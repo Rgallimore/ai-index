@@ -780,7 +780,6 @@ const DATA = [
 let currentAge   = "10";
 let currentCat   = "all";
 let currentQuery = "";
-let filtered     = [...DATA];
 
 const fuse = new Fuse(DATA, {
   keys: [
@@ -796,25 +795,60 @@ const fuse = new Fuse(DATA, {
 
 // ── Category Config ──────────────────────────────────────────
 const catClass = {
-  model:    "cat-model",
-  "ml-type":"cat-ml-type",
-  arch:     "cat-arch",
-  concept:  "cat-concept",
-  role:     "cat-role",
+  model:      "cat-model",
+  "ml-type":  "cat-ml-type",
+  arch:       "cat-arch",
+  concept:    "cat-concept",
+  role:       "cat-role",
   cloud:      "cat-cloud",
   challenge:  "cat-challenge",
   prompt:     "cat-prompt",
 };
 const catLabel = {
-  model:    "AI Model",
-  "ml-type":"ML Type",
-  arch:     "Architecture",
-  concept:  "Concept",
+  model:      "AI Model",
+  "ml-type":  "ML Type",
+  arch:       "Architecture",
+  concept:    "Concept",
   role:       "Role",
   cloud:      "Cloud Service",
   challenge:  "Challenge",
   prompt:     "Prompt Technique",
 };
+
+// ── URL sync ─────────────────────────────────────────────────
+function syncURL() {
+  const p = new URLSearchParams();
+  if (currentCat   !== "all") p.set("cat", currentCat);
+  if (currentQuery.trim())    p.set("q",   currentQuery.trim());
+  if (currentAge   !== "10")  p.set("age", currentAge);
+  const qs = p.toString();
+  history.replaceState(null, "", qs ? "?" + qs : location.pathname);
+}
+
+function loadFromURL() {
+  const p = new URLSearchParams(location.search);
+
+  if (p.has("q")) {
+    currentQuery = p.get("q");
+    document.getElementById("search").value = currentQuery;
+  }
+  if (p.has("age") && ["10","45"].includes(p.get("age"))) {
+    currentAge = p.get("age");
+    document.querySelectorAll(".age-toggle button").forEach(b => {
+      b.classList.toggle("active", b.dataset.age === currentAge);
+    });
+  }
+  if (p.has("cat")) {
+    const cat = p.get("cat");
+    const valid = document.querySelector(`.filter-btn[data-cat="${cat}"]`);
+    if (valid) {
+      currentCat = cat;
+      document.querySelectorAll(".filter-btn").forEach(b => {
+        b.classList.toggle("active", b.dataset.cat === currentCat);
+      });
+    }
+  }
+}
 
 // ── Render ───────────────────────────────────────────────────
 function render() {
@@ -822,7 +856,6 @@ function render() {
   const count = document.getElementById("count");
   grid.innerHTML = "";
 
-  // Search
   let results;
   if (currentQuery.trim()) {
     results = fuse.search(currentQuery).map(r => r.item);
@@ -830,7 +863,6 @@ function render() {
     results = [...DATA];
   }
 
-  // Category filter
   if (currentCat !== "all") {
     results = results.filter(d => d.cat === currentCat);
   }
@@ -844,7 +876,6 @@ function render() {
 
   results.forEach(item => {
     const expl = currentAge === "10" ? item.age10 : item.age45;
-
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
@@ -863,6 +894,7 @@ function render() {
 // ── Event Listeners ──────────────────────────────────────────
 document.getElementById("search").addEventListener("input", e => {
   currentQuery = e.target.value;
+  syncURL();
   render();
 });
 
@@ -871,6 +903,7 @@ document.querySelectorAll(".age-toggle button").forEach(btn => {
     currentAge = btn.dataset.age;
     document.querySelectorAll(".age-toggle button").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
+    syncURL();
     render();
   });
 });
@@ -880,11 +913,13 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
     currentCat = btn.dataset.cat;
     document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
+    syncURL();
     render();
   });
 });
 
 // ── Init ─────────────────────────────────────────────────────
+loadFromURL();
 render();
 </script>
 </body>

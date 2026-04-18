@@ -183,6 +183,7 @@
     .cat-arch     { background: rgba(96,165,250,0.15);  color: var(--blue); }
     .cat-concept  { background: rgba(251,146,60,0.15);  color: var(--orange); }
     .cat-role     { background: rgba(244,114,182,0.15); color: var(--pink); }
+    .cat-cloud    { background: rgba(34,211,238,0.15);  color: #22d3ee; }
 
     .card-summary { color: var(--text-muted); font-size: 0.85rem; }
     .tags { display: flex; gap: 0.35rem; flex-wrap: wrap; }
@@ -235,6 +236,7 @@
   <button class="filter-btn" data-cat="arch">🧠 Architectures</button>
   <button class="filter-btn" data-cat="concept">💡 Concepts</button>
   <button class="filter-btn" data-cat="role">👤 Roles</button>
+  <button class="filter-btn" data-cat="cloud">☁️ Cloud Services</button>
 </div>
 
 <main>
@@ -542,7 +544,90 @@ const DATA = [
     age10: "AI solutions architects design the overall system: which AI models to use, how data flows in and out, how the AI connects to existing software, and how to handle scale and reliability. They make sure the AI solution fits the business's needs, budget, and technical constraints.",
     age45: "AI solutions architects translate business requirements into technical AI system designs. Competencies: cloud AI services (Azure OpenAI, AWS Bedrock, Google Vertex), LLM integration patterns (RAG, function calling, agents), cost modeling (build vs. buy vs. fine-tune), security (data residency, encryption, access control), and vendor evaluation. Interface between C-suite AI strategy and engineering implementation."
   },
+
+  // ── CLOUD AI SERVICES ──────────────────────────────────
+
+  // AWS
+  {
+    name: "Amazon Bedrock", cat: "cloud", tags: ["AWS","Managed AI","Foundation Models","Agents","RAG"],
+    summary: "AWS's managed platform for accessing 50+ foundation models and building production AI agents",
+    age10: "Amazon Bedrock is like a giant menu of AI brains that AWS lets you rent. Instead of building your own AI from scratch, you pick from top models — Claude, Llama, Mistral, Amazon Nova — and use them in your app. It also has tools for building AI agents that can browse the web, search your documents, and run code.",
+    age45: "Amazon Bedrock (GA 2023, rapidly expanding through 2026) is AWS's fully managed FM service — no infrastructure to manage. Key capabilities: access to 50+ models (Anthropic Claude, Meta Llama, Mistral, Amazon Nova, Stability AI); Bedrock Agents for multi-step agentic workflows; Knowledge Bases for RAG with built-in vector stores; Guardrails for content filtering and PII redaction; Model Evaluation for automated benchmarking. Native IAM/VPC integration makes it the default enterprise choice on AWS. Bedrock agent workflows (Feb 2026) added visual workflow orchestration for multi-agent pipelines."
+  },
+  {
+    name: "Amazon SageMaker", cat: "cloud", tags: ["AWS","MLOps","Training","Deployment","ML Platform"],
+    summary: "AWS's end-to-end ML platform — build, train, and deploy models at any scale",
+    age10: "SageMaker is AWS's toolkit for data scientists and ML engineers. It has everything in one place: tools to prepare data, train models on powerful GPUs, automatically find the best settings, label data, and serve predictions to real users. Think of it as a full workshop for building AI — from raw materials to finished product.",
+    age45: "Amazon SageMaker is AWS's integrated ML platform covering the full lifecycle: data prep (Data Wrangler, Ground Truth labeling), experiment management (Experiments), training at scale (distributed training, HyperPod for large model training with checkpointless/elastic capabilities announced re:Invent 2025), hyperparameter optimization (Automatic Model Tuning), model registry, and serving (real-time, async, serverless inference). SageMaker Studio provides a web-based IDE. SageMaker Autopilot handles AutoML. Key for MLOps teams building custom models rather than consuming foundation models via Bedrock."
+  },
+  {
+    name: "Amazon Q", cat: "cloud", tags: ["AWS","Enterprise Assistant","Copilot","Code","Business Intelligence"],
+    summary: "AWS's AI assistant for businesses — answers questions from your own data, writes code, and automates tasks",
+    age10: "Amazon Q is AWS's version of a smart office assistant. You connect it to your company's documents and databases, and it answers questions using your actual business data — not just the internet. It also helps developers write and fix code inside their coding tools.",
+    age45: "Amazon Q is AWS's enterprise-grade AI assistant, launched 2024, covering two main surfaces: Amazon Q Business (connects to 40+ enterprise data sources — S3, SharePoint, Salesforce, Jira — for grounded Q&A and workflow automation) and Amazon Q Developer (AI coding assistant integrated into VS Code, JetBrains, CLI, and the AWS Console; includes code generation, security scanning, and infrastructure-as-code generation). Positioned as AWS's direct competitor to Microsoft Copilot for M365."
+  },
+  {
+    name: "Amazon Nova", cat: "cloud", tags: ["AWS","Foundation Model","Multimodal","Amazon","Nova"],
+    summary: "Amazon's own family of frontier multimodal models — optimized for AWS cost and performance",
+    age10: "Amazon Nova is Amazon's own AI model family, like how Google has Gemini and OpenAI has GPT. Nova comes in different sizes — Micro (tiny, super fast), Lite (balanced), Pro (most powerful), and Reel (for video). They're all built to work efficiently on AWS and are cheaper to run than many alternatives.",
+    age45: "Amazon Nova (announced re:Invent 2024; Nova 2 at re:Invent 2025) is Amazon's proprietary multimodal model family: Nova Micro (text, ultra-low latency), Nova Lite (multimodal, low cost), Nova Pro (best quality/cost), Nova Premier (frontier, with distillation capability), and Nova Reel (video generation). Trained on Amazon's data with AWS infrastructure optimizations. Key differentiation: Nova models are available exclusively via Bedrock, giving AWS a first-party model option that competes on price with third-party model APIs while keeping inference revenue within AWS."
+  },
+
+  // Azure
+  {
+    name: "Azure AI Foundry", cat: "cloud", tags: ["Azure","Microsoft","Model Hub","Enterprise","GPT","Claude"],
+    summary: "Microsoft's unified AI development platform — 1,900+ models, enterprise tooling, and the only cloud with both GPT and Claude",
+    age10: "Azure AI Foundry is Microsoft's AI superstore and workshop. It has nearly 2,000 AI models to choose from — including GPT-5 from OpenAI AND Claude from Anthropic, which no other cloud offers together. It also gives developers all the tools to build, test, and launch AI apps for businesses.",
+    age45: "Azure AI Foundry (evolved from Azure OpenAI Service + Azure ML, unified 2025) is Microsoft's enterprise AI platform hosting 1,900+ models as of April 2026. Unique differentiator: the only cloud platform offering both OpenAI GPT-4.1/GPT-5 and Anthropic Claude natively. Includes: AI Foundry SDK, prompt flow, model evaluation, content safety, fine-tuning, and agent builder surfaces. Deeply integrated with Microsoft Entra ID, Azure Policy, and Purview for enterprise governance. The MAI model family (Microsoft's in-house models: MAI-Transcribe-1, MAI-Voice-1, MAI-Image-2) launched April 2026, supplementing third-party models."
+  },
+  {
+    name: "Microsoft Copilot & Copilot Studio", cat: "cloud", tags: ["Azure","Microsoft","M365","Low-Code","Agents","Enterprise"],
+    summary: "Microsoft's AI assistant embedded across Office 365 — and the low-code tool to build custom enterprise agents",
+    age10: "Microsoft Copilot is AI built into all the Office apps you know — Word, Excel, PowerPoint, Outlook, Teams. It helps you write documents, summarize emails, create spreadsheets, and more. Copilot Studio is a tool that lets businesses build their own custom AI helpers without needing to write lots of code.",
+    age45: "Microsoft Copilot is the AI layer across M365 (Word, Excel, PowerPoint, Outlook, Teams, OneNote) and Windows. Agent Mode (2025) enables iterative, multi-step task execution within M365 apps. Copilot Studio is the low-code/no-code agent builder for customizing Copilot or building standalone enterprise agents — connecting to SharePoint, Dataverse, and 1,000+ connectors via Power Platform. The Agent Store (70+ pre-built agents as of March 2026) and multi-agent orchestration via A2A protocol extend enterprise workflow automation. Key PM consideration: Copilot's value compounds with M365 data — organizations heavily invested in Microsoft's stack see strongest ROI."
+  },
+  {
+    name: "Azure OpenAI Service", cat: "cloud", tags: ["Azure","OpenAI","GPT","Enterprise","API","Compliance"],
+    summary: "Enterprise-grade access to OpenAI's models (GPT-5, o3, DALL-E) with Azure's security and compliance",
+    age10: "Azure OpenAI Service lets businesses use OpenAI's powerful models — like GPT-5 — but through Microsoft's cloud, with extra security controls. It's like getting all the power of ChatGPT but inside your company's secure environment, where your data stays private.",
+    age45: "Azure OpenAI Service provides access to OpenAI's full model suite (GPT-4.1 series, GPT-5, o3/o4-mini, DALL-E 3, Whisper, text-embedding models) via Azure's infrastructure with: private networking (VNet integration), Azure Active Directory auth, data residency guarantees, compliance certifications (SOC 2, ISO 27001, HIPAA BAA), and content filtering. Customer data is not used to train OpenAI models. For enterprise procurement: Azure OpenAI is typically the approved path for regulated industries (finance, healthcare, government) where direct OpenAI API use fails vendor risk assessments."
+  },
+
+  // GCP
+  {
+    name: "Google Vertex AI", cat: "cloud", tags: ["GCP","Google","ML Platform","MLOps","Gemini","Training"],
+    summary: "Google Cloud's unified AI platform — from ML training to Gemini access to enterprise agent building",
+    age10: "Vertex AI is Google's one-stop shop for building AI on Google Cloud. It lets you access Google's Gemini models, train your own custom models, build AI agents, search through your documents intelligently, and monitor everything in production. It's Google's answer to Azure AI Foundry and AWS SageMaker combined.",
+    age45: "Vertex AI is GCP's integrated ML and GenAI platform covering: Model Garden (200+ models including Gemini 3.1, Claude, Llama, Mistral), Vertex AI Studio (prompt testing and fine-tuning UI), Agent Builder (enterprise agent construction with RAG and tool use), Agent Engine (managed agent runtime with Memory Bank in preview and Code Execution GA), Pipelines (MLOps orchestration), Feature Store, Model Registry, and Vector Search 2.0 (GA, optimized for RAG retrieval). Prompt Optimizer (GA 2025) automates prompt engineering. Deep integration with BigQuery and Google Workspace. Lyria (audio generation) and Veo 3.1 (video generation) are latest multimodal additions."
+  },
+  {
+    name: "Vertex AI Agent Builder", cat: "cloud", tags: ["GCP","Agents","RAG","Enterprise","No-Code","Search"],
+    summary: "Google's enterprise agent platform — build grounded AI agents connected to your business data",
+    age10: "Vertex AI Agent Builder is Google's tool for creating AI assistants that actually know your company's specific information. You connect it to your documents and databases, and it builds an AI that can search them, answer questions accurately, and complete tasks — all without making things up because it's grounded in real data.",
+    age45: "Vertex AI Agent Builder (2025) is GCP's enterprise-grade platform for building production agents grounded in organizational data. Key components: Data Store (connects documents, websites, BigQuery, Cloud Storage for RAG), Search (semantic + keyword hybrid search replacing enterprise search), Conversation (multi-turn dialog management), and Agent (tool-using reasoning agent with MCP support). Enhanced Tool Governance (2026) adds granular permissions for agent tool access. Agent Development Kit (ADK) in preview enables code-first agent construction. Competitive with Amazon Bedrock Agents and Azure Copilot Studio."
+  },
+
+  // Others
+  {
+    name: "Hugging Face", cat: "cloud", tags: ["Open Source","Model Hub","Community","Inference","Fine-tuning"],
+    summary: "The GitHub of AI — the world's largest open-source model and dataset repository with managed inference",
+    age10: "Hugging Face is like GitHub but for AI models. It hosts hundreds of thousands of free AI models that anyone can download and use. It also has tools to fine-tune models on your own data, run them in the cloud without setting up servers, and share your work with the AI research community. Most open-source AI starts here.",
+    age45: "Hugging Face hosts 900,000+ models, 250,000+ datasets, and 300,000+ Spaces (interactive ML demos) as of 2026. Key products: Hub (model discovery and versioning), Transformers library (the standard PyTorch/JAX model library), Inference Endpoints (managed deployment for any Hub model), Serverless Inference API (pay-per-call), AutoTrain (no-code fine-tuning), and Spaces (Gradio/Streamlit app hosting). The de facto standard for open-source model distribution — virtually every open-weight model (Llama, Mistral, Gemma, Phi) is distributed via Hugging Face. Enterprise tier adds SSO, private model hosting, and SLA-backed inference."
+  },
+  {
+    name: "Snowflake Cortex AI", cat: "cloud", tags: ["Snowflake","Data Platform","SQL","LLM","RAG","Analytics"],
+    summary: "AI built directly into Snowflake's data platform — run LLMs on your data warehouse without moving data",
+    age10: "Snowflake Cortex lets companies use AI directly inside their data warehouse. Instead of moving your data somewhere else to use AI, Cortex brings the AI to where your data already lives. You can ask questions in plain English, summarize documents, and build AI features using regular SQL — the language data teams already know.",
+    age45: "Snowflake Cortex AI embeds LLM capabilities natively into the Snowflake Data Cloud. Key functions: COMPLETE (call frontier models — Llama, Mistral, Claude — via SQL), SUMMARIZE, SENTIMENT, TRANSLATE, EXTRACT_ANSWER, and EMBED_TEXT for vector operations. Cortex Search (semantic search on Snowflake data) and Cortex Analyst (natural language to SQL) address RAG and BI use cases without data egress. Key PM insight: for organizations whose data already lives in Snowflake, Cortex dramatically reduces the architecture complexity of AI features — no separate vector DB, embedding pipeline, or data movement required."
+  },
+  {
+    name: "Databricks Mosaic AI", cat: "cloud", tags: ["Databricks","MLOps","Fine-tuning","Lakehouse","Training","RAG"],
+    summary: "Enterprise AI on the data lakehouse — fine-tune, train, and deploy models where your data already lives",
+    age10: "Databricks Mosaic AI is an AI platform for companies that have lots of data in Databricks' data lakehouse. It lets you fine-tune existing AI models on your own data, train new models from scratch, and deploy them — all without moving your data to a different system. It's especially popular with data engineering teams.",
+    age45: "Databricks Mosaic AI (rebranded from MosaicML acquisition, 2023) integrates AI model development into the Databricks Lakehouse. Key products: Model Training (efficient large-scale training with MosaicML Composer), Foundation Model APIs (pay-per-token access to DBRX, Llama, Mixtral), Fine-tuning (instruction tuning and continued pre-training on Delta Lake data), MLflow (open-source experiment tracking and model registry, now industry standard), Feature Store, and Vector Search (managed vector DB integrated with Unity Catalog). Unity Catalog governance applies to both data and AI models. Strong choice for data-heavy enterprises already on Databricks — AI and data pipelines share the same platform and governance."
+  },
 ];
+
 
 // ── Search & Filter State ────────────────────────────────────
 let currentAge   = "10";
@@ -569,6 +654,7 @@ const catClass = {
   arch:     "cat-arch",
   concept:  "cat-concept",
   role:     "cat-role",
+  cloud:    "cat-cloud",
 };
 const catLabel = {
   model:    "AI Model",
@@ -576,6 +662,7 @@ const catLabel = {
   arch:     "Architecture",
   concept:  "Concept",
   role:     "Role",
+  cloud:    "Cloud Service",
 };
 
 // ── Render ───────────────────────────────────────────────────

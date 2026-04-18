@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Tutor — Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --border: #2e3350;
+      --text: #e8eaf0;
+      --text-muted: #8892b0;
+      --accent: #7c6af7;
+      --accent-light: #a89df9;
+      --green: #4ade80;
+      --green-bg: rgba(74,222,128,0.12);
+      --red: #f87171;
+      --red-bg: rgba(248,113,113,0.12);
+      --blue: #60a5fa;
+      --orange: #fb923c;
+      --pink: #f472b6;
+      --yellow: #facc15;
+      --radius: 12px;
+      --transition: 0.18s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1a1d27 0%, #12152a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .header-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a89df9, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .back-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color var(--transition);
+    }
+    .back-link:hover { color: var(--accent-light); }
+
+    /* ── Layout ── */
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* ── Pill Buttons ── */
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .pill {
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: none;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .pill:hover { border-color: var(--accent-light); color: var(--accent-light); }
+    .pill.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+
+    /* ── Start Screen ── */
+    .start-heading {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .start-heading h2 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .start-heading p { color: var(--text-muted); font-size: 0.95rem; }
+
+    .settings-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .setting-group h3 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    #btn-start {
+      display: block;
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity var(--transition), transform var(--transition);
+      margin-bottom: 2rem;
+    }
+    #btn-start:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ── Stats Section ── */
+    .stats-section h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      line-height: 1.2;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .sessions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .session-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+    .session-meta { color: var(--text-muted); }
+    .session-score {
+      font-weight: 600;
+    }
+    .score-good { color: var(--green); }
+    .score-ok   { color: var(--yellow); }
+    .score-poor { color: var(--red); }
+
+    .no-history {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    /* ── Quiz Screen ── */
+    .quiz-header {
+      margin-bottom: 1.5rem;
+    }
+    .quiz-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .quiz-progress-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .quiz-score-text {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-light);
+    }
+    .progress-bar {
+      height: 4px;
+      background: var(--surface2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .question-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .question-type-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-light);
+      margin-bottom: 0.75rem;
+    }
+    .question-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    .question-detail {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 1.25rem;
+      padding: 0.75rem 1rem;
+      background: var(--surface2);
+      border-left: 3px solid var(--border);
+      border-radius: 0 8px 8px 0;
+      line-height: 1.5;
+    }
+    .question-detail:empty { display: none; margin: 0; padding: 0; }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .option-btn {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all var(--transition);
+      line-height: 1.4;
+    }
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--accent-light);
+      background: rgba(124,106,247,0.08);
+    }
+    .option-btn.correct {
+      border-color: var(--green);
+      background: var(--green-bg);
+      color: var(--green);
+    }
+    .option-btn.wrong {
+      border-color: var(--red);
+      background: var(--red-bg);
+      color: var(--red);
+    }
+    .option-btn.dimmed {
+      opacity: 0.4;
+    }
+    .option-btn:disabled { cursor: default; }
+
+    /* ── Feedback ── */
+    .feedback-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .feedback-result {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .feedback-result.correct { color: var(--green); }
+    .feedback-result.wrong   { color: var(--red); }
+    .feedback-explanation {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      border-top: 1px solid var(--border);
+      padding-top: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .feedback-explanation strong { color: var(--text); }
+
+    #btn-next {
+      display: block;
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity var(--transition);
+    }
+    #btn-next:hover { opacity: 0.9; }
+
+    /* ── End Screen ── */
+    .end-score-card {
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .end-score-number {
+      font-size: clamp(3rem, 10vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .end-score-pct {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+    .end-score-label {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .breakdown-table {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .breakdown-title {
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+    }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-cat { color: var(--text-muted); }
+    .breakdown-score { font-weight: 600; }
+
+    .end-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .btn-primary {
+      padding: 0.85rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity var(--transition);
+      text-align: center;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-secondary {
+      padding: 0.85rem;
+      background: none;
+      color: var(--text-muted);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-align: center;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-secondary:hover { border-color: var(--accent-light); color: var(--accent-light); }
+
+    /* ── Cat badge colours ── */
+    .cat-model    { background: rgba(124,106,247,0.18); color: var(--accent-light); }
+    .cat-ml-type  { background: rgba(74,222,128,0.15);  color: #4ade80; }
+    .cat-arch     { background: rgba(96,165,250,0.15);  color: #60a5fa; }
+    .cat-concept  { background: rgba(251,146,60,0.15);  color: #fb923c; }
+    .cat-role     { background: rgba(244,114,182,0.15); color: #f472b6; }
+    .cat-cloud    { background: rgba(34,211,238,0.15);  color: #22d3ee; }
+    .cat-challenge{ background: rgba(251,113,133,0.15); color: #fb7185; }
+    .cat-prompt   { background: rgba(251,191,36,0.15);  color: #fbbf24; }
+
+    .cat-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="header-title">AI Tutor</span>
+  <a href="index.html" class="back-link">← Back to Index</a>
+</header>
+
+<main>
+
+  <!-- ── START SCREEN ── -->
+  <div id="screen-start">
+    <div class="start-heading">
+      <h2>AI Knowledge Quiz</h2>
+      <p>Test yourself on models, concepts, architectures, roles, and more</p>
+    </div>
+
+    <div class="settings-panel">
+      <div class="setting-group">
+        <h3>Category</h3>
+        <div class="pills" id="cat-pills">
+          <button class="pill active" data-cat="all">All Topics</button>
+          <button class="pill" data-cat="model">🤖 AI Models</button>
+          <button class="pill" data-cat="ml-type">📚 ML Types</button>
+          <button class="pill" data-cat="arch">🧠 Architectures</button>
+          <button class="pill" data-cat="concept">💡 Concepts</button>
+          <button class="pill" data-cat="role">👤 Roles</button>
+          <button class="pill" data-cat="cloud">☁️ Cloud Services</button>
+          <button class="pill" data-cat="challenge">⚠️ Deployment</button>
+          <button class="pill" data-cat="prompt">✍️ Prompt Engineering</button>
+        </div>
+      </div>
+      <div class="setting-group">
+        <h3>Number of Questions</h3>
+        <div class="pills" id="num-pills">
+          <button class="pill" data-num="5">5</button>
+          <button class="pill active" data-num="10">10</button>
+          <button class="pill" data-num="20">20</button>
+        </div>
+      </div>
+    </div>
+
+    <button id="btn-start">Start Quiz →</button>
+
+    <div id="stats-section">
+      <h3 style="font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:0.75rem">All-Time Stats</h3>
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total">—</div>
+          <div class="stat-label">Quizzes taken</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-correct">—</div>
+          <div class="stat-label">Questions correct</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-pct">—</div>
+          <div class="stat-label">Overall accuracy</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:0.75rem;margin-top:1.5rem">Recent Sessions</h3>
+      <div id="sessions-list"></div>
+    </div>
+  </div>
+
+  <!-- ── QUIZ SCREEN ── -->
+  <div id="screen-quiz" hidden>
+    <div class="quiz-header">
+      <div class="quiz-meta">
+        <span class="quiz-progress-text" id="quiz-progress-text">Question 1 of 10</span>
+        <span class="quiz-score-text" id="quiz-score-text">Score: 0</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-type-label" id="q-type-label"></div>
+      <div class="question-text" id="q-text"></div>
+      <div class="question-detail" id="q-detail"></div>
+      <div class="options-grid" id="options-grid"></div>
+    </div>
+
+    <div id="feedback-box" class="feedback-box" hidden>
+      <div class="feedback-result" id="feedback-result"></div>
+      <div class="feedback-explanation" id="feedback-explanation"></div>
+    </div>
+
+    <button id="btn-next" hidden>Next Question →</button>
+  </div>
+
+  <!-- ── END SCREEN ── -->
+  <div id="screen-end" hidden>
+    <div class="end-score-card">
+      <div class="end-score-number" id="end-score-number"></div>
+      <div class="end-score-pct" id="end-score-pct"></div>
+      <div class="end-score-label" id="end-score-label"></div>
+    </div>
+
+    <div class="breakdown-table" id="breakdown-table" hidden>
+      <div class="breakdown-title">Results by Category</div>
+      <div id="breakdown-rows"></div>
+    </div>
+
+    <div class="end-actions">
+      <button class="btn-primary" id="btn-play-again">Play Again (same settings)</button>
+      <button class="btn-secondary" id="btn-change-settings">Change Settings</button>
+      <a href="index.html" class="btn-secondary">← Back to Index</a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────────────
+const DATA = [
+  // ── AI MODELS ──────────────────────────────────────────────────────
+  { name: "GPT-5 / GPT-5.4 (OpenAI)", cat: "model", tags: ["OpenAI","LLM","Multimodal","Reasoning","Computer Use"],
+    summary: "OpenAI's current flagship — adaptive reasoning, native computer use, 80% fewer hallucinations than GPT-4",
+    age45: "GPT-5 introduced adaptive reasoning — internally routing simple queries to a fast path (~2s) and complex ones to extended thinking (~10s+), using ~50% fewer tokens than competitors at comparable quality. GPT-5.4 (current) scores 74.9% SWE-bench Verified and is positioned as the first general-purpose model with native computer-use. Hallucination rate reduced ~80% vs GPT-4." },
+  { name: "o3 / o4-mini (OpenAI Reasoning)", cat: "model", tags: ["OpenAI","Reasoning","Math","Agentic"],
+    summary: "OpenAI's dedicated reasoning models — near-human on PhD science, competition math, and autonomous coding",
+    age45: "The o-series uses test-time compute scaling — quality improves by allocating more inference-time computation rather than more training compute. o3 achieves near-human on competition math (AIME 2024: 96.7%), PhD science (GPQA Diamond: 87.7%), and software engineering (SWE-bench: 71.7%). o4-mini offers comparable performance to o3 on STEM at dramatically lower cost." },
+  { name: "Claude 4.5 / Opus 4.6 (Anthropic)", cat: "model", tags: ["Anthropic","LLM","Agentic Coding","1M Context","Computer Use"],
+    summary: "Anthropic's latest — leads real-world coding benchmarks and is purpose-built for autonomous agentic tasks",
+    age45: "Claude Sonnet 4.5 leads SWE-bench Verified (77.2%) and achieved 0% error rate on Replit's internal benchmark. Opus 4.6 (Feb 2026 beta) introduces a 1M token context window and is optimized for long-horizon agentic tasks. Constitutional AI and extended thinking make it the preferred choice for compliance-sensitive enterprise deployments." },
+  { name: "Gemini 3.1 Pro (Google DeepMind)", cat: "model", tags: ["Google","LLM","Reasoning","1M Context"],
+    summary: "Google's flagship — leads reasoning benchmarks, first model to break 1500 LMArena Elo, 1M token context",
+    age45: "Gemini 3.1 Pro Preview (Feb 2026) scores 94.3% GPQA Diamond (surpassing human experts at ~89.8%), 77.1% ARC-AGI-2, and 80.6% SWE-bench Verified. It's the first model to break LMArena Elo 1500. The 1M token context window enables full-codebase analysis in a single prompt." },
+  { name: "DeepSeek R1 / V3", cat: "model", tags: ["DeepSeek","China","Open Source","Reasoning","Low Cost"],
+    summary: "Chinese lab's open-source model that shocked the industry — frontier reasoning at a fraction of Western costs",
+    age45: "DeepSeek R1/V3 (Jan 2025) caused significant market disruption: frontier reasoning performance at ~3% of OpenAI's API pricing, open-weight release enabling self-hosting. V3 was trained on ~$6M of compute (vs. GPT-4's estimated $100M+). R1 matches o1 on AIME and MATH-500." },
+  { name: "Llama 3.3 (Meta)", cat: "model", tags: ["Meta","Open Source","LLM","Local","On-Premise"],
+    summary: "Meta's latest open-weight LLM — near-frontier quality, free to download and self-host",
+    age45: "Llama 3.3 70B delivers performance competitive with GPT-4o on many benchmarks at zero API cost. The open-weight license permits commercial use with minimal restrictions. Key enterprise use cases: air-gapped deployments, fine-tuning on proprietary data, and cost-sensitive high-volume inference." },
+  { name: "Mistral Large 2", cat: "model", tags: ["Mistral AI","Open Source","LLM","European","Code"],
+    summary: "Mistral's frontier open-weight model — strong coding, multilingual, and commercially permissive",
+    age45: "Mistral Large 2 (123B) benchmarks competitively with GPT-4o on code generation and multilingual tasks. The MRL license allows commercial use with attribution. Key differentiator: European data residency via La Plateforme API satisfies EU AI Act and GDPR requirements." },
+  { name: "Grok 2 (xAI)", cat: "model", tags: ["xAI","LLM","Real-time","X/Twitter"],
+    summary: "Elon Musk's xAI model — integrated into X (Twitter) with real-time web access",
+    age45: "Grok 2 (Aug 2024) is xAI's frontier LLM, integrated into X Premium with real-time access to X's data firehose — a unique data advantage for current events and market sentiment. Competes with GPT-4o on benchmarks. Aurora handles image generation." },
+  { name: "Gemma 2 (Google)", cat: "model", tags: ["Google","Open Source","Small","On-device","Efficient"],
+    summary: "Google's open-source lightweight model family — optimized for on-device and edge deployment",
+    age45: "Gemma 2 outperforms Llama 3.1 8B and Mistral 7B at comparable sizes, leveraging knowledge distillation from larger Gemini models. The 2B variant runs on-device (Pixel 8+), enabling privacy-preserving inference. Commercially usable with Google's terms." },
+  { name: "Phi-3 / Phi-3.5 (Microsoft)", cat: "model", tags: ["Microsoft","Small","On-device","Efficient","Open Source"],
+    summary: "Microsoft's surprisingly capable small models — frontier quality at 3.8B parameters",
+    age45: "Phi-3 Mini (3.8B) and Phi-3.5 demonstrate that data quality can substitute for scale — trained on 'textbook-quality' curated data. Phi-3 Mini matches Mistral 7B and Llama 3 8B on benchmarks. Runs on CPU-only devices and NPUs." },
+  { name: "Stable Diffusion 3", cat: "model", tags: ["Image Generation","Open Source","Diffusion","Stability AI"],
+    summary: "The latest open-source text-to-image model — major improvements in text rendering and composition",
+    age45: "Stable Diffusion 3 uses a Multimodal Diffusion Transformer (MMDiT) architecture with separate weights for image and text tokens, dramatically improving text legibility in generated images and compositional accuracy. Available in 800M–8B parameter sizes." },
+  { name: "Sora (OpenAI)", cat: "model", tags: ["OpenAI","Video Generation","Diffusion","Text-to-Video"],
+    summary: "OpenAI's text-to-video model — generates realistic HD video up to 60 seconds from a prompt",
+    age45: "Sora uses a spacetime patch-based diffusion transformer trained on vast video data. It generates up to 60-second 1080p video with coherent camera motion, lighting, and physical plausibility. Competitors: Runway Gen-3, Kling, Google Veo 2." },
+  { name: "Whisper v3 (OpenAI)", cat: "model", tags: ["OpenAI","Speech","Audio","Transcription","Open Source"],
+    summary: "OpenAI's state-of-the-art open-source speech-to-text model — 99 languages, near-human accuracy",
+    age45: "Whisper Large v3 achieves near-human word error rates on clean audio with strong noise robustness. Open-weight (Apache 2.0) and self-hostable. Whisper v3 Turbo delivers 8x faster inference at marginal quality loss — the preferred choice for production." },
+
+  // ── ML TYPES ──────────────────────────────────────────────────────
+  { name: "Supervised Learning", cat: "ml-type", tags: ["Labeled Data","Classification","Regression","Foundation"],
+    summary: "Train a model on labeled examples — the backbone of most production ML",
+    age45: "Supervised learning uses labeled training data (X, y) to learn a mapping function f(X) → y. It's the dominant paradigm in production ML. Key variants: classification (discrete output), regression (continuous output). Business applications span fraud detection, churn prediction, demand forecasting, and medical imaging." },
+  { name: "Unsupervised Learning", cat: "ml-type", tags: ["Clustering","No Labels","Patterns","Dimensionality"],
+    summary: "Find hidden patterns in data without labeled examples",
+    age45: "Unsupervised learning discovers latent structure in unlabeled data. Core techniques: clustering (k-means, DBSCAN), dimensionality reduction (PCA, t-SNE, UMAP), and density estimation. Practical applications: customer segmentation, anomaly detection, recommendation system embeddings." },
+  { name: "Reinforcement Learning", cat: "ml-type", tags: ["Rewards","Agents","Games","Robotics","RLHF"],
+    summary: "An agent learns by trial-and-error, maximizing rewards over time",
+    age45: "RL trains an agent to maximize cumulative reward through environment interaction. Key algorithms: PPO, Q-learning, A3C. Critical to modern AI: RLHF is how GPT-4 and Claude are aligned to follow instructions helpfully." },
+  { name: "Transfer Learning", cat: "ml-type", tags: ["Pre-training","Fine-tuning","Efficiency","Foundation Models"],
+    summary: "Reuse knowledge from a large pre-trained model for a new specific task",
+    age45: "Transfer learning leverages representations learned from large datasets (pre-training) for downstream tasks (fine-tuning). Revolutionized NLP via BERT/GPT. Reduces training cost by 10-100x and data requirements by orders of magnitude." },
+  { name: "Self-Supervised Learning", cat: "ml-type", tags: ["Pre-training","No Labels","LLMs","Representations"],
+    summary: "Generate labels automatically from data — how LLMs are pre-trained",
+    age45: "SSL eliminates the labeling bottleneck by deriving supervision signals from data structure (e.g., masked token prediction, next-token prediction, contrastive objectives). It's the pre-training paradigm for virtually all modern foundation models." },
+  { name: "Federated Learning", cat: "ml-type", tags: ["Privacy","Distributed","Mobile","On-device"],
+    summary: "Train models across devices without centralizing sensitive data",
+    age45: "Federated learning enables model training across distributed data silos while keeping data local — addressing GDPR, HIPAA, and data sovereignty concerns. Key challenges: communication cost, non-IID data distributions, and secure aggregation." },
+  { name: "Agentic AI", cat: "ml-type", tags: ["Agents","Autonomous","Tools","2025","Planning"],
+    summary: "AI that reasons, plans, uses tools, and takes multi-step actions autonomously — the defining shift of 2025-2026",
+    age45: "Agentic AI represents the paradigm shift from AI-as-responder to AI-as-actor. Core components: a reasoning model (the 'brain'), a tool layer (web, code execution, APIs, computer use), a memory system (short/long-term), and a planning/reflection loop. 83% of organizations planned agentic AI deployments in 2025." },
+  { name: "Multi-Agent Systems", cat: "ml-type", tags: ["Orchestration","Collaboration","Specialization","Enterprise"],
+    summary: "Networks of specialized AI agents that collaborate — replacing single all-purpose agents",
+    age45: "Multi-agent architecture mirrors microservices: specialized agents (researcher, coder, critic, orchestrator) collaborate via message passing. Key patterns: Orchestrator-Worker, Peer-to-Peer, and Pipeline. Google's A2A protocol and Anthropic's MCP are standardizing inter-agent communication." },
+  { name: "Test-Time Compute Scaling", cat: "ml-type", tags: ["Reasoning","o3","Inference","Quality"],
+    summary: "Spend more compute at inference time — thinking longer — to dramatically improve answer quality",
+    age45: "Test-time compute scaling shifts the quality-compute tradeoff from training to inference. Instead of scaling model size or training data, quality improves by allocating more inference FLOPs to search, self-reflection, or chain-of-thought expansion. Product implications: variable-latency pricing models, async task queues for deep reasoning." },
+
+  // ── ARCHITECTURES ────────────────────────────────────────────────
+  { name: "Transformer", cat: "arch", tags: ["Attention","LLMs","2017","Foundation","NLP"],
+    summary: "The architecture behind virtually all modern LLMs — introduced in 'Attention Is All You Need'",
+    age45: "Transformers (Vaswani et al., 2017) replaced sequential RNNs with parallel self-attention, solving the vanishing gradient problem for long sequences. Encoder-only (BERT) for understanding; decoder-only (GPT) for generation; encoder-decoder (T5) for translation. The dominant architecture for NLP, vision (ViT), audio, and multi-modal tasks." },
+  { name: "CNN (Convolutional Neural Network)", cat: "arch", tags: ["Vision","Images","Filters","Computer Vision"],
+    summary: "Specialized architecture for image recognition — uses learned filters to detect features",
+    age45: "CNNs exploit spatial locality and translation invariance via convolutional filters, pooling layers, and hierarchical feature extraction. Landmark architectures: LeNet, VGG, ResNet (skip connections), EfficientNet. Largely superseded by Vision Transformers (ViT) for large-scale tasks, but CNNs remain compute-efficient for edge/mobile deployment." },
+  { name: "RNN / LSTM", cat: "arch", tags: ["Sequential","Time Series","Memory","Pre-Transformer"],
+    summary: "Recurrent networks that process sequences step-by-step — dominant before transformers",
+    age45: "RNNs use recurrent connections to model sequential dependencies, with LSTM/GRU gating solving the vanishing gradient problem for longer sequences. Superseded by transformers for NLP (2017+) but still relevant for real-time time series, embedded systems, and sensor data." },
+  { name: "GAN (Generative Adversarial Network)", cat: "arch", tags: ["Generative","Adversarial","Images","2014"],
+    summary: "Two neural networks compete — one generating, one judging — to produce realistic outputs",
+    age45: "GANs (Goodfellow et al., 2014) introduced adversarial training: Generator minimizes while Discriminator maximizes the same objective. Largely supplanted by diffusion models for image generation (2022+) due to better stability and diversity. Still used in video synthesis and image-to-image translation." },
+  { name: "Diffusion Model", cat: "arch", tags: ["Generative","Images","DALL-E","Stable Diffusion","Denoising"],
+    summary: "Generates images by learning to reverse a noise-addition process",
+    age45: "Diffusion models outperformed GANs on image quality and diversity (2021-2022). Key mechanism: learn the score function of the data distribution to denoise iteratively. Latent diffusion (Stable Diffusion) operates in compressed latent space. Extended to audio, video (Sora/Gen-2), and 3D generation." },
+  { name: "Attention Mechanism", cat: "arch", tags: ["Transformer","Self-Attention","Key Concept","QKV"],
+    summary: "Lets models dynamically focus on relevant parts of input — the core of transformers",
+    age45: "Self-attention computes attention scores via Q (query), K (key), V (value) projections: softmax(QKᵀ/√d)V. Multi-head attention runs attention in parallel across multiple subspaces. Computational complexity is O(n²) in sequence length — motivating efficient variants (Flash Attention, Sliding Window, Mamba)." },
+  { name: "Mixture of Experts (MoE)", cat: "arch", tags: ["Efficiency","Scaling","Mixtral","Sparse"],
+    summary: "Activates only a subset of model parameters per input — enabling huge models cheaply",
+    age45: "MoE replaces dense FFN layers with N expert sub-networks and a learned routing function (top-k gating). At inference, only k/N parameters are active per token, dramatically reducing FLOPs vs parameter count. Mixtral 8x7B, GPT-4 (alleged), and Gemini use MoE." },
+
+  // ── CONCEPTS ────────────────────────────────────────────────────
+  { name: "Token / Tokenization", cat: "concept", tags: ["LLM","Input","Pricing","Context"],
+    summary: "How text is broken into chunks that AI models can process — also the billing unit for LLM APIs",
+    age45: "Tokenization (BPE, WordPiece, SentencePiece) converts text to integer IDs. ~1 token ≈ 0.75 English words; code tokenizes less efficiently. Critical for PMs: context window limits affect maximum document length; API cost = input + output tokens × price/1M." },
+  { name: "Embedding", cat: "concept", tags: ["Vector","Semantic Search","RAG","Similarity"],
+    summary: "A numerical representation of text (or images) that captures semantic meaning",
+    age45: "Embeddings are dense vector representations in high-dimensional space (768–4096 dimensions) where semantic proximity ≈ cosine similarity. Core to RAG pipelines, semantic search, classification, and clustering. Models: text-embedding-3 (OpenAI), E5, BGE. Stored in vector databases (Pinecone, Weaviate, pgvector)." },
+  { name: "RAG (Retrieval-Augmented Generation)", cat: "concept", tags: ["Architecture","LLM","Search","Grounding","Enterprise"],
+    summary: "Combine LLM generation with real-time retrieval from your own knowledge base",
+    age45: "RAG (Lewis et al., 2020) decouples parametric memory (model weights) from non-parametric memory (retrieval index). Architecture: query → embed → vector search → top-k chunks → LLM prompt → answer. RAG quality depends on chunking strategy, embedding model, retrieval k, and prompt engineering." },
+  { name: "Hallucination", cat: "concept", tags: ["LLM","Risk","Reliability","Accuracy"],
+    summary: "When an AI confidently states false information — a core limitation of current LLMs",
+    age45: "Hallucination is the tendency of generative models to produce factually incorrect, fabricated, or internally inconsistent output while maintaining confident tone. Root cause: next-token prediction optimizes fluency, not factuality. Mitigation strategies: RAG grounding, chain-of-thought reasoning, function calling with external verification." },
+  { name: "Fine-Tuning", cat: "concept", tags: ["Training","Customization","LoRA","Domain Adaptation"],
+    summary: "Further train a pre-trained model on your specific data to specialize its behavior",
+    age45: "Fine-tuning updates model weights on domain-specific data, adapting behavior without full pre-training costs. Parameter-efficient methods (LoRA, QLoRA, prefix tuning) update <1% of weights with comparable results. Key tradeoff vs. RAG: fine-tuning changes implicit knowledge; RAG changes retrieved knowledge." },
+  { name: "Prompt Engineering", cat: "concept", tags: ["LLM","No-Code","Technique","Chain of Thought"],
+    summary: "The craft of writing inputs that reliably get the best outputs from an LLM",
+    age45: "Prompt engineering encompasses techniques to guide LLM output without weight updates. Key methods: zero/few-shot learning, chain-of-thought (Wei et al., 2022), ReAct, self-consistency, and meta-prompting. For PMs: prompt versioning, A/B testing, and evals are essential for production systems." },
+  { name: "Context Window", cat: "concept", tags: ["LLM","Memory","Tokens","Limitations"],
+    summary: "The maximum amount of text an LLM can 'see' at once in a single conversation",
+    age45: "Context window defines the maximum input+output token capacity per inference pass. Scaling: GPT-4 Turbo 128K, Claude 3 200K, Gemini 1.5 Pro 1M. Longer context incurs O(n²) attention cost. 'Lost in the middle' research shows retrieval performance degrades for content buried in long contexts." },
+  { name: "RLHF (Reinforcement Learning from Human Feedback)", cat: "concept", tags: ["Alignment","Safety","Training","LLM","GPT"],
+    summary: "The training technique that makes LLMs helpful and aligned — key to ChatGPT's behavior",
+    age45: "RLHF (Christiano et al., 2017; applied to LLMs by InstructGPT, 2022) consists of: (1) supervised fine-tuning on demonstrations, (2) reward model training on human preference pairs, (3) PPO optimization against the reward model. Alternatives: DPO skips the reward model step. Constitutional AI (Anthropic) uses AI feedback." },
+  { name: "Parameters / Weights", cat: "concept", tags: ["Model Size","Training","Capacity","Scale"],
+    summary: "The numbers inside a neural network that encode learned knowledge — measured in billions",
+    age45: "Parameters (weights and biases) encode learned representations; gradient descent optimizes them during training. Scaling laws (Kaplan et al., Chinchilla) show compute-optimal training requires proportional data scaling. Quantization (INT8, INT4) reduces memory at modest quality loss." },
+  { name: "Model Context Protocol (MCP)", cat: "concept", tags: ["Agents","Anthropic","Standard","Tools","Integration","2024"],
+    summary: "The open standard that lets AI agents connect to any tool or data source — the 'USB-C for AI'",
+    age45: "MCP (Anthropic, Nov 2024) solves the N×M integration problem: without a standard, connecting N agents to M tools requires N×M custom integrations. MCP reduces this to N+M. By Feb 2026: 97M monthly SDK downloads, adopted by all major AI providers. Donated to the Linux Foundation AAIF in Dec 2025." },
+  { name: "Computer Use / Tool Use", cat: "concept", tags: ["Agents","Agentic","GUI","Automation","Claude","GPT-5"],
+    summary: "AI that can control a computer — clicking, typing, browsing — to complete tasks autonomously",
+    age45: "Computer use (Claude Computer Use Oct 2024; GPT-5.4 native CU 2025) enables LLMs to perceive GUI screenshots and emit mouse/keyboard actions — turning any desktop or web application into an agent-accessible tool without requiring an API. Key risks: unrestricted computer access significantly expands the attack surface for prompt injection." },
+
+  // ── ROLES ────────────────────────────────────────────────────────
+  { name: "AI Product Manager", cat: "role", tags: ["PM","Strategy","Non-Technical","Business","Leadership"],
+    summary: "Defines what AI should do, for whom, and why — bridges business goals and technical teams",
+    age45: "The AI PM role combines traditional product management with AI-specific skills: defining success metrics for probabilistic systems, managing model evaluation and evals pipelines, understanding data requirements, navigating build/buy/fine-tune decisions, and communicating model limitations to stakeholders." },
+  { name: "Machine Learning Engineer", cat: "role", tags: ["MLE","Engineering","Training","Production","Python"],
+    summary: "Builds, trains, and deploys ML models into production systems",
+    age45: "ML engineers bridge research and production. Responsibilities: feature engineering, model training and hyperparameter optimization, experiment tracking (MLflow, W&B), model serving (TensorRT, vLLM, Triton), and A/B testing. Key skills: PyTorch/JAX, distributed training, CUDA basics, and production monitoring." },
+  { name: "Data Scientist", cat: "role", tags: ["Analytics","Statistics","Python","Insights","SQL"],
+    summary: "Extracts insights from data and builds models to solve business problems",
+    age45: "Data scientists combine statistical expertise with programming skills to extract actionable insights. AI-era responsibilities: defining ML problem framing, building baseline models, running controlled experiments, and communicating uncertainty. SQL, Python, and statistical fluency are table stakes." },
+  { name: "MLOps Engineer", cat: "role", tags: ["Infrastructure","DevOps","CI/CD","Deployment","Monitoring"],
+    summary: "Keeps ML systems running reliably in production — the DevOps of machine learning",
+    age45: "MLOps covers the operational lifecycle of ML systems: automated training pipelines (Kubeflow, Airflow), model registry and versioning (MLflow), feature stores (Feast, Tecton), serving infrastructure (KServe, Ray Serve), and monitoring for data drift, concept drift, and performance degradation." },
+  { name: "AI Research Scientist", cat: "role", tags: ["Research","Publications","Academia","PhD","Novel Methods"],
+    summary: "Advances the state of the art through novel algorithms, architectures, and experiments",
+    age45: "AI research scientists (typically PhD-level) design and validate novel methods, often publishing at NeurIPS, ICML, ICLR. Applied research roles (at Anthropic, Google DeepMind, Meta FAIR) bridge pure research with product needs. Key skills: mathematical rigor, experimental design, literature synthesis." },
+  { name: "Prompt Engineer", cat: "role", tags: ["LLM","No-Code","Optimization","Workflows"],
+    summary: "Specializes in crafting and optimizing prompts to maximize LLM output quality",
+    age45: "Prompt engineering emerged as a distinct role with LLM adoption. Current value-add: systematic evaluation (evals), multi-step agentic workflow design, adversarial testing, and prompt injection defense. The role is converging with AI engineering as workflows become code-based (LangChain, DSPy)." },
+  { name: "AI Ethics Officer / Responsible AI Lead", cat: "role", tags: ["Ethics","Governance","Policy","Risk","Fairness"],
+    summary: "Ensures AI systems are fair, transparent, safe, and compliant with regulations",
+    age45: "Responsible AI (RAI) roles govern the ethical development and deployment of AI systems. Responsibilities include: bias auditing and fairness metrics, model transparency and explainability (SHAP, LIME), privacy compliance (differential privacy, data minimization), and regulatory alignment (EU AI Act, NIST AI RMF)." },
+  { name: "AI Solutions Architect", cat: "role", tags: ["Architecture","Enterprise","Cloud","Integration","Design"],
+    summary: "Designs how AI components integrate into enterprise systems and infrastructure",
+    age45: "AI solutions architects translate business requirements into technical AI system designs. Competencies: cloud AI services (Azure OpenAI, AWS Bedrock, Google Vertex), LLM integration patterns (RAG, function calling, agents), cost modeling (build vs. buy vs. fine-tune), security (data residency, encryption, access control)." },
+
+  // ── CLOUD SERVICES ──────────────────────────────────────────────
+  { name: "Amazon Bedrock", cat: "cloud", tags: ["AWS","Managed AI","Foundation Models","Agents","RAG"],
+    summary: "AWS's managed platform for accessing 50+ foundation models and building production AI agents",
+    age45: "Amazon Bedrock is AWS's fully managed FM service. Key capabilities: access to 50+ models (Anthropic Claude, Meta Llama, Mistral, Amazon Nova, Stability AI); Bedrock Agents for multi-step agentic workflows; Knowledge Bases for RAG with built-in vector stores; Guardrails for content filtering and PII redaction." },
+  { name: "Amazon SageMaker", cat: "cloud", tags: ["AWS","MLOps","Training","Deployment","ML Platform"],
+    summary: "AWS's end-to-end ML platform — build, train, and deploy models at any scale",
+    age45: "Amazon SageMaker is AWS's integrated ML platform covering the full lifecycle: data prep (Data Wrangler, Ground Truth labeling), experiment management, training at scale (distributed training, HyperPod), hyperparameter optimization, model registry, and serving. SageMaker Autopilot handles AutoML." },
+  { name: "Amazon Q", cat: "cloud", tags: ["AWS","Enterprise Assistant","Copilot","Code","Business Intelligence"],
+    summary: "AWS's AI assistant for businesses — answers questions from your own data, writes code, and automates tasks",
+    age45: "Amazon Q is AWS's enterprise-grade AI assistant covering: Amazon Q Business (connects to 40+ enterprise data sources for grounded Q&A and workflow automation) and Amazon Q Developer (AI coding assistant integrated into VS Code, JetBrains, CLI, and the AWS Console). Positioned as AWS's direct competitor to Microsoft Copilot for M365." },
+  { name: "Amazon Nova", cat: "cloud", tags: ["AWS","Foundation Model","Multimodal","Amazon"],
+    summary: "Amazon's own family of frontier multimodal models — optimized for AWS cost and performance",
+    age45: "Amazon Nova (announced re:Invent 2024; Nova 2 at re:Invent 2025) is Amazon's proprietary multimodal model family: Nova Micro (text, ultra-low latency), Nova Lite (multimodal, low cost), Nova Pro (best quality/cost), Nova Premier (frontier), and Nova Reel (video generation). Available exclusively via Bedrock." },
+  { name: "Azure AI Foundry", cat: "cloud", tags: ["Azure","Microsoft","Model Hub","Enterprise","GPT","Claude"],
+    summary: "Microsoft's unified AI development platform — 1,900+ models, enterprise tooling, and the only cloud with both GPT and Claude",
+    age45: "Azure AI Foundry (unified 2025) is Microsoft's enterprise AI platform hosting 1,900+ models. Unique differentiator: the only cloud platform offering both OpenAI GPT-5 and Anthropic Claude natively. Includes AI Foundry SDK, prompt flow, model evaluation, content safety, fine-tuning, and agent builder surfaces." },
+  { name: "Microsoft Copilot & Copilot Studio", cat: "cloud", tags: ["Azure","Microsoft","M365","Low-Code","Agents","Enterprise"],
+    summary: "Microsoft's AI assistant embedded across Office 365 — and the low-code tool to build custom enterprise agents",
+    age45: "Microsoft Copilot is the AI layer across M365 (Word, Excel, PowerPoint, Outlook, Teams, Windows). Copilot Studio is the low-code/no-code agent builder for customizing Copilot or building standalone enterprise agents — connecting to SharePoint, Dataverse, and 1,000+ connectors via Power Platform." },
+  { name: "Azure OpenAI Service", cat: "cloud", tags: ["Azure","OpenAI","GPT","Enterprise","API","Compliance"],
+    summary: "Enterprise-grade access to OpenAI's models (GPT-5, o3, DALL-E) with Azure's security and compliance",
+    age45: "Azure OpenAI Service provides access to OpenAI's full model suite via Azure's infrastructure with: private networking (VNet integration), Azure Active Directory auth, data residency guarantees, compliance certifications (SOC 2, ISO 27001, HIPAA BAA), and content filtering. The approved path for regulated industries." },
+  { name: "Google Vertex AI", cat: "cloud", tags: ["GCP","Google","ML Platform","MLOps","Gemini","Training"],
+    summary: "Google Cloud's unified AI platform — from ML training to Gemini access to enterprise agent building",
+    age45: "Vertex AI is GCP's integrated ML and GenAI platform covering: Model Garden (200+ models including Gemini 3.1, Claude, Llama, Mistral), Vertex AI Studio, Agent Builder, Agent Engine, Pipelines, Feature Store, Model Registry, and Vector Search 2.0. Deep integration with BigQuery and Google Workspace." },
+  { name: "Vertex AI Agent Builder", cat: "cloud", tags: ["GCP","Agents","RAG","Enterprise","No-Code","Search"],
+    summary: "Google's enterprise agent platform — build grounded AI agents connected to your business data",
+    age45: "Vertex AI Agent Builder is GCP's enterprise-grade platform for building production agents grounded in organizational data. Key components: Data Store (RAG), Search (semantic + keyword hybrid), Conversation (multi-turn dialog), and Agent (tool-using reasoning agent with MCP support). Competitive with Amazon Bedrock Agents and Azure Copilot Studio." },
+  { name: "Hugging Face", cat: "cloud", tags: ["Open Source","Model Hub","Community","Inference","Fine-tuning"],
+    summary: "The GitHub of AI — the world's largest open-source model and dataset repository with managed inference",
+    age45: "Hugging Face hosts 900,000+ models, 250,000+ datasets, and 300,000+ Spaces as of 2026. Key products: Hub (model discovery), Transformers library (the standard PyTorch/JAX model library), Inference Endpoints (managed deployment), AutoTrain (no-code fine-tuning). The de facto standard for open-source model distribution." },
+  { name: "Snowflake Cortex AI", cat: "cloud", tags: ["Snowflake","Data Platform","SQL","LLM","RAG","Analytics"],
+    summary: "AI built directly into Snowflake's data platform — run LLMs on your data warehouse without moving data",
+    age45: "Snowflake Cortex AI embeds LLM capabilities natively into the Snowflake Data Cloud. Key functions: COMPLETE (call frontier models via SQL), SUMMARIZE, SENTIMENT, TRANSLATE, EXTRACT_ANSWER, and EMBED_TEXT. Cortex Search and Cortex Analyst address RAG and BI use cases without data egress." },
+  { name: "Databricks Mosaic AI", cat: "cloud", tags: ["Databricks","MLOps","Fine-tuning","Lakehouse","Training","RAG"],
+    summary: "Enterprise AI on the data lakehouse — fine-tune, train, and deploy models where your data already lives",
+    age45: "Databricks Mosaic AI integrates AI model development into the Databricks Lakehouse. Key products: Model Training (efficient large-scale training), Foundation Model APIs (pay-per-token access), Fine-tuning (instruction tuning on Delta Lake data), MLflow (open-source experiment tracking — industry standard), and Vector Search." },
+
+  // ── PROMPT ENGINEERING ──────────────────────────────────────────
+  { name: "System Prompt", cat: "prompt", tags: ["Foundation","Persona","Constraints","Behaviour","Always-on"],
+    summary: "The hidden instruction that sets the AI's role, tone, rules, and boundaries for every conversation",
+    age45: "The system prompt is the highest-leverage asset in any LLM product. It defines persona, task scope, output format constraints, tone and brand voice, safety guardrails, and injected context. Best practices: be explicit; use XML tags or markdown headers to separate sections; version-control your system prompts like code." },
+  { name: "Zero-Shot Prompting", cat: "prompt", tags: ["Beginner","No Examples","Instructions","Baseline"],
+    summary: "Give the model a clear instruction with no examples — the default starting point for any prompt",
+    age45: "Zero-shot prompting relies entirely on the model's pre-trained capabilities — no demonstrations provided. It's your starting point: specify the output format explicitly, define the audience, set scope constraints, and give the model a role. Modern frontier models handle most tasks well zero-shot. Escalate to few-shot only when results are inconsistent." },
+  { name: "Few-Shot Prompting", cat: "prompt", tags: ["Examples","Pattern","Consistency","Format","Quality"],
+    summary: "Show the model 2–5 examples of exactly what you want — dramatically improves consistency and format adherence",
+    age45: "Few-shot prompting provides input-output demonstration pairs that implicitly encode the task, format, tone, and edge-case handling. Ideal count: 2–5 examples (beyond 5 adds token cost with diminishing returns). Selection matters: choose diverse examples that cover the range of inputs; include edge cases you care about." },
+  { name: "Chain-of-Thought (CoT)", cat: "prompt", tags: ["Reasoning","Step-by-step","Accuracy","Math","Logic"],
+    summary: "Tell the model to think step-by-step before answering — improves accuracy on reasoning tasks by 20–40%",
+    age45: "Chain-of-thought (Wei et al., 2022) instructs the model to produce intermediate reasoning steps before the final answer. Key variants: zero-shot CoT ('think step by step'), few-shot CoT (demonstrations showing reasoning steps), and auto-CoT. Accuracy gains: 20–40% on math, 15–25% on logical reasoning." },
+  { name: "Role / Persona Prompting", cat: "prompt", tags: ["Persona","Tone","Domain Expert","Voice","Brand"],
+    summary: "Assign the model an expert identity to activate domain-specific knowledge and calibrate tone",
+    age45: "Role prompting assigns a persona that primes domain-specific vocabulary, reasoning patterns, and communication norms. Effective role prompts specify: job title and seniority, domain and context, communication style, and audience. Combine with task and format instructions for maximum precision." },
+  { name: "Structured Output / JSON Mode", cat: "prompt", tags: ["JSON","Reliability","Integration","Parsing","API"],
+    summary: "Force the model to respond in a strict JSON or XML format — essential for integrating AI into software systems",
+    age45: "Structured output constrains model output to a validated schema — eliminating the parsing fragility of free-text responses. Key approaches: JSON mode (guarantees valid JSON), JSON Schema enforcement (validates fields and types), and tool/function calling (the most reliable method). For agentic systems, structured output is non-negotiable." },
+  { name: "ReAct (Reason + Act)", cat: "prompt", tags: ["Agents","Tool Use","Loop","Grounding","Agentic"],
+    summary: "The core prompting pattern for AI agents — interleave thinking and tool use to ground reasoning in real results",
+    age45: "ReAct (Yao et al., 2022) interleaves reasoning traces (Thought) with executable actions (Action) and their results (Observation) in a loop: Thought → Action → Observation → ... → Final Answer. This grounds reasoning in real tool outputs at each step. ReAct is the foundational prompting pattern for tool-using agents." },
+  { name: "Tree of Thoughts (ToT)", cat: "prompt", tags: ["Reasoning","Exploration","Planning","Complex Tasks","Search"],
+    summary: "Explore multiple reasoning paths simultaneously and evaluate which branch leads to the best answer",
+    age45: "Tree of Thoughts (Yao et al., 2023) generalises CoT to a tree structure: the model generates multiple candidate reasoning steps at each decision point, evaluates their quality via a scoring prompt, prunes dead ends, and explores the most promising paths. Tradeoffs: 5–10x token cost vs. CoT; requires multiple model calls per decision node." },
+  { name: "Self-Consistency", cat: "prompt", tags: ["Reliability","Majority Vote","Accuracy","Reasoning","Ensemble"],
+    summary: "Generate multiple independent answers and take the majority — improves accuracy on reasoning tasks without new data",
+    age45: "Self-consistency (Wang et al., 2022) samples multiple diverse reasoning paths for the same problem (via temperature > 0), then aggregates answers by majority vote. Improves accuracy by 5–15% over single CoT on arithmetic, commonsense, and symbolic reasoning benchmarks — without any additional training." },
+  { name: "Context Engineering", cat: "prompt", tags: ["Agentic","Memory","Context Window","Performance","2025"],
+    summary: "The discipline of curating exactly what goes into the context window for multi-step agentic tasks",
+    age45: "Context engineering (formalized by Anthropic, 2025) is the discipline of curating and maintaining the optimal token set during LLM inference. Key techniques: context compression, selective retrieval (inject only the most relevant chunks via RAG), scratchpad management, context prioritization, and state externalization." },
+  { name: "Prompt Injection & Security", cat: "prompt", tags: ["Security","Jailbreak","Risk","Production","Adversarial"],
+    summary: "Attacks where malicious text hijacks AI behaviour — a critical risk for any production AI product",
+    age45: "Prompt injection attacks occur when untrusted content in the model's context contains instructions that override or subvert the system prompt. Types: direct injection (user directly attempts to override system prompt) and indirect injection (malicious instructions embedded in data the agent retrieves — the most dangerous vector for agentic systems)." },
+  { name: "DSPy & Automated Prompt Optimisation", cat: "prompt", tags: ["Automation","DSPy","Optimisation","Production","Advanced"],
+    summary: "Frameworks that automatically write and optimize prompts — replacing manual trial-and-error at scale",
+    age45: "DSPy (Stanford, 2023) replaces brittle hand-written prompt strings with declarative signatures compiled into optimized prompts and few-shot demonstrations by automated optimizers. The optimizer runs your evaluation metric against a small labeled dataset and iteratively improves the prompt. Prompts become code — versionable, testable, composable." },
+  { name: "Meta-Prompting", cat: "prompt", tags: ["AI-assisted","Productivity","Iteration","Prompt Writing"],
+    summary: "Use the AI itself to write, critique, and improve your prompts — the fastest way to iterate",
+    age45: "Meta-prompting uses an LLM to generate, critique, or refine prompts. Key patterns: prompt generation ('Write a system prompt that will make an AI do X'), prompt critique ('Here is my prompt and a bad output — rewrite it'), prompt red-teaming ('Generate 10 inputs that would cause this prompt to fail')." },
+
+  // ── DEPLOYMENT CHALLENGES ────────────────────────────────────────
+  { name: "The Implementation Gap", cat: "challenge", tags: ["PM","Adoption","Enterprise","Strategy","Reality Check"],
+    summary: "Why AI works in demos but stalls in production — the gulf between AI potential and real-world deployment",
+    age45: "The implementation gap describes the chasm between AI capability and enterprise deployment. Despite 83% of organizations planning agentic AI (Cisco 2025), only 14% have deployment-ready solutions and 11% are in active production use. Root causes: legacy system integration complexity, unclear ownership, inadequate data infrastructure, and underestimated change management cost." },
+  { name: "Trust & Explainability", cat: "challenge", tags: ["PM","User Trust","XAI","Adoption","Black Box"],
+    summary: "Users and stakeholders won't use AI they don't trust — building confidence is a product problem, not just a technical one",
+    age45: "Trust is the #1 adoption barrier for enterprise AI. PM levers: design for appropriate confidence display, build in explanation surfaces (show sources, reasoning steps, confidence scores), implement Human-in-the-Loop (HITL) checkpoints, and establish feedback mechanisms. Explainability techniques (SHAP, LIME, chain-of-thought visibility) address the 'black box' perception." },
+  { name: "Human Oversight & HITL", cat: "challenge", tags: ["PM","Safety","Control","Agentic","Governance"],
+    summary: "Keeping humans appropriately in the loop — knowing when AI should act alone vs. ask for approval",
+    age45: "Human-in-the-loop (HITL) design is the central governance challenge for agentic AI. The spectrum: fully manual → human-on-the-loop → human-in-the-loop → fully autonomous. PM decisions: map each agent action to a risk tier; require approval for irreversible, high-cost, or externally-visible actions; design clear interruption and rollback mechanisms." },
+  { name: "Data Quality & Governance", cat: "challenge", tags: ["PM","Data","Garbage In","Bias","Privacy","Foundation"],
+    summary: "AI is only as good as the data it runs on — poor data is the most common cause of failed AI projects",
+    age45: "Data quality is the silent killer of AI initiatives. Failure modes: missing records causing model blind spots; training data reflecting historical biases; stale data causing concept drift; PII in training or retrieval data creating compliance exposure; and siloed data preventing a complete picture. PM responsibilities: partner with data engineering to define data quality standards before AI build begins." },
+  { name: "Integration Complexity", cat: "challenge", tags: ["PM","Engineering","Legacy Systems","APIs","Architecture"],
+    summary: "Connecting AI to real enterprise systems is the most underestimated cost in AI product development",
+    age45: "Integration is consistently the largest underestimated cost in enterprise AI programs. Sources of complexity: legacy systems with no APIs; authentication and authorization across multiple enterprise systems; data format normalization; latency requirements that conflict with LLM response times; and organizational politics around data access." },
+  { name: "AI Cost Management", cat: "challenge", tags: ["PM","Cost","ROI","Tokens","Budget","Business Case"],
+    summary: "LLM inference costs can spiral — PMs must design for cost efficiency from day one",
+    age45: "LLM inference cost is a first-class product constraint. PM cost levers: model routing (use cheap/fast models for simple tasks); prompt compression (reduce input tokens); caching (cache repeated identical prompts); streaming (reduce perceived latency); and output length constraints. For agentic systems, agent loops that retry can generate 10-100x expected token usage." },
+  { name: "Regulatory & Compliance Risk", cat: "challenge", tags: ["PM","EU AI Act","GDPR","HIPAA","Legal","Risk"],
+    summary: "A fast-moving regulatory landscape — AI PMs must build compliance in, not bolt it on",
+    age45: "Key frameworks: EU AI Act (risk-tiered — prohibited, high-risk, limited-risk, minimal-risk; high-risk systems require conformity assessments, human oversight, transparency, and audit logs); GDPR (data subject rights, right to explanation for automated decisions); sector-specific rules (HIPAA for health, FCRA for credit)." },
+  { name: "Model Drift & Reliability", cat: "challenge", tags: ["PM","MLOps","Monitoring","Quality","Production"],
+    summary: "AI models degrade silently in production — what worked at launch may not work six months later",
+    age45: "Model drift is the gradual degradation of AI performance in production. Types: data drift (input data statistics change), concept drift (relationship between inputs and correct outputs changes), and label drift (definition of correct output changes). PM responsibilities: define quality metrics before launch, build monitoring dashboards, establish re-evaluation cadences." },
+  { name: "Bias & Fairness", cat: "challenge", tags: ["PM","Ethics","Fairness","Discrimination","Responsible AI"],
+    summary: "AI can systematically disadvantage groups of people — PMs are responsible for catching this before it causes harm",
+    age45: "AI bias occurs when a model produces systematically skewed outputs that disadvantage particular groups. Sources: biased training data (historical discrimination encoded as patterns), proxy variables (zip code correlates with race), feedback loops (biased outputs generate biased training data), and measurement bias. High-risk domains have legal exposure under anti-discrimination law." },
+  { name: "Change Management & Adoption", cat: "challenge", tags: ["PM","People","Culture","Training","Resistance"],
+    summary: "The hardest part of AI deployment is people — getting teams to trust, use, and adapt to AI tools",
+    age45: "Change management is the most consistently underinvested component of enterprise AI programs. Failure modes: employees who distrust AI outputs and do parallel manual work; fear of job displacement causing active resistance; inadequate training; and leadership mandates without workflow redesign. PM playbook: involve end users in discovery and testing before launch; frame AI as augmentation, not replacement." },
+];
+
+// ── Config ───────────────────────────────────────────────────────
+const catLabel = {
+  model:     "AI Model",
+  "ml-type": "ML Type",
+  arch:      "Architecture",
+  concept:   "Concept",
+  role:      "Role",
+  cloud:     "Cloud Service",
+  challenge: "Deployment Challenge",
+  prompt:    "Prompt Technique",
+};
+
+const catClass = {
+  model:     "cat-model",
+  "ml-type": "cat-ml-type",
+  arch:      "cat-arch",
+  concept:   "cat-concept",
+  role:      "cat-role",
+  cloud:     "cat-cloud",
+  challenge: "cat-challenge",
+  prompt:    "cat-prompt",
+};
+
+const Q_TYPE_LABEL = {
+  NAME_TO_SUMMARY:  "Match the description",
+  SUMMARY_TO_NAME:  "Name this concept",
+  CATEGORY:         "Identify the category",
+};
+
+// ── State ────────────────────────────────────────────────────────
+let settings = { cat: "all", numQ: 10 };
+let quiz = { questions: [], current: 0, correct: 0, sessionBreakdown: {} };
+
+// ── Utilities ────────────────────────────────────────────────────
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function pct(correct, total) {
+  if (total === 0) return 0;
+  return Math.round((correct / total) * 100);
+}
+
+function scoreClass(p) {
+  if (p >= 80) return "score-good";
+  if (p >= 50) return "score-ok";
+  return "score-poor";
+}
+
+function scoreLabel(p) {
+  if (p === 100) return "Perfect score!";
+  if (p >= 90)  return "Excellent work";
+  if (p >= 80)  return "Great job";
+  if (p >= 70)  return "Good effort";
+  if (p >= 50)  return "Keep practising";
+  return "Review the material and try again";
+}
+
+// ── Question generation ──────────────────────────────────────────
+function getPool() {
+  if (settings.cat === "all") return DATA;
+  return DATA.filter(d => d.cat === settings.cat);
+}
+
+function pickDistractors(pool, exclude, n = 3) {
+  const others = pool.filter(d => d.name !== exclude.name);
+  if (others.length >= n) return shuffle(others).slice(0, n);
+  // fall back to full DATA if pool too small
+  return shuffle(DATA.filter(d => d.name !== exclude.name)).slice(0, n);
+}
+
+function generateQuestionFor(item, pool) {
+  const r = Math.random();
+  const type = r < 0.4 ? "NAME_TO_SUMMARY"
+             : r < 0.8 ? "SUMMARY_TO_NAME"
+             :            "CATEGORY";
+
+  const distractors = pickDistractors(pool, item);
+
+  if (type === "NAME_TO_SUMMARY") {
+    const correct = item.summary;
+    const wrong   = distractors.map(d => d.summary);
+    return {
+      type,
+      questionHTML:  `What best describes <strong>${item.name}</strong>?`,
+      questionDetail: "",
+      options:       shuffle([correct, ...wrong]),
+      correctAnswer: correct,
+      item,
+    };
+  }
+
+  if (type === "SUMMARY_TO_NAME") {
+    const correct = item.name;
+    const wrong   = distractors.map(d => d.name);
+    return {
+      type,
+      questionHTML:   "Which AI concept matches this description?",
+      questionDetail: `"${item.summary}"`,
+      options:        shuffle([correct, ...wrong]),
+      correctAnswer:  correct,
+      item,
+    };
+  }
+
+  // CATEGORY
+  const correct     = catLabel[item.cat];
+  const allLabels   = Object.values(catLabel);
+  const wrongCats   = shuffle(allLabels.filter(c => c !== correct)).slice(0, 3);
+  return {
+    type,
+    questionHTML:   `Which category does <strong>${item.name}</strong> belong to?`,
+    questionDetail: "",
+    options:        shuffle([correct, ...wrongCats]),
+    correctAnswer:  correct,
+    item,
+  };
+}
+
+function buildQuiz() {
+  const pool = getPool();
+  const selected = shuffle(pool).slice(0, Math.min(settings.numQ, pool.length));
+  return selected.map(item => generateQuestionFor(item, pool));
+}
+
+// ── Score storage ────────────────────────────────────────────────
+const STORAGE_KEY = "ai-tutor-scores";
+
+function loadScores() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { sessions: [], allTime: { correct: 0, total: 0, byCat: {} } };
+    return JSON.parse(raw);
+  } catch {
+    return { sessions: [], allTime: { correct: 0, total: 0, byCat: {} } };
+  }
+}
+
+function saveSession(correct, total, cat, breakdown) {
+  const store = loadScores();
+  const p = pct(correct, total);
+  store.sessions.unshift({ date: new Date().toISOString(), score: correct, total, cat, pct: p });
+  if (store.sessions.length > 20) store.sessions = store.sessions.slice(0, 20);
+
+  store.allTime.correct += correct;
+  store.allTime.total   += total;
+  for (const [c, { correct: cc, total: ct }] of Object.entries(breakdown)) {
+    if (!store.allTime.byCat[c]) store.allTime.byCat[c] = [0, 0];
+    store.allTime.byCat[c][0] += cc;
+    store.allTime.byCat[c][1] += ct;
+  }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+}
+
+// ── Screen management ────────────────────────────────────────────
+function showScreen(id) {
+  ["screen-start", "screen-quiz", "screen-end"].forEach(s => {
+    document.getElementById(s).hidden = (s !== id);
+  });
+}
+
+// ── Render start screen ──────────────────────────────────────────
+function renderStartScreen() {
+  const store = loadScores();
+
+  // All-time stats
+  const { correct, total } = store.allTime;
+  document.getElementById("stat-total").textContent   = store.sessions.length || "0";
+  document.getElementById("stat-correct").textContent = total > 0 ? correct : "—";
+  document.getElementById("stat-pct").textContent     = total > 0 ? `${pct(correct, total)}%` : "—";
+
+  // Recent sessions
+  const list = document.getElementById("sessions-list");
+  if (store.sessions.length === 0) {
+    list.innerHTML = `<div class="no-history">No quiz history yet — start your first session above!</div>`;
+    return;
+  }
+  const catEmoji = { all: "🌐", model: "🤖", "ml-type": "📚", arch: "🧠", concept: "💡", role: "👤", cloud: "☁️", challenge: "⚠️", prompt: "✍️" };
+  const catName  = { all: "All Topics", model: "AI Models", "ml-type": "ML Types", arch: "Architectures", concept: "Concepts", role: "Roles", cloud: "Cloud Services", challenge: "Deployment", prompt: "Prompt Engineering" };
+
+  list.innerHTML = store.sessions.slice(0, 8).map(s => {
+    const d    = new Date(s.date);
+    const ds   = d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+    const p    = s.pct;
+    const cls  = scoreClass(p);
+    const emoji = catEmoji[s.cat] || "🌐";
+    const cname = catName[s.cat]  || "All Topics";
+    return `
+      <div class="session-row">
+        <div class="session-meta">${emoji} ${cname} &middot; ${ds}</div>
+        <div class="session-score ${cls}">${s.score}/${s.total} (${p}%)</div>
+      </div>`;
+  }).join("");
+}
+
+// ── Render quiz question ─────────────────────────────────────────
+function renderQuestion() {
+  const q = quiz.questions[quiz.current];
+  const total = quiz.questions.length;
+
+  // Header
+  document.getElementById("quiz-progress-text").textContent =
+    `Question ${quiz.current + 1} of ${total}`;
+  document.getElementById("quiz-score-text").textContent =
+    `Score: ${quiz.correct}`;
+  const fillPct = (quiz.current / total) * 100;
+  document.getElementById("progress-fill").style.width = `${fillPct}%`;
+
+  // Question
+  document.getElementById("q-type-label").textContent   = Q_TYPE_LABEL[q.type];
+  document.getElementById("q-text").innerHTML           = q.questionHTML;
+  document.getElementById("q-detail").textContent       = q.questionDetail || "";
+
+  // Options
+  const grid = document.getElementById("options-grid");
+  grid.innerHTML = q.options.map((opt, i) =>
+    `<button class="option-btn" data-answer="${encodeURIComponent(opt)}">${opt}</button>`
+  ).join("");
+
+  grid.querySelectorAll(".option-btn").forEach(btn => {
+    btn.addEventListener("click", () => handleAnswer(btn, q));
+  });
+
+  // Hide feedback & next
+  document.getElementById("feedback-box").hidden = true;
+  document.getElementById("btn-next").hidden = true;
+}
+
+function handleAnswer(clickedBtn, q) {
+  const chosen = decodeURIComponent(clickedBtn.dataset.answer);
+  const correct = chosen === q.correctAnswer;
+
+  // Track
+  const cat = q.item.cat;
+  if (!quiz.sessionBreakdown[cat]) quiz.sessionBreakdown[cat] = { correct: 0, total: 0 };
+  quiz.sessionBreakdown[cat].total++;
+  if (correct) {
+    quiz.correct++;
+    quiz.sessionBreakdown[cat].correct++;
+  }
+
+  // Colour buttons
+  const grid = document.getElementById("options-grid");
+  grid.querySelectorAll(".option-btn").forEach(btn => {
+    btn.disabled = true;
+    const val = decodeURIComponent(btn.dataset.answer);
+    if (val === q.correctAnswer) {
+      btn.classList.add("correct");
+    } else if (btn === clickedBtn) {
+      btn.classList.add("wrong");
+    } else {
+      btn.classList.add("dimmed");
+    }
+  });
+
+  // Feedback
+  const feedbackBox = document.getElementById("feedback-box");
+  const resultEl    = document.getElementById("feedback-result");
+  const explEl      = document.getElementById("feedback-explanation");
+
+  resultEl.textContent  = correct ? "✓ Correct!" : `✗ Not quite — the answer is "${q.correctAnswer}"`;
+  resultEl.className    = `feedback-result ${correct ? "correct" : "wrong"}`;
+  explEl.innerHTML      = q.item.age45;
+
+  feedbackBox.hidden = false;
+
+  // Next button
+  const nextBtn = document.getElementById("btn-next");
+  const isLast  = quiz.current === quiz.questions.length - 1;
+  nextBtn.textContent = isLast ? "See Results →" : "Next Question →";
+  nextBtn.hidden = false;
+
+  // Update score display immediately
+  document.getElementById("quiz-score-text").textContent = `Score: ${quiz.correct}`;
+}
+
+// ── Render end screen ────────────────────────────────────────────
+function renderEndScreen() {
+  const { correct, questions, sessionBreakdown } = quiz;
+  const total = questions.length;
+  const p     = pct(correct, total);
+
+  const numEl  = document.getElementById("end-score-number");
+  const pctEl  = document.getElementById("end-score-pct");
+  const lblEl  = document.getElementById("end-score-label");
+
+  numEl.textContent = `${correct}/${total}`;
+  numEl.className   = `end-score-number ${scoreClass(p)}`;
+  pctEl.textContent = `${p}%`;
+  lblEl.textContent = scoreLabel(p);
+
+  // Breakdown (only categories that appeared in this session)
+  const cats = Object.keys(sessionBreakdown);
+  if (cats.length > 1) {
+    const rows = document.getElementById("breakdown-rows");
+    rows.innerHTML = cats.map(cat => {
+      const { correct: cc, total: ct } = sessionBreakdown[cat];
+      const cp  = pct(cc, ct);
+      const cls = scoreClass(cp);
+      const badge = `<span class="cat-badge ${catClass[cat]}">${catLabel[cat]}</span>`;
+      return `<div class="breakdown-row">
+        <span class="breakdown-cat">${badge}</span>
+        <span class="breakdown-score ${cls}">${cc}/${ct} (${cp}%)</span>
+      </div>`;
+    }).join("");
+    document.getElementById("breakdown-table").hidden = false;
+  } else {
+    document.getElementById("breakdown-table").hidden = true;
+  }
+
+  // Save to storage
+  saveSession(correct, total, settings.cat, sessionBreakdown);
+}
+
+// ── Event listeners ──────────────────────────────────────────────
+document.getElementById("cat-pills").addEventListener("click", e => {
+  const pill = e.target.closest(".pill");
+  if (!pill) return;
+  settings.cat = pill.dataset.cat;
+  document.querySelectorAll("#cat-pills .pill").forEach(p => p.classList.remove("active"));
+  pill.classList.add("active");
+});
+
+document.getElementById("num-pills").addEventListener("click", e => {
+  const pill = e.target.closest(".pill");
+  if (!pill) return;
+  settings.numQ = parseInt(pill.dataset.num, 10);
+  document.querySelectorAll("#num-pills .pill").forEach(p => p.classList.remove("active"));
+  pill.classList.add("active");
+});
+
+document.getElementById("btn-start").addEventListener("click", () => {
+  const pool = getPool();
+  if (pool.length < 4) {
+    alert("Not enough items in this category to run a quiz. Please choose a different category.");
+    return;
+  }
+  quiz = { questions: buildQuiz(), current: 0, correct: 0, sessionBreakdown: {} };
+  showScreen("screen-quiz");
+  renderQuestion();
+});
+
+document.getElementById("btn-next").addEventListener("click", () => {
+  quiz.current++;
+  if (quiz.current >= quiz.questions.length) {
+    renderEndScreen();
+    showScreen("screen-end");
+  } else {
+    renderQuestion();
+  }
+});
+
+document.getElementById("btn-play-again").addEventListener("click", () => {
+  const pool = getPool();
+  quiz = { questions: buildQuiz(), current: 0, correct: 0, sessionBreakdown: {} };
+  showScreen("screen-quiz");
+  renderQuestion();
+});
+
+document.getElementById("btn-change-settings").addEventListener("click", () => {
+  renderStartScreen();
+  showScreen("screen-start");
+});
+
+// ── Init ─────────────────────────────────────────────────────────
+renderStartScreen();
+showScreen("screen-start");
+</script>
+</body>
+</html>

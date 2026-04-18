@@ -183,7 +183,8 @@
     .cat-arch     { background: rgba(96,165,250,0.15);  color: var(--blue); }
     .cat-concept  { background: rgba(251,146,60,0.15);  color: var(--orange); }
     .cat-role     { background: rgba(244,114,182,0.15); color: var(--pink); }
-    .cat-cloud    { background: rgba(34,211,238,0.15);  color: #22d3ee; }
+    .cat-cloud      { background: rgba(34,211,238,0.15);  color: #22d3ee; }
+    .cat-challenge  { background: rgba(251,113,133,0.15); color: #fb7185; }
 
     .card-summary { color: var(--text-muted); font-size: 0.85rem; }
     .tags { display: flex; gap: 0.35rem; flex-wrap: wrap; }
@@ -237,6 +238,7 @@
   <button class="filter-btn" data-cat="concept">💡 Concepts</button>
   <button class="filter-btn" data-cat="role">👤 Roles</button>
   <button class="filter-btn" data-cat="cloud">☁️ Cloud Services</button>
+  <button class="filter-btn" data-cat="challenge">⚠️ Deployment Challenges</button>
 </div>
 
 <main>
@@ -626,7 +628,70 @@ const DATA = [
     age10: "Databricks Mosaic AI is an AI platform for companies that have lots of data in Databricks' data lakehouse. It lets you fine-tune existing AI models on your own data, train new models from scratch, and deploy them — all without moving your data to a different system. It's especially popular with data engineering teams.",
     age45: "Databricks Mosaic AI (rebranded from MosaicML acquisition, 2023) integrates AI model development into the Databricks Lakehouse. Key products: Model Training (efficient large-scale training with MosaicML Composer), Foundation Model APIs (pay-per-token access to DBRX, Llama, Mixtral), Fine-tuning (instruction tuning and continued pre-training on Delta Lake data), MLflow (open-source experiment tracking and model registry, now industry standard), Feature Store, and Vector Search (managed vector DB integrated with Unity Catalog). Unity Catalog governance applies to both data and AI models. Strong choice for data-heavy enterprises already on Databricks — AI and data pipelines share the same platform and governance."
   },
+
+  // ── DEPLOYMENT CHALLENGES ──────────────────────────────
+  {
+    name: "The Implementation Gap", cat: "challenge", tags: ["PM","Adoption","Enterprise","Strategy","Reality Check"],
+    summary: "Why AI works in demos but stalls in production — the gulf between AI potential and real-world deployment",
+    age10: "The implementation gap is the difference between an AI that works in a test and an AI that actually helps real people in a real company. Only 14% of organizations that want to use AI have systems ready to deploy, and just 11% are actually using AI in production. The hard part isn't building the AI — it's fitting it into how the business already works.",
+    age45: "The implementation gap describes the chasm between AI capability and enterprise deployment. Despite 83% of organizations planning agentic AI (Cisco 2025 AI Readiness Index), only 14% have deployment-ready solutions and 11% are in active production use. Root causes: legacy system integration complexity, unclear ownership of AI outcomes, inadequate data infrastructure, and underestimated change management cost. For PMs, this gap is the job — not the model selection, but the integration design, stakeholder alignment, success metric definition, and iterative rollout plan that bridges potential to value. The technology is rarely the bottleneck."
+  },
+  {
+    name: "Trust & Explainability", cat: "challenge", tags: ["PM","User Trust","XAI","Adoption","Black Box"],
+    summary: "Users and stakeholders won't use AI they don't trust — building confidence is a product problem, not just a technical one",
+    age10: "Even if an AI is right 95% of the time, people won't use it if they don't understand why it gave that answer. A doctor won't follow an AI's diagnosis without an explanation. A loan officer won't approve AI-driven decisions they can't justify. Getting people to trust AI is one of the hardest challenges — and a big part of a PM's job.",
+    age45: "Trust is the #1 adoption barrier for enterprise AI. Two dimensions: user trust (do end users believe the AI's outputs?) and institutional trust (can the organization defend AI-driven decisions to regulators, auditors, and customers?). PM levers: design for appropriate confidence display (don't over-certify uncertain outputs), build in explanation surfaces (show sources, reasoning steps, confidence scores), implement Human-in-the-Loop (HITL) checkpoints at high-stakes decision points, and establish feedback mechanisms so users can flag errors. Explainability techniques (SHAP, LIME, chain-of-thought visibility) address the 'black box' perception. Calibrating trust — neither over-reliance nor under-use — is the core UX challenge of AI product design."
+  },
+  {
+    name: "Human Oversight & HITL", cat: "challenge", tags: ["PM","Safety","Control","Agentic","Governance"],
+    summary: "Keeping humans appropriately in the loop — knowing when AI should act alone vs. ask for approval",
+    age10: "Human-in-the-loop (HITL) means designing AI so a person checks or approves important decisions before they happen. If an AI agent is booking flights, sending emails, or deleting files, you need to decide: which actions can it do automatically, and which ones should it pause and ask a human first? Getting this balance right is one of the trickiest PM decisions for AI products.",
+    age45: "Human-in-the-loop (HITL) design is the central governance challenge for agentic AI. The spectrum: fully manual (human does everything), human-on-the-loop (AI acts, human monitors and can intervene), human-in-the-loop (AI proposes, human approves critical steps), and fully autonomous. PM decisions: map each agent action to a risk tier; require approval for irreversible, high-cost, or externally-visible actions; design clear interruption and rollback mechanisms; and define escalation paths when the agent is uncertain. The EU AI Act mandates HITL requirements for high-risk AI applications (hiring, credit, healthcare). Under-oversight risks harm; over-oversight eliminates the productivity benefit — finding the right tier per action type is a core PM judgment call."
+  },
+  {
+    name: "Data Quality & Governance", cat: "challenge", tags: ["PM","Data","Garbage In","Bias","Privacy","Foundation"],
+    summary: "AI is only as good as the data it runs on — poor data is the most common cause of failed AI projects",
+    age10: "The most common reason AI projects fail isn't the AI — it's the data. If the data the AI is trained on or retrieves is messy, incomplete, biased, or outdated, the AI's answers will be wrong or unfair. Before building AI features, a PM needs to ask: do we have the right data, is it clean, and are we allowed to use it?",
+    age45: "Data quality is the silent killer of AI initiatives. Failure modes: missing or incomplete records causing model blind spots; training data reflecting historical biases that perpetuate discrimination (e.g., hiring models trained on past decisions); stale data causing concept drift; PII in training or retrieval data creating compliance exposure; and siloed data that prevents the AI from having a complete picture. PM responsibilities: partner with data engineering to define data quality standards before AI build begins; establish data lineage and audit trails; apply data minimization principles for privacy; and build data refresh cadences into the product roadmap. RAG-based products shift the problem from training data to retrieval data quality — both require active governance."
+  },
+  {
+    name: "Integration Complexity", cat: "challenge", tags: ["PM","Engineering","Legacy Systems","APIs","Architecture"],
+    summary: "Connecting AI to real enterprise systems is the most underestimated cost in AI product development",
+    age10: "Building the AI itself is often the easy part. The hard part is connecting it to the company's existing systems — databases built 20 years ago, software that doesn't have APIs, processes designed for humans not robots. Most AI project timelines slip because of integration work, not AI work. A PM needs to scope this carefully upfront.",
+    age45: "Integration is consistently the largest underestimated cost in enterprise AI programs. Sources of complexity: legacy systems with no APIs requiring RPA or screen-scraping bridges; authentication and authorization across multiple enterprise systems; data format normalization (structured, unstructured, real-time vs. batch); latency requirements that conflict with LLM response times; and organizational politics around data access and ownership. PM tools: map integration dependencies before committing to timelines; identify 'golden path' integrations that unlock the most value first; use MCP or standard connectors where available to reduce custom work; and build with graceful degradation so the product works even when integrations are partially unavailable. The N×M integration problem is why MCP adoption has been so rapid."
+  },
+  {
+    name: "AI Cost Management", cat: "challenge", tags: ["PM","Cost","ROI","Tokens","Budget","Business Case"],
+    summary: "LLM inference costs can spiral — PMs must design for cost efficiency from day one",
+    age10: "Using AI in a product isn't free — every question a user asks costs money in compute. If millions of people use your product, those costs add up very fast. A PM needs to think about how to make the AI efficient: only use powerful expensive models when needed, cache common answers, and make sure the product makes more money than the AI costs to run.",
+    age45: "LLM inference cost is a first-class product constraint. Cost drivers: input + output token count, model tier chosen, call frequency, and output length. PM cost levers: model routing (use cheap/fast models like GPT-4o mini for simple tasks, expensive models only for complex ones); prompt compression (reduce input tokens via summarization or retrieval); caching (cache repeated identical prompts with semantic similarity matching); streaming (reduce perceived latency, lower timeout costs); and output length constraints (system-prompt instructions to be concise). For agentic systems, agent loops that retry or explore can generate 10-100x expected token usage — always budget for worst-case loop behavior, add token budgets per session, and build cost dashboards before launch, not after."
+  },
+  {
+    name: "Regulatory & Compliance Risk", cat: "challenge", tags: ["PM","EU AI Act","GDPR","HIPAA","Legal","Risk"],
+    summary: "A fast-moving regulatory landscape — AI PMs must build compliance in, not bolt it on",
+    age10: "Governments around the world are making new rules about how AI can be used. In Europe, the EU AI Act says some uses of AI — like in hiring, healthcare, or policing — have strict rules and require extra checks. A PM needs to understand which rules apply to their product before building it, or risk having to tear things apart later.",
+    age45: "The regulatory environment for AI is rapidly evolving. Key frameworks: EU AI Act (risk-tiered — prohibited, high-risk, limited-risk, minimal-risk; high-risk systems require conformity assessments, human oversight, transparency, and audit logs); GDPR (data subject rights, purpose limitation, and right to explanation for automated decisions); US Executive Orders on AI Safety; sector-specific rules (HIPAA for health, FCRA for credit, EEOC guidance for hiring). PM responsibilities: classify your AI system's risk tier early; engage legal and compliance as product stakeholders, not reviewers; design audit log and explainability requirements into technical specs; and track regulatory changes as part of product roadmap inputs. Building compliance into architecture is 10x cheaper than retrofitting it."
+  },
+  {
+    name: "Model Drift & Reliability", cat: "challenge", tags: ["PM","MLOps","Monitoring","Quality","Production"],
+    summary: "AI models degrade silently in production — what worked at launch may not work six months later",
+    age10: "AI models can get worse over time without anyone noticing. The world changes — new slang, new products, new ways people talk — and the model's training data becomes outdated. A model that was 95% accurate at launch might drop to 80% a year later. PMs need to plan for monitoring AI quality continuously, not just at launch.",
+    age45: "Model drift is the gradual degradation of AI performance in production due to changes in real-world data distribution. Types: data drift (input data statistics change), concept drift (the relationship between inputs and correct outputs changes), and label drift (the definition of a correct output changes). PM responsibilities: define quality metrics and acceptable thresholds before launch; build monitoring dashboards (prediction distribution, error rates, user feedback signals, downstream business KPIs); establish re-evaluation cadences; and design rollback procedures. For LLM-based products: model updates by providers can change behavior without notice — pin model versions in production and test new versions in shadow mode before switching. LLM evals (automated test suites) are the primary quality gate for generative AI products."
+  },
+  {
+    name: "Bias & Fairness", cat: "challenge", tags: ["PM","Ethics","Fairness","Discrimination","Responsible AI"],
+    summary: "AI can systematically disadvantage groups of people — PMs are responsible for catching this before it causes harm",
+    age10: "AI learns from historical data, and history isn't always fair. If a company mostly hired men in the past and trains an AI on those decisions, the AI will learn to prefer men — even if that's not intentional. A PM needs to test AI for bias: does it work equally well for all groups of people? Does it treat everyone fairly?",
+    age45: "AI bias occurs when a model produces systematically skewed outputs that disadvantage particular groups. Sources: biased training data (historical discrimination encoded as patterns), proxy variables (zip code correlates with race; name correlates with gender), feedback loops (biased outputs generate biased training data), and measurement bias (performance metrics that obscure subgroup failures). PM responsibilities: define fairness metrics relevant to your use case (demographic parity, equalized odds, calibration) and measure across protected groups; conduct disaggregated evaluation before launch; partner with your responsible AI team on bias audits; design user redress mechanisms for AI-driven decisions; and document model cards. High-risk domains (hiring, lending, healthcare, criminal justice) have legal exposure under anti-discrimination law regardless of whether the discrimination was 'intentional.'"
+  },
+  {
+    name: "Change Management & Adoption", cat: "challenge", tags: ["PM","People","Culture","Training","Resistance"],
+    summary: "The hardest part of AI deployment is people — getting teams to trust, use, and adapt to AI tools",
+    age10: "Even the best AI tool fails if people don't use it. Workers might be scared the AI will replace them. They might not trust its answers. They might just prefer their old way of doing things. A PM working on AI needs to think about how to bring people along: training, communication, showing early wins, and addressing fears honestly.",
+    age45: "Change management is the most consistently underinvested component of enterprise AI programs. Failure modes: employees who distrust AI outputs and do parallel manual work, negating efficiency gains; fear of job displacement causing active resistance; inadequate training leaving users unable to get value from AI tools; and leadership mandates without workflow redesign, forcing AI into processes it doesn't fit. PM playbook: involve end users in discovery and testing before launch (not after); frame AI as augmentation, not replacement, with concrete examples; identify internal champions and early adopters as peer advocates; design feedback mechanisms so users feel heard; measure adoption metrics (active usage, task completion, error override rates) separately from technical metrics; and plan for workflow redesign — AI often requires process changes, not just tool changes, to deliver full value."
+  },
 ];
+
 
 
 // ── Search & Filter State ────────────────────────────────────
@@ -654,15 +719,17 @@ const catClass = {
   arch:     "cat-arch",
   concept:  "cat-concept",
   role:     "cat-role",
-  cloud:    "cat-cloud",
+  cloud:      "cat-cloud",
+  challenge:  "cat-challenge",
 };
 const catLabel = {
   model:    "AI Model",
   "ml-type":"ML Type",
   arch:     "Architecture",
   concept:  "Concept",
-  role:     "Role",
-  cloud:    "Cloud Service",
+  role:       "Role",
+  cloud:      "Cloud Service",
+  challenge:  "Challenge",
 };
 
 // ── Render ───────────────────────────────────────────────────

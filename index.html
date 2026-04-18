@@ -170,6 +170,8 @@
     .card:hover { border-color: var(--accent); transform: translateY(-2px); }
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
     .card-name { font-size: 1.05rem; font-weight: 600; }
+    .card-name a { color: inherit; text-decoration: none; }
+    .card-name a:hover { color: var(--accent-light); text-decoration: underline; text-underline-offset: 3px; }
     .cat-badge {
       font-size: 0.7rem;
       font-weight: 600;
@@ -781,6 +783,92 @@ let currentAge   = "10";
 let currentCat   = "all";
 let currentQuery = "";
 
+const URLS = {
+  "GPT-5 / GPT-5.4 (OpenAI)":                        "https://openai.com/gpt-5",
+  "o3 / o4-mini (OpenAI Reasoning)":                  "https://openai.com/o3",
+  "Claude 4.5 / Opus 4.6 (Anthropic)":                "https://www.anthropic.com/claude",
+  "Gemini 3.1 Pro (Google DeepMind)":                 "https://deepmind.google/technologies/gemini/",
+  "DeepSeek R1 / V3":                                  "https://www.deepseek.com/",
+  "Llama 3.3 (Meta)":                                  "https://ai.meta.com/llama/",
+  "Mistral Large 2":                                   "https://mistral.ai/news/mistral-large-2407/",
+  "Grok 2 (xAI)":                                     "https://x.ai/grok",
+  "Gemma 2 (Google)":                                  "https://ai.google.dev/gemma",
+  "Phi-3 / Phi-3.5 (Microsoft)":                      "https://azure.microsoft.com/en-us/blog/phi-3-small-language-models-with-big-potential/",
+  "Stable Diffusion 3":                                "https://stability.ai/stable-diffusion-3",
+  "Sora (OpenAI)":                                     "https://openai.com/sora",
+  "Whisper v3 (OpenAI)":                               "https://openai.com/research/whisper",
+  "Supervised Learning":                               "https://en.wikipedia.org/wiki/Supervised_learning",
+  "Unsupervised Learning":                             "https://en.wikipedia.org/wiki/Unsupervised_learning",
+  "Reinforcement Learning":                            "https://en.wikipedia.org/wiki/Reinforcement_learning",
+  "Transfer Learning":                                 "https://en.wikipedia.org/wiki/Transfer_learning",
+  "Self-Supervised Learning":                          "https://en.wikipedia.org/wiki/Self-supervised_learning",
+  "Federated Learning":                                "https://en.wikipedia.org/wiki/Federated_learning",
+  "Agentic AI":                                        "https://en.wikipedia.org/wiki/Intelligent_agent",
+  "Multi-Agent Systems":                               "https://en.wikipedia.org/wiki/Multi-agent_system",
+  "Test-Time Compute Scaling":                         "https://arxiv.org/abs/2408.03314",
+  "Transformer":                                       "https://arxiv.org/abs/1706.03762",
+  "CNN (Convolutional Neural Network)":                "https://en.wikipedia.org/wiki/Convolutional_neural_network",
+  "RNN / LSTM":                                        "https://en.wikipedia.org/wiki/Long_short-term_memory",
+  "GAN (Generative Adversarial Network)":              "https://arxiv.org/abs/1406.2661",
+  "Diffusion Model":                                   "https://en.wikipedia.org/wiki/Diffusion_model",
+  "Attention Mechanism":                               "https://arxiv.org/abs/1706.03762",
+  "Mixture of Experts (MoE)":                          "https://en.wikipedia.org/wiki/Mixture_of_experts",
+  "Token / Tokenization":                              "https://platform.openai.com/tokenizer",
+  "Embedding":                                         "https://en.wikipedia.org/wiki/Word_embedding",
+  "RAG (Retrieval-Augmented Generation)":              "https://arxiv.org/abs/2005.11401",
+  "Hallucination":                                     "https://en.wikipedia.org/wiki/Hallucination_(artificial_intelligence)",
+  "Fine-Tuning":                                       "https://en.wikipedia.org/wiki/Fine-tuning_(deep_learning)",
+  "Prompt Engineering":                                "https://en.wikipedia.org/wiki/Prompt_engineering",
+  "Context Window":                                    "https://en.wikipedia.org/wiki/Large_language_model#Context_window",
+  "RLHF (Reinforcement Learning from Human Feedback)": "https://arxiv.org/abs/1706.03741",
+  "Parameters / Weights":                              "https://en.wikipedia.org/wiki/Neural_network_(machine_learning)#Weights",
+  "Model Context Protocol (MCP)":                      "https://modelcontextprotocol.io/",
+  "Computer Use / Tool Use":                           "https://www.anthropic.com/news/developing-computer-use",
+  "AI Product Manager":                                "https://en.wikipedia.org/wiki/Product_manager",
+  "Machine Learning Engineer":                         "https://en.wikipedia.org/wiki/Machine_learning",
+  "Data Scientist":                                    "https://en.wikipedia.org/wiki/Data_science",
+  "MLOps Engineer":                                    "https://en.wikipedia.org/wiki/MLOps",
+  "AI Research Scientist":                             "https://en.wikipedia.org/wiki/Artificial_intelligence",
+  "Prompt Engineer":                                   "https://en.wikipedia.org/wiki/Prompt_engineering",
+  "AI Ethics Officer / Responsible AI Lead":           "https://en.wikipedia.org/wiki/AI_safety",
+  "AI Solutions Architect":                            "https://en.wikipedia.org/wiki/Solution_architecture",
+  "Amazon Bedrock":                                    "https://aws.amazon.com/bedrock/",
+  "Amazon SageMaker":                                  "https://aws.amazon.com/sagemaker/",
+  "Amazon Q":                                          "https://aws.amazon.com/q/",
+  "Amazon Nova":                                       "https://aws.amazon.com/ai/nova/",
+  "Azure AI Foundry":                                  "https://ai.azure.com/",
+  "Microsoft Copilot & Copilot Studio":                "https://www.microsoft.com/en-us/microsoft-copilot",
+  "Azure OpenAI Service":                              "https://azure.microsoft.com/en-us/products/ai-services/openai-service",
+  "Google Vertex AI":                                  "https://cloud.google.com/vertex-ai",
+  "Vertex AI Agent Builder":                           "https://cloud.google.com/products/agent-builder",
+  "Hugging Face":                                      "https://huggingface.co/",
+  "Snowflake Cortex AI":                               "https://www.snowflake.com/en/data-cloud/cortex/",
+  "Databricks Mosaic AI":                              "https://www.databricks.com/product/machine-learning",
+  "System Prompt":                                     "https://en.wikipedia.org/wiki/Prompt_engineering",
+  "Zero-Shot Prompting":                               "https://en.wikipedia.org/wiki/Prompt_engineering#Zero-shot",
+  "Few-Shot Prompting":                                "https://arxiv.org/abs/2005.14165",
+  "Chain-of-Thought (CoT)":                            "https://arxiv.org/abs/2201.11903",
+  "Role / Persona Prompting":                          "https://en.wikipedia.org/wiki/Prompt_engineering",
+  "Structured Output / JSON Mode":                     "https://platform.openai.com/docs/guides/structured-outputs",
+  "ReAct (Reason + Act)":                              "https://arxiv.org/abs/2210.03629",
+  "Tree of Thoughts (ToT)":                            "https://arxiv.org/abs/2305.10601",
+  "Self-Consistency":                                  "https://arxiv.org/abs/2203.11171",
+  "Context Engineering":                               "https://en.wikipedia.org/wiki/Prompt_engineering",
+  "Prompt Injection & Security":                       "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+  "DSPy & Automated Prompt Optimisation":              "https://dspy.ai/",
+  "Meta-Prompting":                                    "https://en.wikipedia.org/wiki/Prompt_engineering",
+  "The Implementation Gap":                            "https://en.wikipedia.org/wiki/Technology_adoption_lifecycle",
+  "Trust & Explainability":                            "https://en.wikipedia.org/wiki/Explainable_artificial_intelligence",
+  "Human Oversight & HITL":                            "https://en.wikipedia.org/wiki/Human_in_the_loop",
+  "Data Quality & Governance":                         "https://en.wikipedia.org/wiki/Data_quality",
+  "Integration Complexity":                            "https://en.wikipedia.org/wiki/Enterprise_application_integration",
+  "AI Cost Management":                                "https://en.wikipedia.org/wiki/Cloud_computing_economics",
+  "Regulatory & Compliance Risk":                      "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
+  "Model Drift & Reliability":                         "https://en.wikipedia.org/wiki/Concept_drift",
+  "Bias & Fairness":                                   "https://en.wikipedia.org/wiki/Algorithmic_bias",
+  "Change Management & Adoption":                      "https://en.wikipedia.org/wiki/Change_management",
+};
+
 const fuse = new Fuse(DATA, {
   keys: [
     { name: "name",    weight: 3 },
@@ -880,7 +968,7 @@ function render() {
     card.className = "card";
     card.innerHTML = `
       <div class="card-header">
-        <div class="card-name">${item.name}</div>
+        <div class="card-name">${URLS[item.name] ? `<a href="${URLS[item.name]}" target="_blank" rel="noopener noreferrer">${item.name} ↗</a>` : item.name}</div>
         <span class="cat-badge ${catClass[item.cat]}">${catLabel[item.cat]}</span>
       </div>
       <div class="card-summary">${item.summary}</div>

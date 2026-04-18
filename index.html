@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Index — Models, Concepts & Roles</title>
+  <title>AI Index — Models, Concepts, Agentic AI & Roles</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
@@ -223,7 +223,6 @@
   </div>
   <div class="age-label">Explain it like I'm…</div>
   <div class="age-toggle">
-    <button data-age="5">👶 Age 5</button>
     <button data-age="10" class="active">🧒 Age 10</button>
     <button data-age="45">💼 Adult</button>
   </div>
@@ -245,162 +244,182 @@
 
 <script>
 const DATA = [
-  // ── AI MODELS ──────────────────────────────────────────
+  // ── AI MODELS (latest as of April 2026) ───────────────
   {
-    name: "GPT-4", cat: "model", tags: ["OpenAI","LLM","Multimodal","Text","Vision"],
-    summary: "OpenAI's flagship model powering ChatGPT Plus and Microsoft Copilot",
-    age5:  "Imagine a super-smart robot that has read almost every book, website, and story ever written. When you ask it something, it picks the best words to answer — like the world's best storyteller and homework helper combined.",
-    age10: "GPT-4 is a Large Language Model made by OpenAI. It was trained on massive amounts of text and can understand images too. When you type something, it predicts the most useful words to reply with — like autocomplete taken to the extreme. It's what powers ChatGPT Plus.",
-    age45: "GPT-4 is OpenAI's multimodal LLM (March 2023), processing text and images. It powers ChatGPT Plus and Microsoft Copilot (via Azure). Key for product leaders: it excels at complex reasoning, code generation, and instruction-following — making it a strong foundation for enterprise copilots, customer service bots, and developer tools."
+    name: "GPT-5 / GPT-5.4 (OpenAI)", cat: "model", tags: ["OpenAI","LLM","Multimodal","Reasoning","Computer Use"],
+    summary: "OpenAI's current flagship — adaptive reasoning, native computer use, 80% fewer hallucinations than GPT-4",
+    age10: "GPT-5 (August 2025) is OpenAI's best model yet. It dynamically decides how long to 'think' — simple questions get fast answers, hard problems trigger deeper reasoning. It has 80% fewer factual mistakes than GPT-4, scores 74.9% on real-world software engineering tasks, and GPT-5.4 can control a mouse and keyboard to complete computer tasks on its own.",
+    age45: "GPT-5 introduced adaptive reasoning — internally routing simple queries to a fast path (~2s) and complex ones to extended thinking (~10s+), using ~50% fewer tokens than competitors at comparable quality. GPT-5.4 (current) scores 74.9% SWE-bench Verified and is positioned as the first general-purpose model with native computer-use. Hallucination rate reduced ~80% vs GPT-4. Key PM consideration: unified model replaces the need to choose between GPT-4o (speed) and o3 (reasoning) — simplifying model selection for product teams."
   },
   {
-    name: "Claude (Anthropic)", cat: "model", tags: ["Anthropic","LLM","Safety","Long Context"],
-    summary: "Anthropic's safety-focused LLM family known for long context and nuanced reasoning",
-    age5:  "Claude is like a very careful and honest robot helper. It was built by people who really, really want to make sure it's kind and doesn't say bad things. It can read really long books and remember what was in them.",
-    age10: "Claude is made by a company called Anthropic, which was started by ex-OpenAI researchers focused on AI safety. Claude is great at handling very long documents (up to 200,000 tokens) and tends to be thoughtful and cautious in its answers.",
-    age45: "Claude (Claude 3 Opus/Sonnet/Haiku) is Anthropic's model family, differentiated by a Constitutional AI safety approach and industry-leading context windows (200K tokens). Strong for document analysis, legal/compliance use cases, and enterprise deployments where safety and auditability matter. Competes directly with GPT-4 and Gemini."
+    name: "o3 / o4-mini (OpenAI Reasoning)", cat: "model", tags: ["OpenAI","Reasoning","Test-Time Compute","Math","Agentic"],
+    summary: "OpenAI's dedicated reasoning models — near-human on PhD science, competition math, and autonomous coding",
+    age10: "o3 and o4-mini are OpenAI models designed to 'think before they answer' — they run an internal chain-of-thought, like showing their work, before responding. This makes them dramatically better at math, science, and coding. o4-mini is a smaller, cheaper version that's still extremely capable at math and code.",
+    age45: "The o-series uses test-time compute scaling — quality improves by allocating more inference-time computation rather than more training compute. o3 achieves near-human on competition math (AIME 2024: 96.7%), PhD science (GPQA Diamond: 87.7%), and software engineering (SWE-bench: 71.7%). o4-mini offers comparable performance to o3 on STEM at dramatically lower cost. Key PM tradeoff: 30-60s latency and high cost suit async, high-stakes tasks — not latency-sensitive UX."
   },
   {
-    name: "Gemini (Google)", cat: "model", tags: ["Google","LLM","Multimodal","Search"],
-    summary: "Google DeepMind's multimodal model family, natively integrated across Google products",
-    age5:  "Gemini is Google's super-smart helper — like having Google Search but it can have a full conversation with you, look at pictures you show it, and even watch videos.",
-    age10: "Gemini is Google's answer to ChatGPT. It's multimodal — meaning it can understand text, images, audio, video, and code. It comes in different sizes: Ultra, Pro, and Nano (for phones). It's built into Google Docs, Gmail, and Android.",
-    age45: "Gemini Ultra/Pro/Nano is Google DeepMind's flagship model series (2024). Natively multimodal across modalities including video. Deeply integrated into Google Workspace, Search, and Android. Key PM consideration: Google's distribution advantage means rapid enterprise adoption; Gemini Pro via API competes on price and integration depth."
+    name: "Claude 4.5 / Opus 4.6 (Anthropic)", cat: "model", tags: ["Anthropic","LLM","Agentic Coding","1M Context","Computer Use"],
+    summary: "Anthropic's latest — leads real-world coding benchmarks and is purpose-built for autonomous agentic tasks",
+    age10: "Claude Sonnet 4.5 (2025) is Anthropic's best everyday model, leading SWE-bench Verified at 77.2% — meaning it can fix 3 out of 4 real software bugs on its own. Claude Opus 4.6 (Feb 2026 beta) goes even further with a 1 million token context window and is designed to work autonomously for hours on complex tasks.",
+    age45: "Claude Sonnet 4.5 leads SWE-bench Verified (77.2%) and achieved 0% error rate on Replit's internal benchmark (vs 9% on prior Sonnet). Opus 4.6 (Feb 2026 beta) introduces a 1M token context window and is optimized for long-horizon agentic tasks — autonomously coding, researching, and completing multi-step workflows. Constitutional AI and extended thinking make it the preferred choice for compliance-sensitive enterprise deployments. Claude Code (the CLI agent) is built on this model family."
   },
   {
-    name: "Llama (Meta)", cat: "model", tags: ["Meta","Open Source","LLM","Local"],
-    summary: "Meta's open-source LLM family — downloadable, customizable, and free to use",
-    age5:  "Llama is like a recipe that anyone can take home and cook themselves. Most AI helpers live on the internet and you have to ask them. But Llama, you can put on your own computer and use privately!",
-    age10: "Llama is Meta's open-source language model. Because the code and weights are public, developers can download it, run it on their own computers, and customize it. This is a big deal — most powerful AI is locked behind paywalls. Llama 3 has models from 8B to 405B parameters.",
-    age45: "Llama 2 & 3 are Meta's open-weight LLMs, enabling on-premise deployment, fine-tuning, and customization without API costs or data-sharing concerns. Critical for enterprises with data privacy requirements. The open-source ecosystem (Ollama, LM Studio, vLLM) makes local deployment accessible. Llama 3 405B approaches frontier model quality."
+    name: "Gemini 3.1 Pro (Google DeepMind)", cat: "model", tags: ["Google","LLM","Reasoning","1M Context","Deep Think"],
+    summary: "Google's flagship — leads reasoning benchmarks, first model to break 1500 LMArena Elo, 1M token context",
+    age10: "Gemini 3.1 Pro Preview (Feb 2026) is Google's strongest model. It has 'Deep Think' mode for extra-hard problems, a 1 million token context window — enough to read dozens of books at once — and scored 94.3% on PhD-level science questions, beating human expert performance. It's being built into everything Google makes.",
+    age45: "Gemini 3.1 Pro Preview (Feb 2026) scores 94.3% GPQA Diamond (surpassing human experts at ~89.8%), 77.1% ARC-AGI-2, and 80.6% SWE-bench Verified. It's the first model to break LMArena Elo 1500. The 1M token context window enables full-codebase analysis in a single prompt. Deep Think mode (extended reasoning) pushes Humanity's Last Exam to 41% — highest published score. Google's distribution advantage across Workspace, Search, and 3B+ Android devices makes this the most rapidly adopted enterprise frontier model."
   },
   {
-    name: "BERT", cat: "model", tags: ["Google","NLP","Encoder","Embeddings","2018"],
-    summary: "Google's landmark model that transformed NLP — used for search and text understanding",
-    age5:  "BERT is like a really good reader who understands words by looking at all the words around them, not just one at a time. It's great at understanding what you actually mean.",
-    age10: "BERT (Bidirectional Encoder Representations from Transformers) was created by Google in 2018. Unlike early AI that read text left-to-right, BERT reads in both directions at once, giving it better understanding. It's not a chatbot — it's used 'under the hood' for Google Search, sentiment analysis, and classification.",
-    age45: "BERT is an encoder-only transformer trained on masked language modeling. It revolutionized NLP benchmarks in 2018 and underpins Google Search. For PMs: BERT-family models (RoBERTa, DistilBERT) are still widely used for classification, NER, and search ranking — often more cost-effective than LLMs for structured text tasks."
+    name: "DeepSeek R1 / V3", cat: "model", tags: ["DeepSeek","China","Open Source","Reasoning","Low Cost"],
+    summary: "Chinese lab's open-source model that shocked the industry — frontier reasoning at a fraction of Western costs",
+    age10: "DeepSeek R1 (Jan 2025) is a Chinese open-source reasoning model that matches o1's performance on math and coding benchmarks — but costs 95% less to run via API. It was a huge moment in AI because it proved you didn't need OpenAI's massive budgets to build a frontier model. DeepSeek V3 is the underlying base model, trained for just $6M — a fraction of GPT-4's estimated $100M+ training cost.",
+    age45: "DeepSeek R1/V3 (Jan 2025, DeepSeek AI, China) caused significant market disruption: frontier reasoning performance at ~3% of OpenAI's API pricing, open-weight release enabling self-hosting. V3 was trained on ~$6M of compute (vs. GPT-4's estimated $100M+), using novel efficiency techniques (FP8 training, MoE architecture, multi-head latent attention). R1 matches o1 on AIME and MATH-500. Key PM considerations: data sovereignty concerns for US/EU enterprises, but unparalleled cost-performance for non-sensitive workloads. Signals that model capability is increasingly commoditized."
   },
   {
-    name: "Stable Diffusion", cat: "model", tags: ["Image Generation","Open Source","Diffusion","Stability AI"],
-    summary: "Open-source text-to-image model that runs locally on consumer GPUs",
-    age5:  "You type 'a dragon flying over a castle at sunset' and — poof! — a picture of exactly that magically appears. It's like having a super-fast artist who can draw anything you describe.",
-    age10: "Stable Diffusion is an AI that creates images from text descriptions. It's open-source, so anyone can download and run it. It works by starting with random noise and gradually 'denoising' it into a picture that matches your description — a bit like watching a blurry photo slowly come into focus.",
-    age45: "Stable Diffusion (Stability AI, 2022) is an open-weight latent diffusion model. It democratized image generation by running on consumer GPUs (4GB VRAM). Key for product teams: enables fine-tuning (DreamBooth, LoRA) for brand-specific styles without cloud API costs. Powers tools like Automatic1111, ComfyUI, and is integrated into Adobe Firefly's backend."
+    name: "Llama 3.3 (Meta)", cat: "model", tags: ["Meta","Open Source","LLM","Local","On-Premise"],
+    summary: "Meta's latest open-weight LLM — near-frontier quality, free to download and self-host",
+    age10: "Llama 3.3 70B (Dec 2024) is Meta's best open-source model. It's free, downloadable, and runs on a good gaming PC. At 70 billion parameters, it matches or beats many paid models. Because it's open, companies can run it on their own servers without sending data to anyone.",
+    age45: "Llama 3.3 70B delivers performance competitive with GPT-4o on many benchmarks at zero API cost. The open-weight license permits commercial use with minimal restrictions. Key enterprise use cases: air-gapped deployments (defense, healthcare), fine-tuning on proprietary data, and cost-sensitive high-volume inference. Ecosystem: Ollama, vLLM, llama.cpp enable single-GPU deployment. Meta's release strategy (open-source dominance) is a direct competitive threat to closed API providers."
   },
   {
-    name: "DALL-E", cat: "model", tags: ["OpenAI","Image Generation","Multimodal","API"],
-    summary: "OpenAI's image generation model, integrated into ChatGPT and available via API",
-    age5:  "DALL-E is like having a magic paintbrush. You say what you want in words and it draws it for you — anything from 'a cat riding a bicycle on the moon' to a realistic painting.",
-    age10: "DALL-E (now DALL-E 3) is OpenAI's image generator. It's designed to follow instructions very precisely — if you write a detailed description, it creates an image matching almost every detail. It's built into ChatGPT Plus and accessible via API.",
-    age45: "DALL-E 3 is OpenAI's latest text-to-image model, notable for superior instruction-following and text rendering in images (a historically hard problem). Tight ChatGPT integration makes it the default for non-technical users. API pricing and content policies make it suitable for enterprise product integration with lower compliance risk than open models."
+    name: "Mistral Large 2", cat: "model", tags: ["Mistral AI","Open Source","LLM","European","Code"],
+    summary: "Mistral's frontier open-weight model — strong coding, multilingual, and commercially permissive",
+    age10: "Mistral Large 2 (July 2024) is the most capable model from Mistral AI. It has 123 billion parameters, is excellent at coding, supports 80+ languages, and is open-weight — meaning companies can download and customize it. It outperforms Llama 3.1 405B on some coding tasks despite having fewer parameters.",
+    age45: "Mistral Large 2 (123B) benchmarks competitively with GPT-4o on code generation and multilingual tasks. The MRL license allows commercial use with attribution. Key differentiator: European data residency via La Plateforme API satisfies EU AI Act and GDPR requirements — critical for EU enterprise procurement. Mistral's growing ecosystem (Le Chat, API, partnerships with Azure/GCP) increases its viability as a primary model provider."
   },
   {
-    name: "Whisper", cat: "model", tags: ["OpenAI","Speech","Audio","Transcription","Open Source"],
-    summary: "OpenAI's highly accurate open-source speech-to-text model",
-    age5:  "Whisper listens to people talking and writes down every word they say — even if they're speaking a different language! It's like a super-fast note-taker that understands many languages.",
-    age10: "Whisper is OpenAI's speech recognition model. It's open-source and can transcribe audio in 99 languages. It handles accents, background noise, and technical vocabulary surprisingly well. Developers use it to add transcription to apps without paying a per-minute fee.",
-    age45: "Whisper is OpenAI's open-weight ASR (automatic speech recognition) model trained on 680K hours of multilingual audio. Near-human accuracy on clean audio; robust to accents and noise. For product teams: enables low-cost on-premise transcription. Popular in meeting tools, accessibility features, and voice-interface products. Can be self-hosted via faster-whisper."
+    name: "Grok 2 (xAI)", cat: "model", tags: ["xAI","LLM","Real-time","X/Twitter","Elon Musk"],
+    summary: "Elon Musk's xAI model — integrated into X (Twitter) with real-time web access",
+    age10: "Grok 2 is made by xAI, Elon Musk's AI company. It's built into X (formerly Twitter) and can access real-time posts and news. It has a more casual, sometimes sarcastic tone compared to other AI assistants. Grok 2 also generates images using a model called Aurora.",
+    age45: "Grok 2 (Aug 2024) is xAI's frontier LLM, integrated into X Premium with real-time access to X's data firehose — a unique data advantage for current events and market sentiment. Competes with GPT-4o on benchmarks. Aurora handles image generation. For PMs: xAI's API (competitive pricing) and X integration make Grok relevant for social media analytics and real-time information products. Open-weight Grok models were released in 2024."
   },
   {
-    name: "Mistral", cat: "model", tags: ["Open Source","LLM","Efficient","European","MoE"],
-    summary: "French startup's efficient open-weight LLMs — strong performance at smaller sizes",
-    age5:  "Mistral is a clever AI brain that's much smaller than other AIs but almost just as smart. It's like a compact car that uses less fuel but still goes fast.",
-    age10: "Mistral AI is a French startup that released models like Mistral 7B — a small model that punches above its weight. They also created Mixtral, which uses a 'Mixture of Experts' trick: instead of activating the whole brain for every answer, it only uses the relevant parts, making it faster.",
-    age45: "Mistral AI (Paris, 2023) produces high-efficiency open-weight models. Mistral 7B outperformed Llama 2 13B on most benchmarks at launch. Mixtral 8x7B uses sparse MoE (only 2 of 8 expert layers activate per token), achieving near-GPT-3.5 quality at fraction of compute. Commercially permissive license. Strong choice for cost-sensitive inference workloads."
+    name: "Gemma 2 (Google)", cat: "model", tags: ["Google","Open Source","Small","On-device","Efficient"],
+    summary: "Google's open-source lightweight model family — optimized for on-device and edge deployment",
+    age10: "Gemma 2 (June 2024) comes in 2B, 9B, and 27B sizes. Google open-sourced it so anyone can use, modify, and run it locally. The 2B version runs on phones; the 27B rivals models 3x its size. It's designed for researchers and developers who want a capable open model without a huge computer.",
+    age45: "Gemma 2 outperforms Llama 3.1 8B and Mistral 7B at comparable sizes, leveraging knowledge distillation from larger Gemini models. The 2B variant runs on-device (Pixel 8+), enabling privacy-preserving inference. Commercially usable with Google's terms. Key for product teams targeting mobile, edge, or cost-sensitive inference: Gemma 2 offers the best quality/compute ratio in its class. Supported natively in Keras, JAX, and Hugging Face."
+  },
+  {
+    name: "Phi-3 / Phi-3.5 (Microsoft)", cat: "model", tags: ["Microsoft","Small","On-device","Efficient","Open Source"],
+    summary: "Microsoft's surprisingly capable small models — frontier quality at 3.8B parameters",
+    age10: "Phi-3 Mini has only 3.8 billion parameters — tiny compared to GPT-4's hundreds of billions. But Microsoft trained it on very carefully chosen high-quality data (like textbooks) rather than just raw internet text. The result is a small model that beats much larger ones on reasoning and coding tasks.",
+    age45: "Phi-3 Mini (3.8B) and Phi-3.5 (3.8B MoE) demonstrate that data quality can substitute for scale — trained on 'textbook-quality' curated data. Phi-3 Mini matches Mistral 7B and Llama 3 8B on benchmarks. Runs on CPU-only devices and NPUs. Key PM insight: Phi-3 makes capable AI viable in offline, low-power, and privacy-sensitive contexts (medical devices, industrial IoT) where cloud API calls are impossible. Available via Azure AI and Hugging Face."
+  },
+  {
+    name: "Stable Diffusion 3", cat: "model", tags: ["Image Generation","Open Source","Diffusion","Stability AI","Text Rendering"],
+    summary: "The latest open-source text-to-image model — major improvements in text rendering and composition",
+    age10: "Stable Diffusion 3 (2024) is the newest version of the popular open-source image generator. Its biggest improvement: it can finally render readable text inside images accurately — something AI art tools always struggled with. It uses a new architecture called a Multimodal Diffusion Transformer (MMDiT).",
+    age45: "Stable Diffusion 3 uses a Multimodal Diffusion Transformer (MMDiT) architecture with separate weights for image and text tokens, dramatically improving text legibility in generated images and compositional accuracy. Available in 800M–8B parameter sizes. Open-weight release enables fine-tuning for brand-consistent image generation pipelines. Key for product teams: SD3 Medium (2B) runs on consumer GPUs and is the new baseline for open-source image generation workflows."
+  },
+  {
+    name: "Sora (OpenAI)", cat: "model", tags: ["OpenAI","Video Generation","Diffusion","Text-to-Video"],
+    summary: "OpenAI's text-to-video model — generates realistic HD video up to 60 seconds from a prompt",
+    age10: "Sora (Dec 2024) is OpenAI's video generation model. You type a description and it creates a realistic video up to 60 seconds long. It understands physics, lighting, and how the real world moves. It also works as a video editor — you can extend or modify existing videos.",
+    age45: "Sora uses a spacetime patch-based diffusion transformer trained on vast video data. It generates up to 60-second 1080p video with coherent camera motion, lighting, and physical plausibility. Available via ChatGPT Plus/Pro. For product teams: Sora represents a step-change in content production cost — relevant for marketing, media, training data generation, and simulation. Key limitations: human anatomy consistency and fine-grained control remain challenges. Competitors: Runway Gen-3, Kling, Google Veo 2."
+  },
+  {
+    name: "Whisper v3 (OpenAI)", cat: "model", tags: ["OpenAI","Speech","Audio","Transcription","Open Source","Multilingual"],
+    summary: "OpenAI's state-of-the-art open-source speech-to-text model — 99 languages, near-human accuracy",
+    age10: "Whisper v3 is OpenAI's best speech recognition model. It's free and open-source, handles 99 languages, understands accents and background noise, and can translate audio to English too. Developers use it to add transcription to any app without paying per minute.",
+    age45: "Whisper Large v3 achieves near-human word error rates on clean audio with strong noise robustness. Open-weight (Apache 2.0) and self-hostable via faster-whisper (4x speed on GPU via CTranslate2). Whisper v3 Turbo delivers 8x faster inference at marginal quality loss — the preferred choice for production. Key applications: meeting transcription, accessibility, voice interfaces, call center analytics. Distil-Whisper (Hugging Face) offers further efficiency gains for English-only use cases."
   },
 
   // ── ML TYPES ───────────────────────────────────────────
   {
     name: "Supervised Learning", cat: "ml-type", tags: ["Labeled Data","Classification","Regression","Foundation"],
     summary: "Train a model on labeled examples — the backbone of most production ML",
-    age5:  "Imagine learning to recognize cats by being shown thousands of pictures with someone saying 'this is a cat' or 'this is NOT a cat.' The computer learns the same way — by practicing with lots of labeled examples.",
     age10: "In supervised learning, you give the AI a training set of inputs paired with correct answers (called labels). The AI learns to predict answers for new inputs. Examples: spam detection (email → spam/not spam), house price prediction (features → price), image classification (photo → 'dog' or 'cat').",
     age45: "Supervised learning uses labeled training data (X, y) to learn a mapping function f(X) → y. It's the dominant paradigm in production ML. Key variants: classification (discrete output), regression (continuous output). Business applications span fraud detection, churn prediction, demand forecasting, and medical imaging. Data labeling cost and quality are the primary product bottlenecks."
   },
   {
     name: "Unsupervised Learning", cat: "ml-type", tags: ["Clustering","No Labels","Patterns","Dimensionality"],
     summary: "Find hidden patterns in data without labeled examples",
-    age5:  "Imagine someone gives you a big box of mixed toys with no instructions. You start sorting them by yourself: 'these are all round, these have wheels, these make noise.' The computer does the same — it finds groups and patterns on its own.",
     age10: "Unsupervised learning is when the AI gets data but no labels — no 'right answers.' It has to find structure itself. Common uses: clustering similar customers together, detecting unusual patterns (anomaly detection), compressing data, or discovering topics in documents.",
     age45: "Unsupervised learning discovers latent structure in unlabeled data. Core techniques: clustering (k-means, DBSCAN), dimensionality reduction (PCA, t-SNE, UMAP), and density estimation. Practical applications: customer segmentation, anomaly detection, recommendation system embeddings, and exploratory data analysis. Often a preprocessing step before supervised tasks."
   },
   {
     name: "Reinforcement Learning", cat: "ml-type", tags: ["Rewards","Agents","Games","Robotics","RLHF"],
     summary: "An agent learns by trial-and-error, maximizing rewards over time",
-    age5:  "Think of training a dog with treats. When the dog sits when asked, it gets a treat (reward). When it doesn't, no treat. The dog learns to do things that get more treats. AI learns the same way — by trying things and seeing what works.",
     age10: "In reinforcement learning, an AI 'agent' interacts with an environment, takes actions, and receives rewards or penalties. Over millions of tries, it learns the best strategy. It's how AI mastered chess, Go, and video games. It's also used to train LLMs to follow instructions (called RLHF).",
     age45: "RL trains an agent to maximize cumulative reward through environment interaction. Key algorithms: PPO, Q-learning, A3C. Critical to modern AI: RLHF (Reinforcement Learning from Human Feedback) is how GPT-4 and Claude are aligned to follow instructions helpfully. Applications beyond gaming: robotics, autonomous vehicles, recommendation systems, and ad bidding optimization."
   },
   {
     name: "Transfer Learning", cat: "ml-type", tags: ["Pre-training","Fine-tuning","Efficiency","Foundation Models"],
     summary: "Reuse knowledge from a large pre-trained model for a new specific task",
-    age5:  "If you already know how to ride a bicycle, learning to ride a motorbike is much easier than starting from zero. Transfer learning lets the AI use what it already knows to quickly learn something new.",
     age10: "Instead of training an AI from scratch (which takes enormous computing power), transfer learning starts with a model already trained on tons of data, then adapts it for a specific task. For example, a model trained on all of Wikipedia can be fine-tuned to be a medical chatbot using far less data and computing.",
     age45: "Transfer learning leverages representations learned from large datasets (pre-training) for downstream tasks (fine-tuning). Revolutionized NLP via BERT/GPT. In practice: reduces training cost by 10-100x and data requirements by orders of magnitude. The foundation model paradigm is built on this. Key PM consideration: fine-tuning existing models is almost always preferable to training from scratch."
   },
   {
     name: "Self-Supervised Learning", cat: "ml-type", tags: ["Pre-training","No Labels","LLMs","Representations"],
     summary: "Generate labels automatically from data — how LLMs are pre-trained",
-    age5:  "Instead of needing a teacher to label every picture, the AI makes its own puzzles from the data. Like covering one word in a sentence and guessing what it was — the answer is already in the sentence!",
     age10: "Self-supervised learning is a clever trick: the model creates its own training tasks from unlabeled data. For LLMs, the task is 'predict the next word in a sentence.' All the labels come free from the data itself. This is how GPT models are trained on billions of web pages without anyone manually labeling anything.",
     age45: "SSL eliminates the labeling bottleneck by deriving supervision signals from data structure (e.g., masked token prediction, next-token prediction, contrastive objectives like SimCLR). It's the pre-training paradigm for virtually all modern foundation models. The resulting representations transfer remarkably well. For product teams: SSL enables training on proprietary unlabeled corpora to build domain-adapted models."
   },
   {
     name: "Federated Learning", cat: "ml-type", tags: ["Privacy","Distributed","Mobile","On-device"],
     summary: "Train models across devices without centralizing sensitive data",
-    age5:  "Imagine everyone in class learns from their own private notebook, but shares only the lesson they learned — not their notebook. The teacher collects all the lessons and makes one big lesson everyone benefits from, but never sees your private notes.",
     age10: "Federated learning trains a model across many devices (like phones) without sending the raw data to a central server. Each phone trains a local model update and sends only that update (not the data) to be combined. Google uses this to improve keyboard autocomplete on Android without seeing your messages.",
     age45: "Federated learning (FL) enables model training across distributed data silos (devices, hospitals, banks) while keeping data local — addressing GDPR, HIPAA, and data sovereignty concerns. Key challenges: communication cost, non-IID data distributions, and secure aggregation. Applied in healthcare consortiums, mobile keyboard prediction, and cross-silo financial fraud detection."
   },
+  {
+    name: "Agentic AI", cat: "ml-type", tags: ["Agents","Autonomous","Tools","2025","Planning"],
+    summary: "AI that reasons, plans, uses tools, and takes multi-step actions autonomously — the defining shift of 2025-2026",
+    age10: "Agentic AI systems don't just respond — they act. They can use tools like web search, calculators, and code executors; make a multi-step plan; carry it out; check their own work; and loop back if something goes wrong. Claude Code, Devin, and OpenAI's Operator are examples. 83% of organizations planned agentic AI deployments in 2025.",
+    age45: "Agentic AI represents the paradigm shift from AI-as-responder to AI-as-actor. Core components: a reasoning model (the 'brain'), a tool layer (web, code execution, APIs, computer use), a memory system (short/long-term), and a planning/reflection loop. In 2025, SWE-bench Verified became the key benchmark — measuring whether an agent can autonomously resolve real GitHub issues. By 2026, 40% of business applications are projected to embed AI agents (up from <5% in 2025). The implementation gap (integration, trust, oversight) — not the technology — is the primary adoption barrier."
+  },
+  {
+    name: "Multi-Agent Systems", cat: "ml-type", tags: ["Orchestration","Collaboration","Specialization","Enterprise","2026"],
+    summary: "Networks of specialized AI agents that collaborate — replacing single all-purpose agents",
+    age10: "Multi-agent systems use several specialized AI agents that work as a team. One agent might research a problem, another writes the code, a third tests it, and a fourth explains the result. This division of labor lets AI tackle complex, long-running tasks that a single agent can't finish alone. Gartner saw a 1,445% surge in multi-agent inquiries from Q1 2024 to Q2 2025.",
+    age45: "Multi-agent architecture mirrors microservices: specialized agents (researcher, coder, critic, orchestrator) collaborate via message passing. Key patterns: Orchestrator-Worker (one agent directs others), Peer-to-Peer (agents negotiate), and Pipeline (sequential handoffs). Google's A2A protocol and Anthropic's MCP are standardizing inter-agent communication. Key PM challenges: observability (tracing cross-agent workflows), fault tolerance (handling agent failures mid-task), cost control (agent loops can spiral), and human-in-the-loop design for high-stakes decisions."
+  },
+  {
+    name: "Test-Time Compute Scaling", cat: "ml-type", tags: ["Reasoning","o3","Inference","Quality","2024-2026"],
+    summary: "Spend more compute at inference time — thinking longer — to dramatically improve answer quality",
+    age10: "Test-time compute scaling is the idea that you can make AI smarter not just by training it on more data, but by letting it 'think longer' when answering. OpenAI's o1 and o3 models do this — they run an internal reasoning process before responding. The longer they're allowed to think, the better they score on hard problems.",
+    age45: "Test-time compute scaling (Snell et al., 2024; OpenAI o1/o3) shifts the quality-compute tradeoff from training to inference. Instead of scaling model size or training data, quality improves by allocating more inference FLOPs to search, self-reflection, or chain-of-thought expansion. Key insight: for fixed training compute, test-time scaling can match a model trained with 10x more data. Product implications: variable-latency pricing models, async task queues for deep reasoning, and user-facing 'thinking' UX patterns. Competes with RAG and fine-tuning as a quality improvement lever."
+  },
 
-  // ── NEURAL NET ARCHITECTURES ────────────────────────────
+  // ── NEURAL NET ARCHITECTURES ───────────────────────────
   {
     name: "Transformer", cat: "arch", tags: ["Attention","LLMs","2017","Foundation","NLP"],
     summary: "The architecture behind virtually all modern LLMs — introduced in 'Attention Is All You Need'",
-    age5:  "Imagine reading a long sentence where you need to understand that 'it' refers to the dog, not the ball, five words earlier. A transformer is really good at paying attention to all words at once and figuring out which ones are connected.",
     age10: "The transformer architecture (Google, 2017) uses 'self-attention' to process all parts of a sequence simultaneously — unlike older models that read word-by-word. This lets it understand long-range relationships in text. GPT, BERT, Claude, and almost every modern AI is built on transformers.",
     age45: "Transformers (Vaswani et al., 2017) replaced sequential RNNs with parallel self-attention, solving the vanishing gradient problem for long sequences. Encoder-only (BERT) for understanding; decoder-only (GPT) for generation; encoder-decoder (T5) for translation. Scaled via the scaling laws paper. The dominant architecture for NLP, vision (ViT), audio, and multi-modal tasks."
   },
   {
     name: "CNN (Convolutional Neural Network)", cat: "arch", tags: ["Vision","Images","Filters","Computer Vision"],
     summary: "Specialized architecture for image recognition — uses learned filters to detect features",
-    age5:  "A CNN looks at images like you do — starting with simple things like edges and colors, then combining them to recognize bigger things like eyes, then faces, then people. It has layers of little detectors, each finding different patterns.",
     age10: "CNNs are designed for images. They use 'filters' that slide across an image looking for specific patterns — horizontal lines, curves, color blobs. Early layers detect simple shapes; deeper layers detect complex objects. CNNs power face recognition, medical imaging, self-driving car vision, and most photo apps.",
     age45: "CNNs exploit spatial locality and translation invariance via convolutional filters, pooling layers, and hierarchical feature extraction. Landmark architectures: LeNet, VGG, ResNet (skip connections), EfficientNet. Largely superseded by Vision Transformers (ViT) for large-scale tasks, but CNNs remain compute-efficient for edge/mobile deployment. Core skill for any ML engineer working on vision pipelines."
   },
   {
     name: "RNN / LSTM", cat: "arch", tags: ["Sequential","Time Series","Memory","Pre-Transformer"],
     summary: "Recurrent networks that process sequences step-by-step — dominant before transformers",
-    age5:  "Imagine reading a story one word at a time and trying to remember everything important. RNNs work the same way — they read text word by word and keep a little 'memory' of what they read before.",
     age10: "RNNs (Recurrent Neural Networks) process sequences one element at a time, passing a 'hidden state' forward. LSTMs (Long Short-Term Memory) added gating mechanisms to remember important things longer. They were the best NLP models before transformers. Still used in time series forecasting and some real-time applications.",
     age45: "RNNs use recurrent connections to model sequential dependencies, with LSTM/GRU gating solving the vanishing gradient problem for longer sequences. Superseded by transformers for NLP (2017+) but still relevant for real-time time series (latency-sensitive streaming), embedded systems, and sensor data where transformers' O(n²) attention is prohibitive."
   },
   {
     name: "GAN (Generative Adversarial Network)", cat: "arch", tags: ["Generative","Adversarial","Images","2014"],
     summary: "Two neural networks compete — one generating, one judging — to produce realistic outputs",
-    age5:  "Imagine an artist and a detective. The artist tries to draw a fake painting that looks real. The detective tries to spot the fake. They keep competing until the artist gets so good that even the detective can't tell the difference.",
     age10: "GANs have two networks: a Generator that creates fake images, and a Discriminator that tries to tell real from fake. They train together — the generator gets better at fooling the discriminator, and the discriminator gets better at detecting fakes. Used for deepfakes, image editing, and data augmentation.",
     age45: "GANs (Goodfellow et al., 2014) introduced adversarial training: G minimizes while D maximizes the same objective. Produced remarkable photorealism (StyleGAN, BigGAN) but suffer from training instability and mode collapse. Largely supplanted by diffusion models for image generation (2022+) due to better stability and diversity. Still used in video synthesis and specialized image-to-image translation."
   },
   {
     name: "Diffusion Model", cat: "arch", tags: ["Generative","Images","DALL-E","Stable Diffusion","Denoising"],
     summary: "Generates images by learning to reverse a noise-addition process",
-    age5:  "Imagine taking a clear picture and slowly adding snow to it until you can't see anything. A diffusion model learns to do the opposite — starting with all snow, it slowly brushes the snow away to reveal a beautiful picture.",
     age10: "Diffusion models work by training on the process of adding and removing noise. First they corrupt images gradually until they become random noise. Then they learn to reverse that: starting from noise and step-by-step revealing a coherent image. DALL-E 3 and Stable Diffusion use this approach.",
     age45: "Diffusion models (DDPM, Rombach et al.) outperformed GANs on image quality and diversity (2021-2022). Key mechanism: learn the score function of the data distribution to denoise iteratively. Latent diffusion (Stable Diffusion) operates in compressed latent space — enabling training on consumer GPUs. Extended to audio (AudioLDM), video (Sora/Gen-2), and 3D generation. Now the dominant paradigm for generative media."
   },
   {
     name: "Attention Mechanism", cat: "arch", tags: ["Transformer","Self-Attention","Key Concept","QKV"],
     summary: "Lets models dynamically focus on relevant parts of input — the core of transformers",
-    age5:  "When reading 'The cat sat on the mat because it was tired,' your brain automatically knows 'it' means the cat. Attention lets AI do the same — figure out which words are most connected when processing each word.",
     age10: "Attention is a technique where the model decides how much to 'pay attention' to each part of the input when computing each output. It creates relationships between all positions in a sequence simultaneously. This is why transformers handle long-range dependencies so much better than RNNs.",
     age45: "Self-attention computes attention scores via Q (query), K (key), V (value) projections: softmax(QKᵀ/√d)V. Multi-head attention runs attention in parallel across multiple subspaces. Computational complexity is O(n²) in sequence length — motivating efficient variants (Flash Attention, Sliding Window, Mamba). Understanding attention is fundamental to LLM optimization and context window scaling decisions."
   },
   {
     name: "Mixture of Experts (MoE)", cat: "arch", tags: ["Efficiency","Scaling","Mixtral","Sparse"],
     summary: "Activates only a subset of model parameters per input — enabling huge models cheaply",
-    age5:  "Instead of asking all your friends every question, you only ask the ones who are experts in that topic. MoE works the same way — only the relevant 'expert' parts of the AI activate for each question.",
     age10: "Mixture of Experts splits the model into many 'expert' sub-networks. For each input, a 'router' picks only 2-4 experts to activate. So even if the total model has hundreds of billions of parameters, only a fraction are used at once — making it faster and cheaper to run.",
     age45: "MoE replaces dense FFN layers with N expert sub-networks and a learned routing function (top-k gating). At inference, only k/N parameters are active per token, dramatically reducing FLOPs vs parameter count. Mixtral 8x7B, GPT-4 (alleged), and Gemini use MoE. Key tradeoff: memory cost is high (all experts must fit in VRAM), but throughput and quality/FLOP ratio improve significantly."
   },
@@ -409,63 +428,54 @@ const DATA = [
   {
     name: "Token / Tokenization", cat: "concept", tags: ["LLM","Input","Pricing","Context"],
     summary: "How text is broken into chunks that AI models can process — also the billing unit for LLM APIs",
-    age5:  "Words are made of letters. AI breaks words into even smaller puzzle pieces called tokens. 'Hello' might be one piece, but 'unbelievable' might be three pieces. The AI thinks in these pieces, not whole words.",
     age10: "LLMs don't read word-by-word or letter-by-letter. They split text into 'tokens' — roughly 3-4 characters each. 'ChatGPT is cool' ≈ 5 tokens. Why? It's computationally efficient and handles new words better. API pricing is per token, so knowing token counts matters for cost management.",
     age45: "Tokenization (BPE, WordPiece, SentencePiece) converts text to integer IDs. ~1 token ≈ 0.75 English words; code tokenizes less efficiently. Critical for PMs: context window limits (128K-1M tokens) affect maximum document length; API cost = input + output tokens × price/1M. Token efficiency (prompt compression, caching) is a key LLM cost optimization lever."
   },
   {
     name: "Embedding", cat: "concept", tags: ["Vector","Semantic Search","RAG","Similarity"],
     summary: "A numerical representation of text (or images) that captures semantic meaning",
-    age5:  "Imagine giving every word a point on a map. Words that mean similar things are placed close together on the map. 'Dog' and 'puppy' would be very close. 'Dog' and 'airplane' would be far apart. Embeddings are those map locations — but with hundreds of dimensions instead of just 2.",
     age10: "Embeddings convert text into lists of numbers (vectors) where similar meanings = similar numbers. 'King' – 'Man' + 'Woman' ≈ 'Queen' in embedding space. Used in search (find related content), recommendations (similar items), and RAG (find relevant documents to give to an LLM).",
     age45: "Embeddings are dense vector representations in high-dimensional space (768–4096 dimensions) where semantic proximity ≈ cosine similarity. Core to RAG pipelines, semantic search (replacing keyword search), classification, and clustering. Models: text-embedding-3 (OpenAI), E5, BGE. Stored in vector databases (Pinecone, Weaviate, pgvector). Embedding quality is a key variable in RAG pipeline performance."
   },
   {
     name: "RAG (Retrieval-Augmented Generation)", cat: "concept", tags: ["Architecture","LLM","Search","Grounding","Enterprise"],
     summary: "Combine LLM generation with real-time retrieval from your own knowledge base",
-    age5:  "Imagine asking a question and instead of guessing, the AI first looks through a library of documents, finds the right pages, then uses those pages to answer your question accurately. That's RAG — look it up, then answer.",
     age10: "RAG solves the problem of LLMs not knowing recent or private information. When you ask a question, the system first searches a database of documents (using embeddings) to find relevant ones. It then passes those documents to the LLM as context, so the LLM answers based on real data instead of guessing.",
     age45: "RAG (Lewis et al., 2020) decouples parametric memory (model weights) from non-parametric memory (retrieval index). Architecture: query → embed → vector search → top-k chunks → LLM prompt → answer. Addresses LLM limitations: hallucination, knowledge cutoff, context window constraints. Key PM consideration: RAG quality depends on chunking strategy, embedding model, retrieval k, and prompt engineering — all tunable product variables."
   },
   {
     name: "Hallucination", cat: "concept", tags: ["LLM","Risk","Reliability","Accuracy"],
     summary: "When an AI confidently states false information — a core limitation of current LLMs",
-    age5:  "Sometimes the AI makes up answers that sound totally real but are completely wrong. Like a friend who makes up stories very confidently. You can't always tell when they're making things up — that's hallucination.",
     age10: "Hallucination is when an LLM generates plausible-sounding but incorrect information with confidence. It might invent fake research papers, wrong dates, or non-existent laws. It happens because LLMs predict likely text, not verified facts. Mitigation: RAG, citations, fact-checking layers, and limiting to in-context information.",
     age45: "Hallucination is the tendency of generative models to produce factually incorrect, fabricated, or internally inconsistent output while maintaining confident tone. Root cause: next-token prediction optimizes fluency, not factuality. Mitigation strategies: RAG grounding, chain-of-thought reasoning, function calling with external verification, model-level RLHF, and output citation requirements. Hallucination rate is a critical metric for any enterprise LLM deployment."
   },
   {
     name: "Fine-Tuning", cat: "concept", tags: ["Training","Customization","LoRA","Domain Adaptation"],
     summary: "Further train a pre-trained model on your specific data to specialize its behavior",
-    age5:  "Imagine a general-purpose robot that knows how to do many things. Fine-tuning is like giving it special training just for your job — like training it specifically to be a great pizza chef. It keeps everything it knew before but gets really good at pizza.",
     age10: "Fine-tuning takes an existing pre-trained model and trains it further on a smaller, specialized dataset. A general LLM can be fine-tuned on medical texts to become a medical AI, or on customer support logs to follow a company's style. It's much cheaper than training from scratch.",
     age45: "Fine-tuning updates model weights on domain-specific (X, y) pairs, adapting behavior without full pre-training costs. Full fine-tuning updates all parameters; parameter-efficient methods (LoRA, QLoRA, prefix tuning) update <1% of weights with comparable results. Use cases: instruction following, style alignment, domain knowledge injection, and safety behavior modification. Key tradeoff vs. RAG: fine-tuning changes implicit knowledge; RAG changes retrieved knowledge — complementary strategies."
   },
   {
     name: "Prompt Engineering", cat: "concept", tags: ["LLM","No-Code","Technique","Chain of Thought"],
     summary: "The craft of writing inputs that reliably get the best outputs from an LLM",
-    age5:  "Asking an AI is like giving instructions to a very smart but very literal genie. If you're not careful, you get something unexpected. Prompt engineering is learning exactly how to phrase your wishes to get what you actually want.",
     age10: "Prompt engineering is structuring your inputs to get better AI outputs. Techniques: few-shot prompting (show examples), chain-of-thought (ask the AI to think step-by-step), system prompts (set persona and constraints), and structured output (ask for JSON). It's the fastest way to improve LLM performance without code.",
     age45: "Prompt engineering encompasses techniques to guide LLM output without weight updates. Key methods: zero/few-shot learning, chain-of-thought (Wei et al., 2022), ReAct, self-consistency, and meta-prompting. For PMs: prompt versioning, A/B testing, and evals are essential for production systems. System prompt security (prompt injection) is a growing attack vector. Increasingly automated via DSPy and similar frameworks."
   },
   {
     name: "Context Window", cat: "concept", tags: ["LLM","Memory","Tokens","Limitations"],
     summary: "The maximum amount of text an LLM can 'see' at once in a single conversation",
-    age5:  "Imagine you can only hold 10 index cards in your hands at once. The AI is similar — it can only 'remember' and look at a certain amount of text at the same time. Older AIs could hold a few paragraphs; newer ones can hold entire books.",
     age10: "The context window is how much text an LLM can process in one go — including your conversation history, documents, and instructions. Older models: 4K tokens (~3,000 words). Modern models: 128K–1M tokens. Longer context = more expensive but lets you analyze entire codebases or books at once.",
     age45: "Context window defines the maximum input+output token capacity per inference pass. Scaling: GPT-4 Turbo 128K, Claude 3 200K, Gemini 1.5 Pro 1M. Longer context incurs O(n²) attention cost, though Flash Attention and sliding window reduce this. Key PM tradeoffs: longer context ↑ capability but ↑ latency and cost. 'Lost in the middle' research shows retrieval performance degrades for content in the middle of long contexts."
   },
   {
     name: "RLHF (Reinforcement Learning from Human Feedback)", cat: "concept", tags: ["Alignment","Safety","Training","LLM","GPT"],
     summary: "The training technique that makes LLMs helpful and aligned — key to ChatGPT's behavior",
-    age5:  "After teaching the AI with books, humans rate its answers: 'good,' 'bad,' 'a little better.' The AI practices and gets feedback until it gets really good at giving answers people like and finds helpful. It's like how you learn from your parents saying 'good job' or 'try again.'",
     age10: "RLHF is a three-step process: first train a model to predict text, then train it to predict which of two responses humans prefer (the reward model), then use reinforcement learning to fine-tune the main model to generate responses humans rate highly. This is what makes ChatGPT feel helpful vs. other LLMs.",
     age45: "RLHF (Christiano et al., 2017; applied to LLMs by InstructGPT, 2022) consists of: (1) supervised fine-tuning on demonstrations, (2) reward model training on human preference pairs, (3) PPO optimization against the reward model with a KL-divergence penalty. Alternatives: DPO (Direct Preference Optimization) skips the reward model step. Constitutional AI (Anthropic) uses AI feedback instead of human feedback. RLHF is the key alignment technique for all major LLMs."
   },
   {
     name: "Parameters / Weights", cat: "concept", tags: ["Model Size","Training","Capacity","Scale"],
     summary: "The numbers inside a neural network that encode learned knowledge — measured in billions",
-    age5:  "Imagine a neural network is like a huge pinball machine with billions of tiny dials. Training adjusts all those dials until the ball always lands in the right place. Those dials are the parameters — and the bigger the machine, the more it can learn.",
     age10: "Parameters are the internal numbers that a neural network learns during training. GPT-3 has 175 billion parameters. More parameters generally means the model can store more knowledge and handle more complex tasks — but it also requires more computing power. 'Model size' usually refers to parameter count.",
     age45: "Parameters (weights and biases) encode learned representations; gradient descent optimizes them during training. Scaling laws (Kaplan et al., Chinchilla) show compute-optimal training requires proportional data scaling. For product decisions: parameter count influences inference cost, latency, and memory requirements. Quantization (INT8, INT4) reduces memory at modest quality loss. Model distillation creates smaller, faster models from larger teachers."
   },
@@ -474,56 +484,61 @@ const DATA = [
   {
     name: "AI Product Manager", cat: "role", tags: ["PM","Strategy","Non-Technical","Business","Leadership"],
     summary: "Defines what AI should do, for whom, and why — bridges business goals and technical teams",
-    age5:  "The AI PM is like the captain of a team building a smart robot. They don't build the robot themselves, but they decide what the robot should do, who it should help, and make sure everyone is working on the right thing.",
     age10: "An AI PM defines what AI features to build and why. They work out: what problem does this solve? Who are the users? How do we know if it worked? They translate business goals into technical requirements, and translate technical limitations back to stakeholders. They don't need to code, but need to understand AI well enough to spot BS.",
     age45: "The AI PM role combines traditional product management with AI-specific skills: defining success metrics for probabilistic systems, managing model evaluation and evals pipelines, understanding data requirements and labeling workflows, navigating build/buy/fine-tune decisions, and communicating model limitations to stakeholders. Key differentiators: comfort with uncertainty, understanding of responsible AI principles, and ability to scope MVP given inherent model variability."
   },
   {
     name: "Machine Learning Engineer", cat: "role", tags: ["MLE","Engineering","Training","Production","Python"],
     summary: "Builds, trains, and deploys ML models into production systems",
-    age5:  "An ML engineer is the person who actually builds the AI brain. They write the instructions that teach computers to learn. It's like being both a chef and an inventor — cooking up new recipes for AI to learn from.",
     age10: "ML engineers write the code that trains and deploys AI models. They choose the right algorithm for a problem, prepare training data, run experiments, monitor model performance, and build the systems that serve predictions to real users. They work in Python and use frameworks like PyTorch or TensorFlow.",
     age45: "ML engineers bridge research and production. Responsibilities: feature engineering, model training and hyperparameter optimization, experiment tracking (MLflow, W&B), model serving (TensorRT, vLLM, Triton), and A/B testing. Key skills: PyTorch/JAX, distributed training, CUDA basics, and production monitoring. Distinct from data scientists (who are more analysis-focused) and MLOps engineers (infra-focused)."
   },
   {
     name: "Data Scientist", cat: "role", tags: ["Analytics","Statistics","Python","Insights","SQL"],
     summary: "Extracts insights from data and builds models to solve business problems",
-    age5:  "A data scientist is like a detective who solves mysteries using numbers. They look at lots of information to find patterns — like figuring out why ice cream sales go up when it's sunny.",
     age10: "Data scientists explore data, find patterns, and build models to make predictions or decisions. They use statistics, Python (pandas, scikit-learn), SQL, and visualization tools. In an AI context, they often do exploratory analysis, feature engineering, and evaluate model performance — bridging business questions and technical solutions.",
     age45: "Data scientists combine statistical expertise with programming skills to extract actionable insights. AI-era responsibilities include: defining ML problem framing, building baseline models, running controlled experiments, and communicating uncertainty. The role increasingly overlaps with MLE; senior data scientists often specialize in experimentation (A/B testing, causal inference) or applied research. SQL, Python, and statistical fluency are table stakes."
   },
   {
     name: "MLOps Engineer", cat: "role", tags: ["Infrastructure","DevOps","CI/CD","Deployment","Monitoring"],
     summary: "Keeps ML systems running reliably in production — the DevOps of machine learning",
-    age5:  "Imagine the AI is a magic vending machine in a shop. Someone has to make sure the machine is always working, gets updated when new snacks arrive, and doesn't break down. MLOps engineers are the people who keep the AI vending machine running.",
     age10: "MLOps engineers build the infrastructure that lets models run reliably at scale. They automate training pipelines, manage model versioning, monitor for performance drift, and handle deployment. Think of them as DevOps engineers whose systems happen to include ML models.",
     age45: "MLOps covers the operational lifecycle of ML systems: automated training pipelines (Kubeflow, Airflow), model registry and versioning (MLflow), feature stores (Feast, Tecton), serving infrastructure (KServe, Ray Serve), and monitoring for data drift, concept drift, and performance degradation. Key metrics: model latency, throughput, staleness, and prediction quality over time. Critical role as ML systems scale beyond experimentation."
   },
   {
+    name: "Model Context Protocol (MCP)", cat: "concept", tags: ["Agents","Anthropic","Standard","Tools","Integration","2024"],
+    summary: "The open standard that lets AI agents connect to any tool or data source — the 'USB-C for AI'",
+    age10: "Before MCP, developers had to build a custom connector every time an AI needed to use a new tool — so 10 tools meant 10 connectors. MCP (Model Context Protocol) is an open standard by Anthropic (Nov 2024) that gives AI agents one standard way to connect to any tool or data source. Now one connector works everywhere. OpenAI, Google, and Microsoft all adopted it in 2025.",
+    age45: "MCP (Anthropic, Nov 2024) solves the N×M integration problem: without a standard, connecting N agents to M tools requires N×M custom integrations. MCP reduces this to N+M. It defines a client-server protocol where AI agents (clients) connect to MCP servers that expose tools and data. By Feb 2026: 97M monthly SDK downloads, adopted by all major AI providers. Donated to the Linux Foundation Agentic AI Foundation (AAIF) in Dec 2025. Security note: prompt injection and tool permission vulnerabilities remain active concerns. Key for PMs: MCP dramatically reduces integration cost for agentic product builds."
+  },
+  {
+    name: "Computer Use / Tool Use", cat: "concept", tags: ["Agents","Agentic","GUI","Automation","Claude","GPT-5"],
+    summary: "AI that can control a computer — clicking, typing, browsing — to complete tasks autonomously",
+    age10: "Computer use lets AI models operate a real computer: open a browser, search the web, fill out forms, write and run code, read emails. Claude's Computer Use (2024) and GPT-5.4's computer use (2025) can complete multi-step computer tasks autonomously. It's a big step toward AI that can handle any digital work a human can.",
+    age45: "Computer use (Claude Computer Use Oct 2024; GPT-5.4 native CU 2025) enables LLMs to perceive GUI screenshots and emit mouse/keyboard actions — turning any desktop or web application into an agent-accessible tool without requiring an API. Architecture: vision model → action prediction → emulated input. Key enterprise applications: legacy system automation, web scraping without APIs, QA testing, and RPA replacement. Key risks: unrestricted computer access significantly expands the attack surface for prompt injection. Best practice: run in sandboxed VMs with scoped permissions and human-in-the-loop checkpoints."
+  },
+
+  {
     name: "AI Research Scientist", cat: "role", tags: ["Research","Publications","Academia","PhD","Novel Methods"],
     summary: "Advances the state of the art through novel algorithms, architectures, and experiments",
-    age5:  "A researcher is like an explorer discovering new places. They don't use maps that already exist — they make new ones. AI researchers figure out new ways for computers to learn that nobody has thought of before.",
     age10: "AI researchers work on inventing new techniques — new neural network designs, new training methods, or solving fundamental problems in AI. They publish papers (often on arXiv), run massive experiments, and their work eventually becomes the foundation that engineers build products on. GPT, transformers, and diffusion models all started as research.",
     age45: "AI research scientists (typically PhD-level) design and validate novel methods, often publishing at NeurIPS, ICML, ICLR. Applied research roles (at Anthropic, Google DeepMind, Meta FAIR) bridge pure research with product needs. For product leaders: understanding which research outputs are productizable vs. academic is a competitive advantage. Key skills: mathematical rigor, experimental design, literature synthesis, and scientific writing."
   },
   {
     name: "Prompt Engineer", cat: "role", tags: ["LLM","No-Code","Optimization","Workflows"],
     summary: "Specializes in crafting and optimizing prompts to maximize LLM output quality",
-    age5:  "A prompt engineer is someone who has gotten really, really good at asking the AI just the right questions in just the right way to get perfect answers. Like knowing the magic words.",
     age10: "A prompt engineer designs the exact text instructions given to an LLM to get the best results. They test different phrasings, use techniques like chain-of-thought and few-shot examples, build prompt templates, and systematically evaluate which prompts work best — often without writing much code.",
     age45: "Prompt engineering emerged as a distinct role with LLM adoption, though it's evolving: as models improve (GPT-4o, Claude 3.5), the delta between naive and optimized prompts narrows. Current value-add: systematic evaluation (evals), multi-step agentic workflow design, adversarial testing, and prompt injection defense. The role is converging with AI engineering as workflows become code-based (LangChain, DSPy)."
   },
   {
     name: "AI Ethics Officer / Responsible AI Lead", cat: "role", tags: ["Ethics","Governance","Policy","Risk","Fairness"],
     summary: "Ensures AI systems are fair, transparent, safe, and compliant with regulations",
-    age5:  "An AI ethics officer is like the referee in a game — they make sure everyone plays fairly and nobody gets hurt. They check that the AI doesn't treat any groups of people unfairly and is honest about what it can and can't do.",
     age10: "AI ethics officers review AI systems for bias, fairness, transparency, and potential harm. They create guidelines for how AI should be used, evaluate risks before launch, and ensure compliance with laws like GDPR and the EU AI Act. They often work with lawyers, ethicists, and engineers.",
     age45: "Responsible AI (RAI) roles govern the ethical development and deployment of AI systems. Responsibilities include: bias auditing and fairness metrics (demographic parity, equalized odds), model transparency and explainability (SHAP, LIME), privacy compliance (differential privacy, data minimization), and regulatory alignment (EU AI Act risk tiers, NIST AI RMF). Increasingly required for enterprise procurement and high-stakes verticals (healthcare, finance, hiring)."
   },
   {
     name: "AI Solutions Architect", cat: "role", tags: ["Architecture","Enterprise","Cloud","Integration","Design"],
     summary: "Designs how AI components integrate into enterprise systems and infrastructure",
-    age5:  "If AI is like a powerful engine, the solutions architect decides how to fit that engine into the car — connecting all the parts, making sure they work together, and designing how people interact with it.",
     age10: "AI solutions architects design the overall system: which AI models to use, how data flows in and out, how the AI connects to existing software, and how to handle scale and reliability. They make sure the AI solution fits the business's needs, budget, and technical constraints.",
     age45: "AI solutions architects translate business requirements into technical AI system designs. Competencies: cloud AI services (Azure OpenAI, AWS Bedrock, Google Vertex), LLM integration patterns (RAG, function calling, agents), cost modeling (build vs. buy vs. fine-tune), security (data residency, encryption, access control), and vendor evaluation. Interface between C-suite AI strategy and engineering implementation."
   },
@@ -540,7 +555,6 @@ const fuse = new Fuse(DATA, {
     { name: "name",    weight: 3 },
     { name: "summary", weight: 2 },
     { name: "tags",    weight: 2 },
-    { name: "age5",    weight: 1 },
     { name: "age10",   weight: 1 },
     { name: "age45",   weight: 1 },
   ],
@@ -591,9 +605,7 @@ function render() {
   }
 
   results.forEach(item => {
-    const expl = currentAge === "5"  ? item.age5
-               : currentAge === "10" ? item.age10
-               :                       item.age45;
+    const expl = currentAge === "10" ? item.age10 : item.age45;
 
     const card = document.createElement("div");
     card.className = "card";

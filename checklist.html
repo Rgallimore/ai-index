@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Production Checklist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --border: #2e3350;
+      --text: #e8eaf0;
+      --text-muted: #8892b0;
+      --accent: #7c6af7;
+      --accent-light: #a89df9;
+      --green: #4ade80;
+      --blue: #60a5fa;
+      --orange: #fb923c;
+      --pink: #f472b6;
+      --yellow: #facc15;
+      --red: #f87171;
+      --radius: 12px;
+      --transition: 0.18s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1a1d27 0%, #12152a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 1.5rem 1.5rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #a89df9, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.4rem;
+    }
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.4rem;
+    }
+    .header-links {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .header-link {
+      display: inline-block;
+      padding: 0.45rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+    .header-link-ghost {
+      background: rgba(124,106,247,0.1);
+      border: 1.5px solid var(--border);
+      color: var(--text-muted);
+    }
+    .header-link-ghost:hover {
+      border-color: var(--accent-light);
+      color: var(--accent-light);
+    }
+    .header-link-danger {
+      background: rgba(248,113,113,0.1);
+      border: 1.5px solid rgba(248,113,113,0.3);
+      color: #f87171;
+    }
+    .header-link-danger:hover {
+      background: rgba(248,113,113,0.2);
+    }
+
+    /* ── Progress bar ── */
+    .progress-section {
+      max-width: 800px;
+      margin: 2rem auto 0;
+      padding: 0 1.5rem;
+    }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+    .progress-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .progress-count {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-light);
+    }
+    .progress-count span { color: var(--text-muted); font-weight: 400; }
+    .progress-track {
+      height: 8px;
+      background: var(--surface2);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--blue));
+      border-radius: 999px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+    .progress-message {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: right;
+      min-height: 1.2em;
+      transition: color var(--transition);
+    }
+    .progress-message.complete { color: var(--green); font-weight: 600; }
+
+    /* ── Main layout ── */
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* ── Section cards ── */
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+    .section-card:hover { border-color: var(--section-color, var(--accent)); }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      border-left: 4px solid var(--section-color, var(--accent));
+      background: rgba(255,255,255,0.02);
+      gap: 0.75rem;
+    }
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .section-icon {
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .section-progress {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all var(--transition);
+    }
+    .section-progress.done {
+      background: rgba(74,222,128,0.12);
+      color: var(--green);
+    }
+
+    /* ── Checklist items ── */
+    .checklist {
+      list-style: none;
+      padding: 0.5rem 0;
+    }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.65rem 1.25rem;
+      transition: background var(--transition);
+      cursor: pointer;
+    }
+    .checklist li:hover { background: rgba(255,255,255,0.03); }
+
+    /* Hide native checkbox, use styled one */
+    .checklist input[type="checkbox"] { display: none; }
+
+    .check-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+      background: var(--bg);
+    }
+    .checklist li:hover .check-box { border-color: var(--section-color, var(--accent)); }
+    .checklist li.checked .check-box {
+      background: var(--section-color, var(--accent));
+      border-color: var(--section-color, var(--accent));
+    }
+    .check-mark {
+      width: 10px;
+      height: 10px;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .checklist li.checked .check-mark { opacity: 1; }
+
+    .item-text {
+      font-size: 0.875rem;
+      color: var(--text);
+      line-height: 1.55;
+      transition: color var(--transition);
+    }
+    .checklist li.checked .item-text {
+      color: var(--text-muted);
+      text-decoration: line-through;
+      text-decoration-color: rgba(136,146,176,0.5);
+    }
+
+    /* ── Footer note ── */
+    .footer-note {
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-style: italic;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>AI Production Checklist</h1>
+  <p>24 checks across 6 areas — complete before moving from pilot to production.</p>
+  <div class="header-links">
+    <a href="index.html" class="header-link header-link-ghost">← Back to AI Index</a>
+    <a href="tutor.html" class="header-link header-link-ghost">✏️ Take a Quiz</a>
+    <button id="reset-btn" class="header-link header-link-danger" style="cursor:pointer;border:none;font-family:inherit;">↺ Reset All</button>
+  </div>
+</header>
+
+<!-- Overall progress -->
+<div class="progress-section">
+  <div class="progress-header">
+    <span class="progress-label">Overall Progress</span>
+    <span class="progress-count" id="progress-count">0 <span>/ 24</span></span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+  <div class="progress-message" id="progress-message">Check off items as you complete each area.</div>
+</div>
+
+<main>
+
+  <!-- 1. Business and Scope -->
+  <div class="section-card" style="--section-color: #7c6af7">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <span class="section-icon">🎯</span>
+        <span class="section-title">Business and Scope</span>
+      </div>
+      <span class="section-progress" data-section="0" id="sec-prog-0">0 / 4</span>
+    </div>
+    <ul class="checklist" data-section="0">
+      <li data-id="0-0"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">The business problem, intended users, and use cases are clearly defined.</span></li>
+      <li data-id="0-1"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Success criteria and release gates are documented.</span></li>
+      <li data-id="0-2"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">The limits of the AI system are understood, including what it should not be used for.</span></li>
+      <li data-id="0-3"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">A fallback or non-AI path exists if the AI output is wrong or unavailable.</span></li>
+    </ul>
+  </div>
+
+  <!-- 2. Data, Privacy, and Compliance -->
+  <div class="section-card" style="--section-color: #60a5fa">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <span class="section-icon">🔒</span>
+        <span class="section-title">Data, Privacy, and Compliance</span>
+      </div>
+      <span class="section-progress" data-section="1" id="sec-prog-1">0 / 4</span>
+    </div>
+    <ul class="checklist" data-section="1">
+      <li data-id="1-0"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Data sources are approved and appropriate for production use.</span></li>
+      <li data-id="1-1"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Sensitive, personal, confidential, or regulated data is identified and protected.</span></li>
+      <li data-id="1-2"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Retention, logging, access, and consent rules are defined.</span></li>
+      <li data-id="1-3"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Legal, privacy, compliance, or policy review is complete where required.</span></li>
+    </ul>
+  </div>
+
+  <!-- 3. Security and Risk Controls -->
+  <div class="section-card" style="--section-color: #f87171">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <span class="section-icon">🛡️</span>
+        <span class="section-title">Security and Risk Controls</span>
+      </div>
+      <span class="section-progress" data-section="2" id="sec-prog-2">0 / 4</span>
+    </div>
+    <ul class="checklist" data-section="2">
+      <li data-id="2-0"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">The application has been reviewed for prompt injection, data leakage, misuse, and access risks.</span></li>
+      <li data-id="2-1"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Authentication, authorization, and environment secrets are secured.</span></li>
+      <li data-id="2-2"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Tool use, API actions, and downstream integrations are restricted to what is necessary.</span></li>
+      <li data-id="2-3"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">A clear escalation path exists for harmful, unsafe, or incorrect outputs.</span></li>
+    </ul>
+  </div>
+
+  <!-- 4. Quality and Testing -->
+  <div class="section-card" style="--section-color: #4ade80">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <span class="section-icon">✅</span>
+        <span class="section-title">Quality and Testing</span>
+      </div>
+      <span class="section-progress" data-section="3" id="sec-prog-3">0 / 4</span>
+    </div>
+    <ul class="checklist" data-section="3">
+      <li data-id="3-0"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">The AI has been tested on realistic scenarios, edge cases, and failure cases.</span></li>
+      <li data-id="3-1"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Accuracy, hallucination risk, latency, and consistency have been evaluated.</span></li>
+      <li data-id="3-2"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Human review is built in for high-risk use cases.</span></li>
+      <li data-id="3-3"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">User acceptance testing or pilot feedback has been completed.</span></li>
+    </ul>
+  </div>
+
+  <!-- 5. Operations and Launch Readiness -->
+  <div class="section-card" style="--section-color: #facc15">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <span class="section-icon">🚀</span>
+        <span class="section-title">Operations and Launch Readiness</span>
+      </div>
+      <span class="section-progress" data-section="4" id="sec-prog-4">0 / 4</span>
+    </div>
+    <ul class="checklist" data-section="4">
+      <li data-id="4-0"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Monitoring, logging, alerts, and performance tracking are in place.</span></li>
+      <li data-id="4-1"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Versioning, rollback, and incident response plans are defined.</span></li>
+      <li data-id="4-2"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Cost controls, rate limits, and usage guardrails are configured.</span></li>
+      <li data-id="4-3"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Support owners are identified for business, technical, and operational issues.</span></li>
+    </ul>
+  </div>
+
+  <!-- 6. Governance and Continuous Improvement -->
+  <div class="section-card" style="--section-color: #f472b6">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <span class="section-icon">📋</span>
+        <span class="section-title">Governance and Continuous Improvement</span>
+      </div>
+      <span class="section-progress" data-section="5" id="sec-prog-5">0 / 4</span>
+    </div>
+    <ul class="checklist" data-section="5">
+      <li data-id="5-0"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">The model, prompts, tools, data sources, and known limitations are documented.</span></li>
+      <li data-id="5-1"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Approvals and sign-off are complete.</span></li>
+      <li data-id="5-2"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">Users are informed when content is AI-generated and how to report issues.</span></li>
+      <li data-id="5-3"><input type="checkbox" /><div class="check-box"><svg class="check-mark" viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="item-text">A post-launch review process is in place to monitor quality, drift, and risk over time.</span></li>
+    </ul>
+  </div>
+
+</main>
+
+<p class="footer-note">Ready for production only when the system is not just impressive in a demo, but dependable in real-world use.</p>
+
+<script>
+  const STORAGE_KEY = 'ai-checklist-v1';
+  const TOTAL = 24;
+
+  // ── Load saved state ──────────────────────────────────────────────────────
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch { return {}; }
+  }
+
+  function saveState(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  // ── Apply saved state to DOM ──────────────────────────────────────────────
+  function applyState(state) {
+    document.querySelectorAll('.checklist li').forEach(li => {
+      if (state[li.dataset.id]) li.classList.add('checked');
+      else li.classList.remove('checked');
+    });
+  }
+
+  // ── Count checked items (overall + per section) ───────────────────────────
+  function countChecked() {
+    let total = 0;
+    for (let s = 0; s < 6; s++) {
+      const items = document.querySelectorAll(`.checklist[data-section="${s}"] li`);
+      const done  = [...items].filter(li => li.classList.contains('checked')).length;
+      const prog  = document.getElementById(`sec-prog-${s}`);
+      prog.textContent = `${done} / ${items.length}`;
+      prog.classList.toggle('done', done === items.length);
+      total += done;
+    }
+    return total;
+  }
+
+  // ── Update progress bar ───────────────────────────────────────────────────
+  function updateProgress() {
+    const done = countChecked();
+    const pct  = Math.round((done / TOTAL) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-count').innerHTML = `${done} <span>/ ${TOTAL}</span>`;
+
+    const msg = document.getElementById('progress-message');
+    if (done === 0) {
+      msg.textContent = 'Check off items as you complete each area.';
+      msg.classList.remove('complete');
+    } else if (done === TOTAL) {
+      msg.textContent = '✓ All checks complete — ready for production.';
+      msg.classList.add('complete');
+    } else {
+      msg.textContent = `${TOTAL - done} item${TOTAL - done !== 1 ? 's' : ''} remaining.`;
+      msg.classList.remove('complete');
+    }
+  }
+
+  // ── Toggle a checklist item ───────────────────────────────────────────────
+  function toggleItem(li, state) {
+    li.classList.toggle('checked');
+    state[li.dataset.id] = li.classList.contains('checked');
+    saveState(state);
+    updateProgress();
+  }
+
+  // ── Wire up click handlers ────────────────────────────────────────────────
+  const state = loadState();
+  applyState(state);
+  updateProgress();
+
+  document.querySelectorAll('.checklist li').forEach(li => {
+    li.addEventListener('click', () => toggleItem(li, state));
+  });
+
+  // ── Reset all ─────────────────────────────────────────────────────────────
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    if (!confirm('Reset all checklist items?')) return;
+    document.querySelectorAll('.checklist li').forEach(li => {
+      li.classList.remove('checked');
+      state[li.dataset.id] = false;
+    });
+    saveState(state);
+    updateProgress();
+  });
+</script>
+</body>
+</html>

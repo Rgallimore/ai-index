@@ -455,6 +455,7 @@
     .cat-challenge{ background: rgba(251,113,133,0.15); color: #fb7185; }
     .cat-prompt   { background: rgba(251,191,36,0.15);  color: #fbbf24; }
     .cat-business { background: rgba(52,211,153,0.15);  color: #34d399; }
+    .cat-smb      { background: rgba(163,230,53,0.15);  color: #a3e635; }
 
     .cat-badge {
       display: inline-block;
@@ -500,6 +501,7 @@
           <button class="pill" data-cat="challenge">⚠️ Deployment</button>
           <button class="pill" data-cat="prompt">✍️ Prompt Engineering</button>
           <button class="pill" data-cat="business">💼 Business Use Cases</button>
+          <button class="pill" data-cat="smb">🏪 Business Use Cases (SMB)</button>
         </div>
       </div>
       <div class="setting-group">
@@ -914,6 +916,38 @@ const DATA = [
   { name: "Real Estate Valuation & Property Intelligence", cat: "business", tags: ["Real Estate","Valuation","AWS SageMaker","Zillow","CBRE","JLL","Opendoor"],
     summary: "AI values every US property within 2.4% of sale price and is reshaping how commercial portfolios and instant-buy programs are managed at scale",
     age45: "Zillow's Zestimate (AWS SageMaker) covers 100M+ US properties at 2.4% national median error; their 2021 iBuying wind-down ($500M write-down) is a canonical case study in the dangers of over-relying on AVM accuracy during volatile market conditions — human override authority is essential. Redfin Estimate (AWS) incorporates CNN-based listing photo condition scoring. CBRE's analytics platform (Azure) powers portfolio decision-making for Fortune 500 corporate real estate teams. JLL's JLLT platform (OpenAI integration) generates market reports and investment memos from property data. Opendoor (AWS SageMaker) generates 10,000+ daily home purchase price offers. Key PM lesson: AVM accuracy degrades sharply during macroeconomic regime shifts." },
+
+  // ── BUSINESS USE CASES (SMB) ────────────────────────────────────
+  { name: "AI Customer Support Chatbot", cat: "smb", tags: ["Customer Service","Chatbot","Tidio","Intercom","Freshdesk","SMB"],
+    summary: "Deploy a 24/7 AI support agent in hours — handles FAQs, bookings, and complaints without hiring extra staff",
+    age45: "SMB chatbot platforms (Tidio, Intercom Fin, Freshdesk Freddy) expose no-code LLM-powered agents that ingest a knowledge base via RAG and handle inbound queries. Resolution rates of 40–60% are typical for well-configured deployments. Key implementation decisions: knowledge base freshness (sync with CMS/Shopify), escalation routing (handoff triggers: sentiment, confidence score, topic), and tone calibration. TCO: $30–300/month vs. $18–22/hour for a human support agent. ROI benchmark: 3:1 payback within 60 days for businesses handling 50+ weekly inquiries." },
+  { name: "AI Marketing Copy & Content Generation", cat: "smb", tags: ["Marketing","Copywriting","Jasper","Copy.ai","Claude","Social Media","Email","SMB"],
+    summary: "Generate blog posts, social captions, email campaigns, and ad copy in minutes — at a fraction of agency cost",
+    age45: "AI content generation for SMBs leverages instruction-tuned LLMs (Claude, GPT-4o) via wrapped SaaS platforms (Jasper, Copy.ai, Writesonic) or directly via API. Core workflow: brand voice system prompt → product/service input → multi-format output (social, email, SEO blog). Email platforms (Mailchimp, Klaviyo, HubSpot) now embed native AI generation. Performance benchmarks: AI-assisted content teams produce 3–5x more output volume; A/B testing shows equivalent or better engagement vs. human-only copy in 60%+ of trials. Key risk: AI content requires a human review gate for accuracy — fully autonomous publishing carries brand risk." },
+  { name: "AI Bookkeeping & Expense Automation", cat: "smb", tags: ["Finance","Accounting","QuickBooks","Xero","Dext","Expense Tracking","SMB"],
+    summary: "AI auto-categorizes transactions, reconciles accounts, and flags anomalies — cutting bookkeeping time by 70%",
+    age45: "SMB accounting AI integrates with bank feeds via open banking APIs (Plaid, MX) and applies multi-class transaction classification using fine-tuned models trained on millions of categorized entries. Accuracy: 85–95% auto-categorization on well-trained accounts. OCR + NLP pipelines (AWS Textract, Azure Document Intelligence) power receipt/invoice parsing. Anomaly detection flags duplicate payments and out-of-pattern expenses. Key tools: QuickBooks AI (Intuit Assist), Xero Analytics, Dext, Vic.ai. ROI: reduces bookkeeping service costs by 40–60% and eliminates month-end reconciliation backlog." },
+  { name: "AI Meeting Transcription & Action Items", cat: "smb", tags: ["Productivity","Meetings","Otter.ai","Fireflies","Notion AI","Transcription","SMB"],
+    summary: "AI joins your Zoom or Teams calls, transcribes everything, and delivers a summary with action items in seconds",
+    age45: "AI meeting intelligence platforms (Otter.ai, Fireflies.ai, Fathom, Grain) use speaker-diarized ASR (Whisper-based) combined with instruction-tuned LLMs for summarization and action item extraction. WER of 5–10% in clean audio. Post-processing pipeline: diarization → transcript → LLM extraction of topics/decisions/action items → CRM sync or task manager integration. Privacy consideration: check vendor data retention terms before connecting to client calls. Pricing: $10–30/user/month. ROI: eliminates ~30 min of post-meeting admin per call." },
+  { name: "AI-Powered Email & CRM Automation", cat: "smb", tags: ["Email","CRM","HubSpot","Mailchimp","Klaviyo","Lead Nurturing","SMB"],
+    summary: "AI writes follow-up sequences, scores leads, and sends the right message to the right person at the right time — automatically",
+    age45: "SMB email automation leverages LLM-generated copy combined with behavioral trigger logic (page visits, cart abandonment, purchase history) and predictive scoring. Core ML models: propensity-to-purchase (gradient boosting on RFM features), churn risk (logistic regression on purchase cadence), and send-time optimization (learned per-user open-rate patterns). Klaviyo's predictive analytics (AWS) forecasts CLV and next-order date. Key SMB metrics: email revenue attribution (Klaviyo benchmarks: 20–30% of e-commerce revenue from email), list health (unsubscribe rate <0.3%), and flow conversion rates." },
+  { name: "AI Appointment Scheduling & Booking", cat: "smb", tags: ["Scheduling","Booking","Calendly","Square Appointments","OpenTable","Service Business","SMB"],
+    summary: "AI handles booking, reminders, and rescheduling automatically — cutting no-shows by up to 30% for service businesses",
+    age45: "AI scheduling platforms (Calendly, Square Appointments, Acuity, Vagaro) combine constraint-satisfaction scheduling with ML-powered no-show prediction and dynamic reminder sequences. No-show reduction: ML-timed SMS/email reminders reduce no-shows 20–35% vs. static reminders. Demand forecasting uses LSTM or Prophet models on historical booking data for staffing optimization. Deposit capture via payment processor reduces no-shows by an additional 15–25%. NLP-based voice booking (Twilio + LLM) is now available for hands-free phone reservations." },
+  { name: "AI Product Descriptions & SEO Content", cat: "smb", tags: ["E-commerce","SEO","Shopify","Wix","Semrush","Product Copy","SMB"],
+    summary: "AI writes search-optimized product descriptions, meta tags, and blog content — helping small online stores compete on Google",
+    age45: "E-commerce AI copy generation integrates structured product data with LLM prompting to produce SEO-optimized descriptions at scale. Shopify Magic (GPT-4o) generates product copy from title + bullet points; Semrush ContentShake combines SERP analysis with LLM drafting to produce topically authoritative content with embedded keyword density targets. Key risk: identical prompts across similar SKUs produce near-duplicate descriptions — add unique differentiators per SKU to avoid thin-content penalties. Volume benchmark: 500 SKUs can be drafted, reviewed, and published in 2–3 days vs. 6–8 weeks manually — a 10–20x throughput improvement." },
+  { name: "AI-Assisted Hiring & Job Description Writing", cat: "smb", tags: ["HR","Recruiting","Indeed","LinkedIn","Workable","Resume Screening","SMB"],
+    summary: "AI writes better job postings, screens resumes, and shortlists candidates — cutting time-to-hire from weeks to days",
+    age45: "SMB recruiting AI addresses the full hiring funnel: JD generation → candidate sourcing → resume screening → interview scheduling. JD generation: LLMs produce inclusive, legally compliant descriptions; Textio scores for gender bias and engagement likelihood. Candidate sourcing: Indeed Smart Sourcing and LinkedIn Recruiter AI use collaborative filtering to rank and surface candidates. Resume screening: NLP-based skill extraction + semantic similarity matching via Workable, Greenhouse, or Lever. Time-to-hire benchmark: SMBs using full-funnel AI recruiting reduce time-to-hire from 21–35 days to 8–14 days. Key risk: AI screening can introduce systematic bias — diverse shortlist human review is a legal requirement in most jurisdictions." },
+  { name: "AI Social Media Management", cat: "smb", tags: ["Social Media","Buffer","Hootsuite","Later","Content Calendar","Analytics","SMB"],
+    summary: "AI generates captions, suggests posting times, repurposes content across platforms, and analyses what's working",
+    age45: "AI social media management platforms (Buffer AI, Hootsuite Owly AI, Later AI, Sprout Social) combine LLM-powered content generation with ML-based send-time optimization and performance analytics. Send-time optimization models trained on per-account engagement history outperform generic best-practice windows by 15–25% on engagement. Content repurposing pipelines extract key points from long-form content and generate platform-native variants with appropriate tone calibration. Competitive intelligence tools (Sprout Social Listening, Brandwatch) use NLP to monitor brand mentions and competitor activity across the web in real time." },
+  { name: "AI Inventory & Demand Forecasting", cat: "smb", tags: ["Retail","Inventory","Shopify","Square","Lightspeed","Demand Planning","Cash Flow","SMB"],
+    summary: "AI predicts what to stock and when — reducing overstock, preventing stockouts, and freeing up cash flow",
+    age45: "SMB inventory AI applies time-series forecasting (Prophet, SARIMA, gradient boosting on lagged features) to POS and e-commerce sales history for SKU-level reorder recommendations. Shopify and third-party apps (Inventory Planner, Cin7, Brightpearl) ingest sales velocity, lead time variability, and seasonal indices to compute dynamic reorder points and safety stock levels. Accuracy benchmark: ML forecasting reduces MAPE by 20–40% vs. naive moving-average methods, translating to 15–30% reduction in carrying costs and stockout events. Key consideration: data sparsity on new SKUs requires Bayesian priors or category-level model sharing — purely data-driven models fail on thin-history products." },
 ];
 
 // ── Config ───────────────────────────────────────────────────────
@@ -927,6 +961,7 @@ const catLabel = {
   challenge: "Deployment Challenge",
   prompt:    "Prompt Technique",
   business:  "Business Use Case",
+  smb:       "Business Use Case (SMB)",
 };
 
 const catClass = {
@@ -939,6 +974,7 @@ const catClass = {
   challenge: "cat-challenge",
   prompt:    "cat-prompt",
   business:  "cat-business",
+  smb:       "cat-smb",
 };
 
 const Q_TYPE_LABEL = {

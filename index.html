@@ -262,12 +262,12 @@
 
 <script>
 const DATA = [
-  // ── AI MODELS (latest as of April 2026) ───────────────
+  // ── AI MODELS (latest as of May 2026) ───────────────
   {
-    name: "GPT-5 / GPT-5.4 (OpenAI)", cat: "model", tags: ["OpenAI","LLM","Multimodal","Reasoning","Computer Use"],
-    summary: "OpenAI's current flagship — adaptive reasoning, native computer use, 80% fewer hallucinations than GPT-4",
-    age10: "GPT-5 (August 2025) is OpenAI's best model yet. It dynamically decides how long to 'think' — simple questions get fast answers, hard problems trigger deeper reasoning. It has 80% fewer factual mistakes than GPT-4, scores 74.9% on real-world software engineering tasks, and GPT-5.4 can control a mouse and keyboard to complete computer tasks on its own.",
-    age45: "GPT-5 introduced adaptive reasoning — internally routing simple queries to a fast path (~2s) and complex ones to extended thinking (~10s+), using ~50% fewer tokens than competitors at comparable quality. GPT-5.4 (current) scores 74.9% SWE-bench Verified and is positioned as the first general-purpose model with native computer-use. Hallucination rate reduced ~80% vs GPT-4. Key PM consideration: unified model replaces the need to choose between GPT-4o (speed) and o3 (reasoning) — simplifying model selection for product teams."
+    name: "GPT-5.5 / GPT-5.5 Instant (OpenAI)", cat: "model", tags: ["OpenAI","LLM","Multimodal","Reasoning","Computer Use"],
+    summary: "OpenAI's current flagship — GPT-5.5 is the smartest yet, with GPT-5.5 Instant now the default for all ChatGPT users",
+    age10: "GPT-5.5 (April 2026) is OpenAI's best model yet. It excels at writing and debugging code, researching online, analyzing data, and operating software autonomously. GPT-5.5 Instant became the new default ChatGPT model in May 2026, replacing GPT-5.3 Instant — it gives sharper, more concise answers with better image and STEM help for everyone.",
+    age45: "GPT-5.5 (API: $5/$30 per 1M tokens) is OpenAI's current frontier model, succeeding GPT-5.4. It excels at agentic tasks — researching, coding, operating software end-to-end. GPT-5.5 Instant is the new ChatGPT default as of May 2026, optimized for low-latency everyday use. The o3/o4-mini reasoning models remain the choice for multi-step logic, math, and analysis at a fraction of the cost (o4-mini: $0.55/$2.20). Key PM consideration: GPT-5.5 unifies capability across tasks — product teams no longer need to route between speed and reasoning models."
   },
   {
     name: "o3 / o4-mini (OpenAI Reasoning)", cat: "model", tags: ["OpenAI","Reasoning","Test-Time Compute","Math","Agentic"],
@@ -276,16 +276,16 @@ const DATA = [
     age45: "The o-series uses test-time compute scaling — quality improves by allocating more inference-time computation rather than more training compute. o3 achieves near-human on competition math (AIME 2024: 96.7%), PhD science (GPQA Diamond: 87.7%), and software engineering (SWE-bench: 71.7%). o4-mini offers comparable performance to o3 on STEM at dramatically lower cost. Key PM tradeoff: 30-60s latency and high cost suit async, high-stakes tasks — not latency-sensitive UX."
   },
   {
-    name: "Claude 4.5 / Opus 4.6 (Anthropic)", cat: "model", tags: ["Anthropic","LLM","Agentic Coding","1M Context","Computer Use"],
-    summary: "Anthropic's latest — leads real-world coding benchmarks and is purpose-built for autonomous agentic tasks",
-    age10: "Claude Sonnet 4.5 (2025) is Anthropic's best everyday model, leading SWE-bench Verified at 77.2% — meaning it can fix 3 out of 4 real software bugs on its own. Claude Opus 4.6 (Feb 2026 beta) goes even further with a 1 million token context window and is designed to work autonomously for hours on complex tasks.",
-    age45: "Claude Sonnet 4.5 leads SWE-bench Verified (77.2%) and achieved 0% error rate on Replit's internal benchmark (vs 9% on prior Sonnet). Opus 4.6 (Feb 2026 beta) introduces a 1M token context window and is optimized for long-horizon agentic tasks — autonomously coding, researching, and completing multi-step workflows. Constitutional AI and extended thinking make it the preferred choice for compliance-sensitive enterprise deployments. Claude Code (the CLI agent) is built on this model family."
+    name: "Claude Sonnet 4.6 / Opus 4.7 (Anthropic)", cat: "model", tags: ["Anthropic","LLM","Agentic Coding","Fast Mode","Computer Use"],
+    summary: "Anthropic's current lineup — Sonnet 4.6 for everyday tasks, Opus 4.7 for complex agentic coding with Fast mode",
+    age10: "Claude Sonnet 4.6 (Feb 2026) is Anthropic's best everyday model — great for writing, analysis, and coding. Claude Opus 4.7 (April 2026) is the most capable model for the hardest tasks, with a major step-change in agentic coding and better vision. Opus 4.7 also has a Fast mode in research preview that generates responses much more quickly.",
+    age45: "Claude Sonnet 4.6 (Feb 2026) is the recommended starting point for most API use cases — development, writing, analysis, and enterprise workflows. Claude Opus 4.7 (April 16, 2026) is Anthropic's most capable GA model, with step-change improvements in software engineering and long-running agentic coding tasks, plus higher-resolution vision. Fast mode (research preview on Opus 4.7) delivers faster output token generation for latency-sensitive use cases. Constitutional AI and extended thinking make Anthropic models the preferred choice for compliance-sensitive deployments. Claude Code (the CLI agent) is built on this model family."
   },
   {
-    name: "Gemini 3.1 Pro (Google DeepMind)", cat: "model", tags: ["Google","LLM","Reasoning","1M Context","Deep Think"],
-    summary: "Google's flagship — leads reasoning benchmarks, first model to break 1500 LMArena Elo, 1M token context",
-    age10: "Gemini 3.1 Pro Preview (Feb 2026) is Google's strongest model. It has 'Deep Think' mode for extra-hard problems, a 1 million token context window — enough to read dozens of books at once — and scored 94.3% on PhD-level science questions, beating human expert performance. It's being built into everything Google makes.",
-    age45: "Gemini 3.1 Pro Preview (Feb 2026) scores 94.3% GPQA Diamond (surpassing human experts at ~89.8%), 77.1% ARC-AGI-2, and 80.6% SWE-bench Verified. It's the first model to break LMArena Elo 1500. The 1M token context window enables full-codebase analysis in a single prompt. Deep Think mode (extended reasoning) pushes Humanity's Last Exam to 41% — highest published score. Google's distribution advantage across Workspace, Search, and 3B+ Android devices makes this the most rapidly adopted enterprise frontier model."
+    name: "Gemini 2.5 Pro (Google DeepMind)", cat: "model", tags: ["Google","LLM","Reasoning","1M Context","Deep Think","Computer Use"],
+    summary: "Google's flagship — world-leading on WebDev Arena and LMArena, with Deep Think reasoning and a Computer Use model",
+    age10: "Gemini 2.5 Pro is Google's strongest model right now. It has 'Deep Think' mode for extra-hard problems — select mathematicians used it to compete in the International Math Olympiad. A new Computer Use version (May 2026) lets it control apps and websites directly. It leads the charts on LMArena and is being built into everything Google makes.",
+    age45: "Gemini 2.5 Pro is currently the world-leading model on both WebDev Arena and LMArena leaderboards (May 2026). Deep Think (available to Google AI Ultra subscribers) uses parallel thinking for complex math and science — Anthropic and Google are neck-and-neck on hard reasoning evals. The new Gemini 2.5 Computer Use model (public preview, May 2026) enables agents to interact with UIs via Gemini API on AI Studio and Vertex AI. Thought summaries are now available in the API. Google's distribution advantage across Workspace, Search, and 3B+ Android devices makes this the most rapidly adopted enterprise frontier model."
   },
   {
     name: "DeepSeek R1 / V3", cat: "model", tags: ["DeepSeek","China","Open Source","Reasoning","Low Cost"],
@@ -294,22 +294,22 @@ const DATA = [
     age45: "DeepSeek R1/V3 (Jan 2025, DeepSeek AI, China) caused significant market disruption: frontier reasoning performance at ~3% of OpenAI's API pricing, open-weight release enabling self-hosting. V3 was trained on ~$6M of compute (vs. GPT-4's estimated $100M+), using novel efficiency techniques (FP8 training, MoE architecture, multi-head latent attention). R1 matches o1 on AIME and MATH-500. Key PM considerations: data sovereignty concerns for US/EU enterprises, but unparalleled cost-performance for non-sensitive workloads. Signals that model capability is increasingly commoditized."
   },
   {
-    name: "Llama 3.3 (Meta)", cat: "model", tags: ["Meta","Open Source","LLM","Local","On-Premise"],
-    summary: "Meta's latest open-weight LLM — near-frontier quality, free to download and self-host",
-    age10: "Llama 3.3 70B (Dec 2024) is Meta's best open-source model. It's free, downloadable, and runs on a good gaming PC. At 70 billion parameters, it matches or beats many paid models. Because it's open, companies can run it on their own servers without sending data to anyone.",
-    age45: "Llama 3.3 70B delivers performance competitive with GPT-4o on many benchmarks at zero API cost. The open-weight license permits commercial use with minimal restrictions. Key enterprise use cases: air-gapped deployments (defense, healthcare), fine-tuning on proprietary data, and cost-sensitive high-volume inference. Ecosystem: Ollama, vLLM, llama.cpp enable single-GPU deployment. Meta's release strategy (open-source dominance) is a direct competitive threat to closed API providers."
+    name: "Llama 4 Scout / Maverick (Meta)", cat: "model", tags: ["Meta","Open Source","LLM","Multimodal","MoE","Local"],
+    summary: "Meta's first multimodal open-weight models — MoE architecture, 10M context window, beats GPT-4o and Gemini 2.0 Flash",
+    age10: "Llama 4 (April 2025) is Meta's biggest leap yet. Scout fits on a single GPU but has a 10-million token context window — the biggest of any model. Maverick beats GPT-4o and Gemini 2.0 Flash on benchmarks and is built into WhatsApp, Messenger, and Instagram. Both models understand images as well as text, and they're free to download and run yourself.",
+    age45: "Llama 4 Scout (17B active params, 16 experts MoE) and Maverick (17B active params, 128 experts MoE) mark Meta's shift to Mixture-of-Experts architecture and native multimodality. Scout has an industry-leading 10M token context window and fits on a single H100. Maverick outperforms GPT-4o and Gemini 2.0 Flash across benchmarks. Both available on Hugging Face under Meta's commercial license. Integrated into Meta AI across WhatsApp, Messenger, Instagram. Llama 4 Behemoth (largest model) remains in training. Key PM consideration: MoE efficiency makes frontier-class multimodal inference viable on modest hardware."
   },
   {
-    name: "Mistral Large 2", cat: "model", tags: ["Mistral AI","Open Source","LLM","European","Code"],
-    summary: "Mistral's frontier open-weight model — strong coding, multilingual, and commercially permissive",
-    age10: "Mistral Large 2 (July 2024) is the most capable model from Mistral AI. It has 123 billion parameters, is excellent at coding, supports 80+ languages, and is open-weight — meaning companies can download and customize it. It outperforms Llama 3.1 405B on some coding tasks despite having fewer parameters.",
-    age45: "Mistral Large 2 (123B) benchmarks competitively with GPT-4o on code generation and multilingual tasks. The MRL license allows commercial use with attribution. Key differentiator: European data residency via La Plateforme API satisfies EU AI Act and GDPR requirements — critical for EU enterprise procurement. Mistral's growing ecosystem (Le Chat, API, partnerships with Azure/GCP) increases its viability as a primary model provider."
+    name: "Mistral Medium 3.5 (Mistral AI)", cat: "model", tags: ["Mistral AI","Open Source","LLM","European","Code","Multimodal","Reasoning"],
+    summary: "Mistral's latest frontier open-weight model — 128B, multimodal, configurable reasoning, 77.6% SWE-bench",
+    age10: "Mistral Medium 3.5 (May 2026) is Mistral's most powerful model yet — 128 billion parameters, open-weight, and it can understand images as well as text. You can toggle 'reasoning mode' for harder problems. It scores 77.6% on real-world software engineering tasks and costs just $1.50 per million tokens through the API — far cheaper than comparable models.",
+    age45: "Mistral Medium 3.5 (128B dense, May 2026) is Mistral's largest open-weight model, released under a modified MIT license. It scores 77.6% SWE-Bench Verified (ahead of Qwen3.5 397B) and 91.4 on τ³-Telecom agentic benchmarks. Configurable reasoning mode (fast vs. extended) in a single model. Vision capabilities for image analysis. 256K token context window. Priced at $1.50/$7.50 per 1M tokens. Key differentiator: European data residency via La Plateforme satisfies EU AI Act/GDPR requirements — critical for EU enterprise procurement. Powers remote agents in Mistral's Vibe platform."
   },
   {
-    name: "Grok 2 (xAI)", cat: "model", tags: ["xAI","LLM","Real-time","X/Twitter","Elon Musk"],
-    summary: "Elon Musk's xAI model — integrated into X (Twitter) with real-time web access",
-    age10: "Grok 2 is made by xAI, Elon Musk's AI company. It's built into X (formerly Twitter) and can access real-time posts and news. It has a more casual, sometimes sarcastic tone compared to other AI assistants. Grok 2 also generates images using a model called Aurora.",
-    age45: "Grok 2 (Aug 2024) is xAI's frontier LLM, integrated into X Premium with real-time access to X's data firehose — a unique data advantage for current events and market sentiment. Competes with GPT-4o on benchmarks. Aurora handles image generation. For PMs: xAI's API (competitive pricing) and X integration make Grok relevant for social media analytics and real-time information products. Open-weight Grok models were released in 2024."
+    name: "Grok 3 / Grok 4.3 (xAI)", cat: "model", tags: ["xAI","LLM","Real-time","X/Twitter","Reasoning","1M Context"],
+    summary: "xAI's latest — Grok 3 leads academic benchmarks, Grok 4.3 adds aggressively low pricing and voice cloning",
+    age10: "Grok 3 (June 2025) is xAI's most powerful model, trained on a supercluster 10x larger than previous models. It's built into X and Grok.com for Premium users, can read real-time posts and news, has a 1 million token context window, and leads on graduate-level science, math, and coding benchmarks. Grok 4.3 (2026) adds new low-cost pricing and a fast voice cloning suite.",
+    age45: "Grok 3 (June 2025) was trained on xAI's Colossus supercluster with 10x the compute of prior models. It achieves state-of-the-art results on GPQA, MMLU-Pro, AIME, and multimodal benchmarks (MMMU, EgoSchema), with an LMArena Elo of 1402. 1M token context window — 8x larger than Grok 2. Pricing: $3/$15 per 1M tokens. Grok 4.3 (2026) launches at aggressively low pricing with a new fast voice cloning suite. Real-time X data firehose remains a unique competitive advantage for market sentiment and current events. For PMs: xAI's API + X integration makes Grok the natural choice for social media analytics and real-time information products."
   },
   {
     name: "Gemma 2 (Google)", cat: "model", tags: ["Google","Open Source","Small","On-device","Efficient"],
@@ -439,7 +439,7 @@ const DATA = [
     name: "Mixture of Experts (MoE)", cat: "arch", tags: ["Efficiency","Scaling","Mixtral","Sparse"],
     summary: "Activates only a subset of model parameters per input — enabling huge models cheaply",
     age10: "Mixture of Experts splits the model into many 'expert' sub-networks. For each input, a 'router' picks only 2-4 experts to activate. So even if the total model has hundreds of billions of parameters, only a fraction are used at once — making it faster and cheaper to run.",
-    age45: "MoE replaces dense FFN layers with N expert sub-networks and a learned routing function (top-k gating). At inference, only k/N parameters are active per token, dramatically reducing FLOPs vs parameter count. Mixtral 8x7B, GPT-4 (alleged), and Gemini use MoE. Key tradeoff: memory cost is high (all experts must fit in VRAM), but throughput and quality/FLOP ratio improve significantly."
+    age45: "MoE replaces dense FFN layers with N expert sub-networks and a learned routing function (top-k gating). At inference, only k/N parameters are active per token, dramatically reducing FLOPs vs parameter count. Key examples: Mixtral 8x7B, GPT-4 (alleged), Gemini, and Meta's Llama 4 (Scout: 16 experts, Maverick: 128 experts). Key tradeoff: memory cost is high (all experts must fit in VRAM), but throughput and quality/FLOP ratio improve significantly."
   },
 
   // ── KEY CONCEPTS ──────────────────────────────────────────
@@ -483,7 +483,7 @@ const DATA = [
     name: "Context Window", cat: "concept", tags: ["LLM","Memory","Tokens","Limitations"],
     summary: "The maximum amount of text an LLM can 'see' at once in a single conversation",
     age10: "The context window is how much text an LLM can process in one go — including your conversation history, documents, and instructions. Older models: 4K tokens (~3,000 words). Modern models: 128K–1M tokens. Longer context = more expensive but lets you analyze entire codebases or books at once.",
-    age45: "Context window defines the maximum input+output token capacity per inference pass. Scaling: GPT-4 Turbo 128K, Claude 3 200K, Gemini 1.5 Pro 1M. Longer context incurs O(n²) attention cost, though Flash Attention and sliding window reduce this. Key PM tradeoffs: longer context ↑ capability but ↑ latency and cost. 'Lost in the middle' research shows retrieval performance degrades for content in the middle of long contexts."
+    age45: "Context window defines the maximum input+output token capacity per inference pass. Scaling: GPT-4 Turbo 128K → Gemini 2.5 Pro / Claude 1M → Llama 4 Scout 10M. Longer context incurs O(n²) attention cost, though Flash Attention and sliding window reduce this. Key PM tradeoffs: longer context ↑ capability but ↑ latency and cost. 'Lost in the middle' research shows retrieval performance degrades for content in the middle of long contexts."
   },
   {
     name: "RLHF (Reinforcement Learning from Human Feedback)", cat: "concept", tags: ["Alignment","Safety","Training","LLM","GPT"],
@@ -532,8 +532,8 @@ const DATA = [
   {
     name: "Computer Use / Tool Use", cat: "concept", tags: ["Agents","Agentic","GUI","Automation","Claude","GPT-5"],
     summary: "AI that can control a computer — clicking, typing, browsing — to complete tasks autonomously",
-    age10: "Computer use lets AI models operate a real computer: open a browser, search the web, fill out forms, write and run code, read emails. Claude's Computer Use (2024) and GPT-5.4's computer use (2025) can complete multi-step computer tasks autonomously. It's a big step toward AI that can handle any digital work a human can.",
-    age45: "Computer use (Claude Computer Use Oct 2024; GPT-5.4 native CU 2025) enables LLMs to perceive GUI screenshots and emit mouse/keyboard actions — turning any desktop or web application into an agent-accessible tool without requiring an API. Architecture: vision model → action prediction → emulated input. Key enterprise applications: legacy system automation, web scraping without APIs, QA testing, and RPA replacement. Key risks: unrestricted computer access significantly expands the attack surface for prompt injection. Best practice: run in sandboxed VMs with scoped permissions and human-in-the-loop checkpoints."
+    age10: "Computer use lets AI models operate a real computer: open a browser, search the web, fill out forms, write and run code, read emails. Claude's Computer Use (2024), GPT-5.4 (2025), and Google's Gemini 2.5 Computer Use model (May 2026) can all complete multi-step computer tasks autonomously. It's a big step toward AI that can handle any digital work a human can.",
+    age45: "Computer use enables LLMs to perceive GUI screenshots and emit mouse/keyboard actions — turning any desktop or web application into an agent-accessible tool. Key implementations: Claude Computer Use (Oct 2024), GPT-5.4 native CU (2025), Gemini 2.5 Computer Use model (public preview, May 2026). Architecture: vision model → action prediction → emulated input. Key enterprise applications: legacy system automation, web scraping without APIs, QA testing, and RPA replacement. Key risks: unrestricted computer access significantly expands the attack surface for prompt injection. Best practice: run in sandboxed VMs with scoped permissions and human-in-the-loop checkpoints."
   },
 
   {
@@ -1052,14 +1052,14 @@ let currentCat   = "all";
 let currentQuery = "";
 
 const URLS = {
-  "GPT-5 / GPT-5.4 (OpenAI)":                        "https://openai.com/gpt-5",
+  "GPT-5.5 / GPT-5.5 Instant (OpenAI)":               "https://openai.com/gpt-5",
   "o3 / o4-mini (OpenAI Reasoning)":                  "https://openai.com/o3",
-  "Claude 4.5 / Opus 4.6 (Anthropic)":                "https://www.anthropic.com/claude",
-  "Gemini 3.1 Pro (Google DeepMind)":                 "https://deepmind.google/technologies/gemini/",
+  "Claude Sonnet 4.6 / Opus 4.7 (Anthropic)":         "https://www.anthropic.com/claude",
+  "Gemini 2.5 Pro (Google DeepMind)":                 "https://deepmind.google/technologies/gemini/",
   "DeepSeek R1 / V3":                                  "https://www.deepseek.com/",
-  "Llama 3.3 (Meta)":                                  "https://ai.meta.com/llama/",
-  "Mistral Large 2":                                   "https://mistral.ai/news/mistral-large-2407/",
-  "Grok 2 (xAI)":                                     "https://x.ai/grok",
+  "Llama 4 Scout / Maverick (Meta)":                  "https://ai.meta.com/llama/",
+  "Mistral Medium 3.5 (Mistral AI)":                  "https://mistral.ai/news/mistral-medium-3",
+  "Grok 3 / Grok 4.3 (xAI)":                         "https://x.ai/grok",
   "Gemma 2 (Google)":                                  "https://ai.google.dev/gemma",
   "Phi-3 / Phi-3.5 (Microsoft)":                      "https://azure.microsoft.com/en-us/blog/phi-3-small-language-models-with-big-potential/",
   "Stable Diffusion 3":                                "https://stability.ai/stable-diffusion-3",

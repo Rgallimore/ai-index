@@ -191,6 +191,7 @@
     .cat-business   { background: rgba(52,211,153,0.15);  color: #34d399; }
     .cat-smb        { background: rgba(163,230,53,0.15);  color: #a3e635; }
     .cat-pmconcern  { background: rgba(168,157,249,0.18); color: var(--accent-light); }
+    .cat-consult    { background: rgba(45,212,191,0.15);  color: #2dd4bf; }
 
     .card-summary { color: var(--text-muted); font-size: 0.85rem; }
     .tags { display: flex; gap: 0.35rem; flex-wrap: wrap; }
@@ -253,6 +254,7 @@
   <button class="filter-btn" data-cat="business">💼 Business Use Cases</button>
   <button class="filter-btn" data-cat="smb">🏪 Business Use Cases (SMB)</button>
   <button class="filter-btn" data-cat="pmconcern">🎯 PM Concerns</button>
+  <button class="filter-btn" data-cat="consult">🧭 Consultants</button>
 </div>
 
 <main>
@@ -1066,6 +1068,97 @@ const DATA = [
     age10: "Most people think building an AI product means choosing the right AI model. That's actually the easy part. The hard part is everything else: getting the data right, integrating with old systems, getting people to actually use the tool, navigating legal requirements, managing costs, and measuring whether it worked. The AI PM's real job is managing all of these at once — while keeping the team focused on what matters most.",
     age45: "The AI PM role is defined by a fundamental reality: only 14% of organizations planning AI deployment are deployment-ready, and just 11% are in active production use (Cisco 2025 AI Readiness Index) — despite 83% planning agentic AI. Gartner's 2026 CIO survey tells the same story: only ~17% of organizations have deployed AI agents. The implementation gap is the job. Core PM accountabilities that distinguish AI from traditional product management: (1) Probabilistic system design — AI outputs are not deterministic; PMs must define acceptable quality ranges, failure modes, and fallback behaviors rather than binary pass/fail specs; (2) Evals pipeline ownership — the PM owns the definition of 'good' output through an evals framework, not just user stories; (3) Data requirements definition — data quality, lineage, and access requirements must be specified before engineering begins, not discovered mid-sprint; (4) Build/buy/fine-tune decisions — with direct cost, timeline, and capability implications; (5) Cross-functional alignment — data engineering, legal/compliance, MLOps, and change management are co-equals, not support functions; (6) Responsible AI integration — bias testing, explainability, and compliance are product requirements with launch gates, not post-launch nice-to-haves. The AI PM who understands that the technology is rarely the bottleneck — and plans accordingly — consistently outperforms the one focused primarily on model benchmarks and feature lists."
   },
+  // ── CONSULTANT PLAYBOOK: DEPLOYING AI (sources: spiretech.ca, NIST AI RMF, ISO/IEC 42001, MIT NANDA 2025, McKinsey State of AI 2025, Gartner 2026) ──
+  {
+    name: "AI Roadmap: Discover → Develop → Deliver", cat: "consult", tags: ["Consulting","Strategy","Roadmap","Prioritization","Spire Technologies"],
+    summary: "A phased roadmap turns AI enthusiasm into a ranked, costed plan — find where AI will actually pay off before anyone buys anything",
+    age10: "Before a company spends money on AI, a consultant helps it work out where AI will actually help. First they talk to leaders and look at how work really gets done (Discover). Then everyone agrees on the few ideas that matter most and picks the right tools (Develop). Finally the consultant hands over a plan with priorities, costs, and timelines (Deliver). Spire Technologies says a good roadmap can be ready in about six weeks.",
+    age45: "Spire Technologies structures AI strategy work in three phases. Discover: leadership workshops to align on AI strategy, a qualitative assessment of current systems and tools, process mapping and requirements gathering, and a review of governance, data management, reporting, and KPIs. Develop: agree on the most impactful priorities, choose tools and strategies, set responsible-AI guidance, and define the data strategy. Deliver: prioritized initiatives with solutions, timelines, cost estimates, vendor research, and governance and change-management guidance. Typical deliverables: an AI readiness and capability assessment, process maps with an opportunity register, a prioritized and costed roadmap, and data strategy and governance recommendations — Spire cites ~6 weeks to an actionable roadmap. Consultant recommendation: score every opportunity on value, feasibility (data, integration, risk), and time-to-impact; put one or two quick wins in the first 90 days to build credibility for the harder bets; and size the scope to the company, not the hype — Spire notes even a 40-person firm usually has 'two or three processes where a week of manual work disappears.'"
+  },
+  {
+    name: "AI Readiness & Capability Assessment", cat: "consult", tags: ["Consulting","Readiness","Assessment","Data","Skills"],
+    summary: "Assess data, systems, skills, and governance before committing — readiness gaps, not model quality, decide most outcomes",
+    age10: "A readiness check is like a health check-up before a big race. The consultant looks at the company's data, software, people's skills, and rules to see what's ready for AI and what needs fixing first. Skipping this step is a big reason AI projects fail later.",
+    age45: "A readiness assessment scores the organization on six dimensions: strategy (is there an executive owner and a real business problem?), data (availability, quality, access rights, and lineage for the target use cases), technology (integration points, APIs, identity, cloud posture), people and skills (product, data, and engineering capacity; AI literacy — now a legal duty for EU AI Act deployers), governance (policies, risk classification, approval paths), and operating model (who will own and run the system after launch). Context: MIT NANDA's 2025 'GenAI Divide' study reported ~95% of enterprise generative AI pilots showed no measurable P&L return, and Gartner's 2026 CIO survey found only ~17% of organizations had deployed AI agents — readiness, integration, and workflow fit, not model capability, are the usual blockers. Consultant recommendation: present the assessment as a heat map tied to specific use cases ('ready for initiative A, not yet for B') rather than a generic maturity score, which rarely changes a decision."
+  },
+  {
+    name: "Use-Case Prioritization & the Opportunity Register", cat: "consult", tags: ["Consulting","Prioritization","ROI","Workflow Redesign","Use Cases"],
+    summary: "Rank AI opportunities by value, feasibility, and risk — and explicitly say no to most of them",
+    age10: "Most companies come up with dozens of AI ideas. A consultant writes them all in one list (an opportunity register), then scores each one: how much time or money will it save, how hard is it to build, and how risky is it? Only the best few get started — the rest wait.",
+    age45: "The opportunity register records each candidate use case with its process owner, current cost (hours, errors, cycle time), data sources, integration needs, risk tier, and value hypothesis. Score with a simple, transparent model — e.g., value × feasibility ÷ risk, or RICE. Where AI pays off most reliably, per Spire Technologies: answers instead of reports (natural-language questions over your own systems); automating manual workflows such as quoting, approvals, intake, scheduling, and document handling; customer service with escalation rules 'written down before launch'; trustworthy data foundations; and connecting legacy systems. McKinsey's State of AI 2025 found nearly three-quarters of AI high performers fundamentally redesign workflows around AI versus about a quarter of other companies — so favor use cases where the process itself can change, not just one step being sped up. Consultant recommendation: explicitly park or kill at least half the list; an unprioritized backlog of 30 'AI ideas' is how pilot purgatory starts."
+  },
+  {
+    name: "Data Readiness: Fix What the Roadmap Needs", cat: "consult", tags: ["Consulting","Data Quality","Data Strategy","Ownership","RAG"],
+    summary: "\"Nobody's data is perfect\" — clean the data your prioritized initiatives need, not a two-year cleanup with no owner",
+    age10: "Almost every company worries its data is too messy for AI — and it usually is a bit messy. But you don't need to clean everything first. A consultant helps fix just the data the first AI projects need, so results come sooner instead of after years of cleanup.",
+    age45: "Spire Technologies' answer to 'is our data good enough?' is 'Nobody's is' — so scope data work to what the prioritized initiatives need rather than 'a two-year cleanup with no owner.' Spire also observes that 'most failed AI projects are data projects that were never finished.' Per-use-case checklist: identify the system of record for each field; assign a named data owner; measure completeness and accuracy on the specific fields the model or retrieval layer will use; resolve access rights and personal-data handling (purpose limitation, retention); document lineage; and add metadata (dates, owners, document types) that retrieval can rank on. For retrieval (RAG) use cases the 'data' is often documents: deduplicate, retire stale versions, and tag the authoritative sources. Consultant recommendation: make each data fix a deliverable inside an initiative's plan, with an owner and a date — data-quality work with no consuming use case rarely finishes."
+  },
+  {
+    name: "Build, Buy, Fine-Tune — or Don't Use AI", cat: "consult", tags: ["Consulting","Requirements","Build vs Buy","Fine-Tuning","Decision"],
+    summary: "Requirements should decide where a model is bought, fine-tuned, or not used at all — AI isn't the answer to every requirement",
+    age10: "Not every problem needs AI. Sometimes regular software or a simple rule works better and costs less. A good consultant turns the company's needs into a clear list of requirements, then decides for each one: buy a ready-made AI product, customize an AI model, or skip AI entirely.",
+    age45: "Spire Technologies' system-selection work starts by translating business needs into functional and technical requirements, including deciding 'where a model should be bought, fine-tuned, or not used at all.' Decision guide: buy (SaaS, or AI embedded in your ERP/CRM) when the process is standard and differentiation is low; configure a frontier model with prompts, retrieval, and tools (via Microsoft Foundry, Amazon Bedrock, or Google Cloud) when you need your own data and workflow but not a custom model; fine-tune only for consistent format, tone, or narrow high-volume classification after prompting and RAG have been tried; and use deterministic software or rules where outputs must be exact, auditable, and cheap (pricing calculations, eligibility rules). Consultant recommendation: record the 'not AI' decisions in the requirements too — they protect the budget and the client's credibility, and they signal an independent adviser."
+  },
+  {
+    name: "Vendor Selection & Competitive RFP", cat: "consult", tags: ["Consulting","Procurement","RFP","Vendor Evaluation","Demos"],
+    summary: "Create a competitive bidding environment — long list, short list, formal RFP, scored proposals, and scripted demos on your own data",
+    age10: "When a company buys AI software, it should compare several options instead of picking the first one a salesperson shows. A consultant makes a long list of vendors, narrows it down, asks each finalist the same questions, has them demo using the company's own examples, and scores them fairly.",
+    age45: "Spire Technologies' selection process: build a vendor long list and short list, issue a formal RFP to create 'a competitive bidding environment', score proposals against weighted criteria, facilitate vendor demos, and assess implementation and long-term ownership risk. Deliverables: a requirements document, long list/short list/RFP, a scored comparison with risk assessment, and a TCO model with contract review. AI-specific recommendations: run scripted demos on the client's own data and edge cases, not the vendor's showcase; for high-value deals, require a paid proof of concept with success metrics agreed in advance; ask which foundation models the product uses, how model upgrades and deprecations are handled, and whether models can be swapped; request evaluation evidence (accuracy on your test set, hallucination handling); and check roadmap claims against what is generally available today — an announcement, a preview, and GA are different things."
+  },
+  {
+    name: "Total Cost of Ownership for AI", cat: "consult", tags: ["Consulting","TCO","Cost","Tokens","Business Case"],
+    summary: "Model the full cost before you commit — licensing, tokens, integration, retraining, and the people to run it",
+    age10: "The price tag on an AI product is only part of the cost. You also pay for every question the AI answers (tokens), connecting it to your other systems, training staff, and keeping it running. A consultant adds all of these up over three to five years so there are no surprises.",
+    age45: "Spire Technologies insists on understanding total cost of ownership 'before you commit — licensing, tokens, integration, retraining.' A complete AI TCO model covers: licences, seats, and platform fees; usage costs (tokens, per-minute audio, per-second video) under realistic and worst-case volumes, including agent loops; integration and data-pipeline build; evaluation and testing; security and compliance work; change management and training; ongoing operations (monitoring, prompt and content maintenance, re-testing when vendors change models); and exit costs. List prices move — several 2026 frontier models launched with introductory pricing that doubled within weeks. Consultant recommendation: present TCO next to a benefits model over the same 3–5 year horizon, show a sensitivity range for usage, and define a cost-per-transaction metric the client can monitor after go-live."
+  },
+  {
+    name: "AI Contract & Vendor Risk Review", cat: "consult", tags: ["Consulting","Contracts","Vendor Risk","Data Residency","Legal"],
+    summary: "Hidden risk lives in the contract — data use, model changes, residency, liability, and exit terms",
+    age10: "Before signing with an AI vendor, someone needs to read the fine print. Can the vendor use your company's data to train its AI? Where is your data stored? What happens if the vendor changes its AI model or goes out of business? A consultant checks all of this before the client signs.",
+    age45: "Spire Technologies reviews software and implementation agreements for hidden risks and holds vendors contractually to the roadmap's privacy requirements. AI-specific clauses to check: no training on customer data (inputs, outputs, embeddings) without consent; data residency and sub-processors; retention and deletion; security certifications (SOC 2, ISO 27001, and ISO/IEC 42001 for AI management systems); notice periods for model changes and deprecations, with the right to re-test before forced upgrades; output IP ownership and indemnity (especially for generated content, code, images, and music); service levels for latency and availability; usage-price protections or caps; audit rights and incident notification; EU AI Act role allocation (provider vs. deployer obligations); and exit terms covering export of data, prompts, configurations, and evaluation sets. Consultant recommendation: write a one-page risk summary for the executive sponsor — few leaders will read the master agreement, but they must own the residual risks."
+  },
+  {
+    name: "AI Governance Framework & RACI", cat: "consult", tags: ["Consulting","Governance","RACI","NIST AI RMF","ISO 42001"],
+    summary: "Define who decides, who builds, who approves, and who is accountable — clear governance keeps AI projects from stalling",
+    age10: "Governance means agreeing on the rules and who's in charge. Who decides which AI projects go ahead? Who checks that an AI is safe and fair? Who fixes it when it goes wrong? A consultant writes this down in a simple chart so everyone knows their job.",
+    age45: "Spire Technologies' implementation Phase 1 (governance and readiness) sets objectives and expected benefits, defines project roles and responsibilities, aligns on a governance framework and change-management strategy, assesses architecture impact, reviews the vendor's project plan, validates functional requirements and KPIs, and assesses implementation readiness — delivering a governance framework and RACI. Reference frameworks: the NIST AI Risk Management Framework (Govern, Map, Measure, Manage), ISO/IEC 42001 (a certifiable AI management system), and EU AI Act risk tiers where relevant. Minimum viable AI governance: an executive sponsor; an AI use policy (approved tools, data rules); a use-case intake and risk-tiering process; approval gates proportionate to risk; a model and vendor inventory; incident response; and periodic review. Consultant recommendation: keep governance proportionate — a heavyweight committee for a low-risk internal summarizer pushes staff toward unapproved 'shadow AI'; reserve the full process for high-risk or customer-facing systems."
+  },
+  {
+    name: "Pilots That End in a Decision", cat: "consult", tags: ["Consulting","Pilots","Success Criteria","Adoption","Scale"],
+    summary: "Pilots stall when success criteria, governance, and ownership were never defined — design every pilot to end in a scale, fix, or stop decision",
+    age10: "A pilot is a small test of an AI tool before the whole company uses it. Many pilots never end — people keep testing without ever deciding anything. A consultant sets the goal and the finish date before the test starts, measures whether people actually use the tool, and helps leaders decide: grow it, fix it, or stop it.",
+    age45: "Spire Technologies: 'Pilots stall when success criteria, governance and ownership were never defined' — the remedy is defined roles, measured adoption, and 'a decision point with evidence behind it.' MIT NANDA's 2025 study (~95% of enterprise genAI pilots with no measurable return) and Gartner's prediction that 40% of agentic AI projects will be canceled by end of 2027 point to the same failure mode. Pilot design checklist: a named business owner; a baseline of the current process; 2–4 success metrics with thresholds agreed in advance (time saved, accuracy, adoption, cost per transaction); a fixed duration (typically 6–12 weeks); a representative user group, not just enthusiasts; an evaluation set and a human-review sample; a scale-up cost estimate; and a scheduled decision meeting with a scale / iterate / stop outcome. Consultant recommendation: treat 'stop' as a success when the evidence supports it — it frees budget for the next initiative."
+  },
+  {
+    name: "Grounding, Evaluation & Trust", cat: "consult", tags: ["Consulting","RAG","Evals","Hallucination","Acceptance Criteria"],
+    summary: "A general chatbot does not know your business — ground answers in your own data and measure their quality before and after launch",
+    age10: "An AI chatbot straight out of the box doesn't know anything about your company. To give correct answers, it has to look things up in your own documents first. A consultant also sets up tests that check the AI's answers regularly, so people can trust it.",
+    age45: "Spire Technologies: a general chatbot 'does not know your business' — answers should be grounded through retrieval with 'metadata ranking and evaluation of the answers,' an approach designed to reduce hallucination risk and earn user trust. Spire reports an Oracle LLM assistant across four knowledge sources, with 25,000 users in scope, cut time to find an answer by ~70% (figures described as indicative). Recommended practice: build a golden evaluation set (real questions with approved answers and sources) before go-live; measure groundedness, correctness, citation accuracy, and refusal behavior; show sources to users; route low-confidence or out-of-scope questions to people; log questions to find content gaps; and re-run evaluations whenever the model, prompt, retrieval index, or vendor version changes. Consultant recommendation: make evaluation results a contractual acceptance criterion for vendors — 'it demoed well' is not acceptance."
+  },
+  {
+    name: "Security, Privacy & Responsible AI by Design", cat: "consult", tags: ["Consulting","Security","Privacy","Prompt Injection","Responsible AI","Compliance"],
+    summary: "Responsible AI is a requirement in the document, not a slide — residency, access control, retention, and prompt-injection risk belong in the requirements",
+    age10: "AI systems can leak private information or be tricked by hidden instructions in emails or web pages. A consultant makes sure safety and privacy rules are written into the project's requirements from the start — not added at the end — and that vendors have to follow them.",
+    age45: "Spire Technologies' roadmaps address 'data residency, access control, retention, prompt-injection risk and regulatory exposure,' and vendors are held to them in contract review: 'Responsible AI is a requirement in the document, not a slide.' Requirements checklist: data classification and which data may go to which model; residency (e.g., Canadian or EU hosting); permission-aware retrieval so users see only what they're entitled to; retention and logging policies; defenses against indirect prompt injection for any agent reading external content (least-privilege tools, sandboxing, human approval for irreversible actions); output filtering and PII redaction; bias and fairness testing where decisions affect people; transparency about AI use; and risk classification under applicable law — for Canadian clients, PIPEDA and provincial laws such as Québec's Law 25; for EU exposure, the AI Act (high-risk obligations now due Dec 2027 / Aug 2028). Consultant recommendation: run a lightweight privacy and AI impact assessment per use case at the roadmap stage, when changes are still cheap."
+  },
+  {
+    name: "Driving Adoption & Workflow Change", cat: "consult", tags: ["Consulting","Change Management","Adoption","Training","AI Literacy"],
+    summary: "Adoption is the return — redesign the work, train the people, and measure usage, or the system quietly fails",
+    age10: "Even a great AI tool is useless if people don't use it. Change management means explaining why the tool matters, training people, listening to their worries, and changing how the work gets done so the tool fits. A consultant tracks how many people actually use it and helps fix whatever is getting in the way.",
+    age45: "Spire Technologies includes a change-management and adoption strategy in every implementation and treats measured adoption as evidence for the pilot decision. Practical playbook: secure a visible executive sponsor and front-line champions; explain what the AI will and won't do, and what it means for people's roles; redesign the workflow rather than bolting on a tool — McKinsey's 2025 data shows AI high performers are about three times as likely to fundamentally redesign workflows; train on real tasks with role-specific examples; meet AI-literacy obligations (EU AI Act Article 4 for deployers); create feedback channels and respond visibly; and track adoption metrics (active users, tasks completed with AI, override rates) alongside business outcomes. Consultant recommendation: reserve roughly 15–25% of implementation effort for change and training — it is the line most often cut and the most common reason for low return."
+  },
+  {
+    name: "Staying the Course Through Implementation", cat: "consult", tags: ["Consulting","Implementation","Vendor Oversight","Risk Register","Benefits Tracking"],
+    summary: "Implementation is where most projects quietly lose their return — independent oversight keeps vendors, scope, and benefits on track",
+    age10: "Once the contract is signed, the hard part starts. The vendor builds the system, but the company needs someone on its side checking the work, spotting problems early, and keeping leaders informed. A consultant works alongside the team as a coach and watchdog until the system is live and delivering.",
+    age45: "Spire Technologies calls implementation 'the stage where most projects quietly lose their return.' Its Phase 2 (execution) provides coaching for the project team, regular status updates to leadership, support in vendor meetings, document reviews for oversight and controls, advice on vendor design-session outputs, and early risk flags — with deliverables including the project plan, success criteria and KPI definitions, and a risk register with status reporting. Consultant recommendations: hold the vendor to the requirements and KPIs agreed at selection; manage scope through a change-control log showing cost and benefit impact; run user acceptance testing against the evaluation set, not just functional scripts; plan cutover and rollback; and define the post-launch operating model before go-live — who monitors quality and cost, who maintains prompts and content, and who re-tests when the vendor changes models. Track realized benefits against the business case after launch; that is how the next initiative gets funded."
+  },
+  {
+    name: "Running the Engagement: Independence & Scoping", cat: "consult", tags: ["Consulting","Independence","Engagement Model","Fixed Fee","Ethics"],
+    summary: "Advice is only as good as its independence — vendor-neutral, fixed-scope engagements that will sometimes conclude 'you don't need us yet'",
+    age10: "A good AI consultant works for the client, not for a software company. That means not taking commissions from vendors, agreeing on the price and the scope up front, and being honest — even when the honest answer is that the client isn't ready for AI yet.",
+    age45: "Spire Technologies' engagement model illustrates good practice: vendor-neutral (it resells no software and accepts no vendor commissions); a no-cost first conversation followed by 'a written read' on which solution fits — or that 'you do not need us yet'; engagements that 'start with a defined scope and a fixed fee'; and services sequenced Roadmap → System Selection → Implementation. Consultant recommendations: disclose any vendor partnerships or referral fees in writing; state assumptions and exclusions in every statement of work; tie deliverables to decisions the client must make (prioritize, select, approve, scale); transfer knowledge so the client can run the system without you; stay current — model lineups, prices, product names, and regulations all changed several times in 2026 alone; and measure your success by the client's realized benefits, not hours billed."
+  },
 ];
 
 
@@ -1183,6 +1276,21 @@ const URLS = {
   "Customer Churn Prediction & Retention":             "https://en.wikipedia.org/wiki/Customer_attrition",
   "Legal Research & E-Discovery":                      "https://en.wikipedia.org/wiki/Electronic_discovery",
   "Real Estate Valuation & Property Intelligence":     "https://en.wikipedia.org/wiki/Automated_valuation_model",
+  "AI Roadmap: Discover → Develop → Deliver": "https://spiretech.ca/solutions.html",
+  "AI Readiness & Capability Assessment": "https://spiretech.ca/",
+  "Use-Case Prioritization & the Opportunity Register": "https://spiretech.ca/use-cases.html",
+  "Data Readiness: Fix What the Roadmap Needs": "https://spiretech.ca/solutions.html",
+  "Build, Buy, Fine-Tune — or Don't Use AI": "https://spiretech.ca/solutions.html",
+  "Vendor Selection & Competitive RFP": "https://spiretech.ca/solutions.html",
+  "Total Cost of Ownership for AI": "https://spiretech.ca/solutions.html",
+  "AI Contract & Vendor Risk Review": "https://spiretech.ca/solutions.html",
+  "AI Governance Framework & RACI": "https://www.nist.gov/itl/ai-risk-management-framework",
+  "Pilots That End in a Decision": "https://spiretech.ca/solutions.html",
+  "Grounding, Evaluation & Trust": "https://spiretech.ca/use-cases.html",
+  "Security, Privacy & Responsible AI by Design": "https://spiretech.ca/solutions.html",
+  "Driving Adoption & Workflow Change": "https://spiretech.ca/solutions.html",
+  "Staying the Course Through Implementation": "https://spiretech.ca/solutions.html",
+  "Running the Engagement: Independence & Scoping": "https://spiretech.ca/contact.html",
 };
 
 const fuse = new Fuse(DATA, {
@@ -1210,6 +1318,7 @@ const catClass = {
   business:   "cat-business",
   smb:        "cat-smb",
   pmconcern:  "cat-pmconcern",
+  consult:    "cat-consult",
 };
 const catLabel = {
   model:      "AI Model",
@@ -1223,6 +1332,7 @@ const catLabel = {
   business:   "Business Use Case",
   smb:        "Business Use Case (SMB)",
   pmconcern:  "PM Concern",
+  consult:    "Consultant Playbook",
 };
 
 // ── URL sync ─────────────────────────────────────────────────

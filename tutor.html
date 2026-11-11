@@ -457,6 +457,7 @@
     .cat-business { background: rgba(52,211,153,0.15);  color: #34d399; }
     .cat-smb      { background: rgba(163,230,53,0.15);  color: #a3e635; }
     .cat-pmconcern{ background: rgba(168,157,249,0.18); color: var(--accent-light); }
+    .cat-consult  { background: rgba(45,212,191,0.15);  color: #2dd4bf; }
 
     .cat-badge {
       display: inline-block;
@@ -504,6 +505,7 @@
           <button class="pill" data-cat="business">💼 Business Use Cases</button>
           <button class="pill" data-cat="smb">🏪 Business Use Cases (SMB)</button>
           <button class="pill" data-cat="pmconcern">🎯 PM Concerns</button>
+          <button class="pill" data-cat="consult">🧭 Consultants</button>
         </div>
       </div>
       <div class="setting-group">
@@ -1000,6 +1002,52 @@ const DATA = [
   { name: "The Real AI PM Job", cat: "pmconcern", tags: ["PM","Strategy","Implementation Gap","Leadership","Accountability","Scope"],
     summary: "The hardest part of AI product management is not the AI — it's bridging the gap between what the technology can do and what the organization can actually deploy",
     age45: "Only 14% of organizations planning AI deployment are deployment-ready, and just 11% are in active production use (Cisco 2025) — despite 83% planning agentic AI. Gartner's 2026 CIO survey tells the same story: only ~17% of organizations have deployed AI agents. The implementation gap is the job. Distinguishing AI PM accountabilities: (1) Probabilistic system design — define quality ranges and fallback behaviors, not binary pass/fail specs; (2) Evals pipeline ownership — the PM owns the definition of 'good' output; (3) Data requirements upfront — quality, lineage, and access specified before engineering begins; (4) Build/buy/fine-tune decisions; (5) Cross-functional alignment — data engineering, legal/compliance, MLOps, and change management as co-equals; (6) Responsible AI as launch gates, not nice-to-haves. The AI PM who understands that the technology is rarely the bottleneck consistently outperforms one focused on benchmarks and feature lists." },
+  // ── CONSULTANT PLAYBOOK: DEPLOYING AI (sources: spiretech.ca, NIST AI RMF, ISO/IEC 42001, MIT NANDA 2025, McKinsey State of AI 2025, Gartner 2026) ──
+  { name: "AI Roadmap: Discover → Develop → Deliver", cat: "consult", tags: ["Consulting","Strategy","Roadmap","Prioritization","Spire Technologies"],
+    summary: "A phased roadmap turns AI enthusiasm into a ranked, costed plan — find where AI will actually pay off before anyone buys anything",
+    age45: "Spire Technologies' three-phase roadmap: Discover (leadership workshops, assessment of current systems, process mapping, review of governance, data, and KPIs), Develop (agree priorities, choose tools, set responsible-AI guidance and data strategy), and Deliver (prioritized, costed initiatives with timelines, vendor research, and governance and change guidance). Deliverables include a readiness assessment, opportunity register, and costed roadmap in ~6 weeks. Score opportunities on value, feasibility, and time-to-impact, with quick wins in the first 90 days." },
+  { name: "AI Readiness & Capability Assessment", cat: "consult", tags: ["Consulting","Readiness","Assessment","Data","Skills"],
+    summary: "Assess data, systems, skills, and governance before committing — readiness gaps, not model quality, decide most outcomes",
+    age45: "A readiness assessment scores strategy, data, technology, people and skills, governance, and the post-launch operating model. MIT NANDA's 2025 study reported ~95% of enterprise genAI pilots showed no measurable P&L return, and Gartner's 2026 survey found only ~17% of organizations had deployed agents — readiness and workflow fit, not model capability, are the usual blockers. Tie findings to specific use cases rather than a generic maturity score." },
+  { name: "Use-Case Prioritization & the Opportunity Register", cat: "consult", tags: ["Consulting","Prioritization","ROI","Workflow Redesign","Use Cases"],
+    summary: "Rank AI opportunities by value, feasibility, and risk — and explicitly say no to most of them",
+    age45: "The opportunity register records each use case's owner, current cost, data, integrations, risk tier, and value hypothesis, scored with a transparent model (value × feasibility ÷ risk, or RICE). Reliable payoffs (Spire Technologies): answers instead of reports, automating manual workflows, customer service with escalation rules written before launch, and connecting legacy systems. McKinsey 2025: ~75% of AI high performers redesign workflows vs ~25% of others. Park or kill at least half the list." },
+  { name: "Data Readiness: Fix What the Roadmap Needs", cat: "consult", tags: ["Consulting","Data Quality","Data Strategy","Ownership","RAG"],
+    summary: "\"Nobody's data is perfect\" — clean the data your prioritized initiatives need, not a two-year cleanup with no owner",
+    age45: "Spire Technologies: asked whether their data is good enough, the answer is 'Nobody's is' — fix the data prioritized initiatives need, not 'a two-year cleanup with no owner.' Per use case: name a data owner, identify systems of record, measure quality on the fields actually used, resolve access and privacy, and add metadata for retrieval. For RAG, deduplicate and retire stale documents. Make data fixes deliverables inside initiative plans." },
+  { name: "Build, Buy, Fine-Tune — or Don't Use AI", cat: "consult", tags: ["Consulting","Requirements","Build vs Buy","Fine-Tuning","Decision"],
+    summary: "Requirements should decide where a model is bought, fine-tuned, or not used at all — AI isn't the answer to every requirement",
+    age45: "Spire Technologies translates needs into requirements, deciding 'where a model should be bought, fine-tuned, or not used at all.' Buy when the process is standard; configure a frontier model with prompts, retrieval, and tools when you need your own data and workflow; fine-tune only for consistent format or narrow high-volume tasks after prompting and RAG; use deterministic rules where outputs must be exact and auditable. Record the 'not AI' decisions too." },
+  { name: "Vendor Selection & Competitive RFP", cat: "consult", tags: ["Consulting","Procurement","RFP","Vendor Evaluation","Demos"],
+    summary: "Create a competitive bidding environment — long list, short list, formal RFP, scored proposals, and scripted demos on your own data",
+    age45: "Spire Technologies' process: vendor long list and short list, a formal RFP for 'a competitive bidding environment', scored proposals, facilitated demos, and assessment of implementation and ownership risk. For AI: script demos on your own data and edge cases, require a paid proof of concept with pre-agreed metrics for big deals, ask how model upgrades and deprecations are handled, and check roadmap claims against what is generally available today." },
+  { name: "Total Cost of Ownership for AI", cat: "consult", tags: ["Consulting","TCO","Cost","Tokens","Business Case"],
+    summary: "Model the full cost before you commit — licensing, tokens, integration, retraining, and the people to run it",
+    age45: "Spire Technologies insists on TCO 'before you commit — licensing, tokens, integration, retraining.' Include usage costs under worst-case volumes (agent loops), integration, evaluation, compliance, training, ongoing operations, and exit costs; list prices move, as 2026 introductory pricing showed. Present TCO beside a benefits model over the same 3–5 years, with a cost-per-transaction metric to monitor after launch." },
+  { name: "AI Contract & Vendor Risk Review", cat: "consult", tags: ["Consulting","Contracts","Vendor Risk","Data Residency","Legal"],
+    summary: "Hidden risk lives in the contract — data use, model changes, residency, liability, and exit terms",
+    age45: "Spire Technologies reviews agreements for hidden risks and holds vendors to the roadmap's privacy requirements. Check: no training on your data, residency and sub-processors, retention, certifications (SOC 2, ISO 27001, ISO/IEC 42001), notice of model changes with re-test rights, output IP and indemnity, SLAs, price protections, EU AI Act provider/deployer roles, and exit terms. Give the sponsor a one-page risk summary." },
+  { name: "AI Governance Framework & RACI", cat: "consult", tags: ["Consulting","Governance","RACI","NIST AI RMF","ISO 42001"],
+    summary: "Define who decides, who builds, who approves, and who is accountable — clear governance keeps AI projects from stalling",
+    age45: "Spire Technologies' Phase 1 sets objectives and benefits, roles, a governance framework and change strategy, architecture impact, and readiness — delivering a governance framework and RACI. Reference frameworks: NIST AI RMF (Govern, Map, Measure, Manage), ISO/IEC 42001, and EU AI Act risk tiers. Minimum viable governance: sponsor, use policy, intake and risk tiering, proportionate approval gates, model inventory, and incident response. Keep it proportionate to avoid shadow AI." },
+  { name: "Pilots That End in a Decision", cat: "consult", tags: ["Consulting","Pilots","Success Criteria","Adoption","Scale"],
+    summary: "Pilots stall when success criteria, governance, and ownership were never defined — design every pilot to end in a scale, fix, or stop decision",
+    age45: "Spire Technologies: 'Pilots stall when success criteria, governance and ownership were never defined' — fix with defined roles, measured adoption, and 'a decision point with evidence behind it.' Checklist: business owner, baseline, 2–4 pre-agreed metrics with thresholds, fixed 6–12 week duration, representative users, an evaluation set, scale-up cost estimate, and a scheduled scale / iterate / stop decision. 'Stop' is a valid success." },
+  { name: "Grounding, Evaluation & Trust", cat: "consult", tags: ["Consulting","RAG","Evals","Hallucination","Acceptance Criteria"],
+    summary: "A general chatbot does not know your business — ground answers in your own data and measure their quality before and after launch",
+    age45: "Spire Technologies: a general chatbot 'does not know your business' — ground answers via retrieval with metadata ranking and answer evaluation. Build a golden evaluation set before go-live; measure groundedness, correctness, and citation accuracy; show sources; route low-confidence questions to people; and re-evaluate whenever the model, prompt, or index changes. Make evaluation results a vendor acceptance criterion." },
+  { name: "Security, Privacy & Responsible AI by Design", cat: "consult", tags: ["Consulting","Security","Privacy","Prompt Injection","Responsible AI","Compliance"],
+    summary: "Responsible AI is a requirement in the document, not a slide — residency, access control, retention, and prompt-injection risk belong in the requirements",
+    age45: "Spire Technologies' roadmaps address 'data residency, access control, retention, prompt-injection risk and regulatory exposure' — 'Responsible AI is a requirement in the document, not a slide.' Include data classification, residency, permission-aware retrieval, prompt-injection defenses, PII redaction, bias testing, transparency, and legal classification (PIPEDA and Québec Law 25 in Canada; the EU AI Act). Run a privacy and AI impact assessment per use case at the roadmap stage." },
+  { name: "Driving Adoption & Workflow Change", cat: "consult", tags: ["Consulting","Change Management","Adoption","Training","AI Literacy"],
+    summary: "Adoption is the return — redesign the work, train the people, and measure usage, or the system quietly fails",
+    age45: "Spire Technologies builds a change-management and adoption strategy into every implementation. Secure a sponsor and champions, explain what changes for people's roles, redesign the workflow (McKinsey 2025: high performers are ~3× as likely to), train on real tasks, meet AI-literacy duties (EU AI Act Art. 4), and track active users and override rates. Reserve ~15–25% of implementation effort for change and training." },
+  { name: "Staying the Course Through Implementation", cat: "consult", tags: ["Consulting","Implementation","Vendor Oversight","Risk Register","Benefits Tracking"],
+    summary: "Implementation is where most projects quietly lose their return — independent oversight keeps vendors, scope, and benefits on track",
+    age45: "Spire Technologies calls implementation 'the stage where most projects quietly lose their return.' Its Phase 2 adds team coaching, leadership status updates, vendor-meeting support, oversight document reviews, and early risk flags. Hold vendors to agreed KPIs, run change control, test acceptance against the evaluation set, plan rollback, define the post-launch operating model before go-live, and track realized benefits." },
+  { name: "Running the Engagement: Independence & Scoping", cat: "consult", tags: ["Consulting","Independence","Engagement Model","Fixed Fee","Ethics"],
+    summary: "Advice is only as good as its independence — vendor-neutral, fixed-scope engagements that will sometimes conclude 'you don't need us yet'",
+    age45: "Spire Technologies' model: vendor-neutral (no resold software, no vendor commissions), a free first conversation and 'a written read' — sometimes that 'you do not need us yet' — then a defined scope and fixed fee, sequenced Roadmap → System Selection → Implementation. Disclose any vendor ties, state assumptions in every SOW, tie deliverables to client decisions, transfer knowledge, stay current, and measure success by realized benefits." },
 ];
 
 // ── Config ───────────────────────────────────────────────────────
@@ -1015,6 +1063,7 @@ const catLabel = {
   business:  "Business Use Case",
   smb:       "Business Use Case (SMB)",
   pmconcern: "PM Concern",
+  consult:   "Consultant Playbook",
 };
 
 const catClass = {
@@ -1029,6 +1078,7 @@ const catClass = {
   business:  "cat-business",
   smb:       "cat-smb",
   pmconcern: "cat-pmconcern",
+  consult:   "cat-consult",
 };
 
 const Q_TYPE_LABEL = {
@@ -1190,8 +1240,8 @@ function renderStartScreen() {
     list.innerHTML = `<div class="no-history">No quiz history yet — start your first session above!</div>`;
     return;
   }
-  const catEmoji = { all: "🌐", model: "🤖", "ml-type": "📚", arch: "🧠", concept: "💡", role: "👤", cloud: "☁️", challenge: "⚠️", prompt: "✍️", business: "💼" };
-  const catName  = { all: "All Topics", model: "AI Models", "ml-type": "ML Types", arch: "Architectures", concept: "Concepts", role: "Roles", cloud: "Cloud Services", challenge: "Deployment", prompt: "Prompt Engineering", business: "Business Use Cases" };
+  const catEmoji = { all: "🌐", model: "🤖", "ml-type": "📚", arch: "🧠", concept: "💡", role: "👤", cloud: "☁️", challenge: "⚠️", prompt: "✍️", business: "💼", smb: "🏪", pmconcern: "🎯", consult: "🧭" };
+  const catName  = { all: "All Topics", model: "AI Models", "ml-type": "ML Types", arch: "Architectures", concept: "Concepts", role: "Roles", cloud: "Cloud Services", challenge: "Deployment", prompt: "Prompt Engineering", business: "Business Use Cases", smb: "Business Use Cases (SMB)", pmconcern: "PM Concerns", consult: "Consultants" };
 
   list.innerHTML = store.sessions.slice(0, 8).map(s => {
     const d    = new Date(s.date);
